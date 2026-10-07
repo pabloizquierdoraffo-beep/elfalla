@@ -10,7 +10,7 @@
 |---|---|---|
 | 1 | Visión, usuarios y alcance | ✅ Escrita |
 | 2 | El Palco: cuenta, sesiones, votar, nota, sondeos, ficha | ✅ Escrita y revisada |
-| 3 | Mi Palco (porras), compartir, perfil, notificaciones, ajustes y admin | ✅ Escrita, pendiente de revisión |
+| 3 | Mi Palco (porras), compartir, perfil, notificaciones, ajustes, admin y gamificación | ✅ Escrita (falta confirmar 3.9) |
 | 4 | Requisitos generales (rendimiento, privacidad, accesibilidad) y criterios de lanzamiento | ⏳ Próxima entrega |
 
 **Cómo leer las prioridades**
@@ -74,13 +74,14 @@ Las métricas salen de la sección 13 del dossier. Los objetivos numéricos se f
 | Registro e inicio de sesión | Apuestas, dinero, botes o pagos (**nunca**) |
 | Calendario de sesiones y agrupaciones | Fotos, vídeo o audio de actuaciones |
 | Voto rápido y jurado completo | Comentarios públicos o chat |
-| Nota y ranking de El Palco | Insignias y gamificación avanzada |
+| Nota y ranking de El Palco | Gamificación que premie *cómo* se puntúa (ver 3.9) |
 | Sondeos | Acumulado de puntos de El Palco entre fases |
 | Mi Palco: crear, unirse, predecir, ranking | Históricos de años anteriores |
 | Tarjetas para compartir | Integraciones con medios |
 | Perfil e historial propio | Recomendaciones personalizadas |
 | Notificaciones básicas | Promociones avanzadas de patrocinadores |
 | Panel de administración | |
+| **Gamificación**: rachas, rankings generales, insignias y perfiles de jurado (decidido por el responsable del producto; el dossier la dejaba para la V2) | |
 
 ## 1.7 Principios que guían todas las decisiones
 
@@ -326,7 +327,8 @@ Un **Palco** es un grupo privado de amigos que juegan la porra juntos. Las regla
 | MPA-02 | Los nombres de Palco pasan por el **filtro de palabras ofensivas**. | 🔴 |
 | MPA-03 | **Invitar**: cada Palco tiene un **enlace** y un **código de 6 caracteres**. Botón directo para enviarlo por WhatsApp. | 🔴 |
 | MPA-04 | **Unirse** con el enlace o escribiendo el código. Si la persona no tiene cuenta, se registra y entra al Palco directamente, sin repetir pasos. | 🔴 |
-| MPA-05 | Una persona puede estar en **varios Palcos** (máximo 10, ajustable). Cada Palco tiene un máximo de **50 miembros** (ajustable). | 🔴 |
+| MPA-05 | ✅ **Sin límites**: una persona puede estar en todos los Palcos que quiera y un Palco puede tener todos los miembros que quiera. Los rankings largos se cargan por partes para que la app siga siendo rápida. | 🔴 |
+| MPA-09 | **Protección anti-robots** (invisible para la gente normal): si una cuenta crea Palcos o se une a ellos a un ritmo imposible para una persona (por ejemplo, decenas en un minuto), se frena y se avisa al equipo. No es un límite de producto, es seguridad. | 🔴 |
 | MPA-06 | El anfitrión puede **cambiar el nombre**, **expulsar** a alguien y **cambiar el código** (el anterior deja de funcionar). | 🟠 |
 | MPA-07 | Cualquiera puede **salir** de un Palco. | 🔴 |
 | MPA-08 | Se puede **unir tarde**: juega desde la ronda que esté abierta; las anteriores le cuentan 0. | 🔴 |
@@ -335,7 +337,7 @@ Un **Palco** es un grupo privado de amigos que juegan la porra juntos. Las regla
 
 | Código | Requisito | Prioridad |
 |---|---|---|
-| PRE-01 | **Una sola porra por persona**: la persona hace su predicción una vez y **cuenta igual en todos sus Palcos** (ver pregunta 1). | 🔴 |
+| PRE-01 | ✅ **Una sola porra por persona**: la persona hace su predicción una vez y **cuenta igual en todos sus Palcos**. | 🔴 |
 | PRE-02 | Cada ronda muestra las agrupaciones **por modalidad**, con un contador visible: *"Comparsas: 12 de 18"*. | 🔴 |
 | PRE-03 | No se puede guardar una modalidad con más o menos agrupaciones de las que tocan. | 🔴 |
 | PRE-04 | En la ronda de **Orden**, se ordenan las finalistas de cada modalidad arrastrándolas a los puestos 1.º a 4.º. | 🔴 |
@@ -355,7 +357,7 @@ Un **Palco** es un grupo privado de amigos que juegan la porra juntos. Las regla
 | POR-02 | **Ranking de cada Palco**: puntos, aciertos y posiciones exactas, con los desempates del documento 03. | 🔴 |
 | POR-03 | **Evolución por fase**: puntos de cada ronda y si has subido o bajado de puesto (flechas). | 🟠 |
 | POR-04 | Detalle de cada persona del Palco: qué eligió y en qué acertó (solo rondas cerradas). | 🟠 |
-| POR-05 | **Ranking general** de todas las personas que juegan la porra (ver pregunta 2). | 🟢 |
+| POR-05 | ✅ **Ranking general de la porra**: todas las personas de la app, con su puesto, puntos y evolución. Siempre se ve *mi puesto*, aunque esté en el 3.500. | 🔴 |
 
 ## 3.4 Compartir
 
@@ -425,15 +427,73 @@ Una web privada para el equipo, que **funciona bien desde el móvil**. Es impres
 | ADM-06 | **Sondeos**: activar los de cada noche (SON-03). | 🟠 |
 | ADM-07 | **Moderación**: ver denuncias, cambiar alias o nombres de Palco ofensivos, bloquear cuentas. | 🔴 |
 | ADM-08 | **Alertas de votos raros** (documento 02, apartado 6) y opción de **apartar votos sospechosos** de la nota. | 🟠 |
-| ADM-09 | **Ajustes** sin tocar la app: mínimo de votos (30), proporción de recorte (5), puntos de la porra (1-2-4-5-2), cifras del botón "¡Ya ha salido!" (5 personas en 2 minutos), límites de Palcos. | 🔴 |
+| ADM-09 | **Ajustes** sin tocar la app: mínimo de votos (30), proporción de recorte (5), puntos de la porra (1-2-4-5-2), cifras del botón "¡Ya ha salido!" (5 personas en 2 minutos), umbrales de la protección anti-robots, reglas de rachas e insignias. | 🔴 |
 | ADM-10 | **Registro de auditoría**: quién hizo qué y cuándo. | 🔴 |
 | ADM-11 | **Dos tipos de acceso**: *administrador* (todo) y *operador de directo* (solo ADM-02), para poder dar acceso a alguien de confianza solo para las noches de sesión. | 🟢 |
 | ADM-12 | **Corregir un resultado oficial** cargado por error: se recalculan los puntos y se avisa a los afectados. | 🔴 |
 
 ---
 
-## Preguntas de esta entrega
+## 3.9 Gamificación
 
-1. **Una porra por persona para todos sus Palcos (recomendado)**, o una porra distinta en cada Palco. Con una sola, la persona predice una vez y compite en todos sus grupos a la vez: menos trabajo, más justo, y permite calcular el "% que la incluye en su Final". Con una por Palco, puede "jugar distinto" en cada grupo, pero tiene que rellenarlo varias veces.
-2. **Ranking general de la porra** (todas las personas de la app, no solo tu Palco): ¿lo quieres? Da emoción y es un buen espacio para un patrocinador ("Patrocinador de Porras", dossier sección 12). Lo he dejado como 🟢 "si da tiempo".
-3. **Límites**: ¿te parecen bien **50 personas por Palco** y **10 Palcos por persona** para empezar? Se pueden cambiar en el panel en cualquier momento.
+Decisión del responsable del producto: la app tiene que tener **rankings, rachas y retos** que enganchen. Aquí se ordenan en dos grupos, porque no todos son igual de seguros para El Palco.
+
+### ⚠️ La regla que protege a El Palco
+
+El objetivo número 3 del MVP es que **la nota de El Palco sea creíble**. Hay que evitar premiar públicamente **el valor** de las notas que pone la gente, porque entonces la gente vota para ganar el premio y no lo que de verdad piensa:
+
+- Si hay un **ranking público del "más derrotista"**, alguien votará 0 a todo para encabezarlo. Es exactamente el ataque de "hundir" del documento 02, pero hecho por diversión. La nota de El Palco se estropea.
+- Si hay un **ranking público del "mejor jurado"** (quien más se parece al jurado oficial), la gente dejará de votar *lo que le ha gustado* y votará *lo que cree que pondrá el jurado*. Eso rompe la separación "puntuar ≠ predecir", que el dossier pide no cambiar sin justificarlo (sección 18). Además, ese ranking ya existe en otra forma: **la porra general** premia a quien mejor adivina al jurado.
+
+**Propuesta:** los premios por **cuánto participas** son rankings públicos. Lo que dice **cómo puntúas** se enseña como **perfil personal**, que cada uno ve y puede compartir con orgullo, pero que no compite contra nadie.
+
+### A · Rankings públicos (premian participar)
+
+| Código | Qué | Prioridad |
+|---|---|---|
+| GAM-01 | **Ranking general de la porra** (POR-05). | 🔴 |
+| GAM-02 | **Rachas**: noches de sesión seguidas votando al menos una actuación. *"🔥 7 noches seguidas"*. Una noche sin sesión no rompe la racha. | 🔴 |
+| GAM-03 | **Ranking de rachas** y **ranking de "más actuaciones puntuadas"** de la temporada. | 🟠 |
+| GAM-04 | **Ranking de jurados completos**: quién ha rellenado más fichas de jurado completo. Premia el esfuerzo, no la nota. | 🟠 |
+| GAM-05 | Cada ranking general tiene también su versión **dentro de cada Palco** ("el más fiel de mi Palco"). | 🟠 |
+
+### B · Perfil de jurado (personal, se puede compartir)
+
+Se calcula al cerrar cada fase, con un mínimo de 10 votos para que tenga sentido.
+
+| Código | Qué | Prioridad |
+|---|---|---|
+| GAM-06 | **Tu carácter como jurado**, comparando tus notas con las de El Palco: *El Exigente* (puntúas bastante por debajo de la afición), *El Generoso* (por encima), *El Equilibrado* (como la afición). Los nombres finales se escribirán con el tono de la marca: con gracia, sin caricatura ni insultos. | 🟠 |
+| GAM-07 | **Ojo de jurado**: *"Tus notas se parecen a las del Jurado Oficial en un 82 %"*. Solo se calcula **después del fallo**, con las puntuaciones oficiales publicadas. | 🟠 |
+| GAM-08 | Tarjeta para **compartir el perfil**: *"Soy El Exigente de El Falla"*. | 🟠 |
+
+### C · Insignias
+
+| Código | Ejemplos | Prioridad |
+|---|---|---|
+| GAM-09 | *Primera nota* · *Has votado toda una sesión* · *10 noches seguidas* · *Has puntuado la Final completa* · *Has acertado las 4 finalistas de una modalidad* · *Has clavado el orden de una Final* · *Has creado un Palco con 10 amigos*. | 🟠 |
+| GAM-10 | Las insignias se ven en el perfil y se pueden compartir. | 🟠 |
+
+### D · Protecciones
+
+| Código | Qué | Prioridad |
+|---|---|---|
+| GAM-11 | Los votos de cuentas bloqueadas o sospechosas **no cuentan** para rachas, rankings ni insignias. | 🔴 |
+| GAM-12 | Opción **"No aparecer en rankings generales"** en ajustes (sigue jugando, pero sin mostrar su alias a desconocidos). | 🟠 |
+| GAM-13 | El ranking de "más actuaciones puntuadas" puede animar a votar sin haber visto la actuación. La regla de recorte de El Palco y la detección de votos raros (documento 02) lo amortiguan; el equipo lo vigilará la primera semana. | 🔴 |
+
+### Calendario
+
+Todo lo 🟠 de gamificación se calcula en el servidor, así que **puede activarse durante el COAC** sin publicar una nueva versión de la app en las tiendas, siempre que las pantallas estén preparadas desde el lanzamiento. Así no retrasa el lanzamiento.
+
+---
+
+## Decisiones de la parte 3
+
+| # | Tema | Decisión |
+|---|---|---|
+| 1 | Porra por persona | ✅ Una sola porra por persona, cuenta en todos sus Palcos. |
+| 2 | Ranking general de la porra | ✅ Sí, imprescindible. |
+| 3 | Límites de Palcos y miembros | ✅ Sin límites. Solo protección anti-robots. |
+| 4 | Gamificación | ✅ Sí, en el MVP. |
+| 5 | Rankings que premian *cómo* se puntúa ("más derrotista", "mejor jurado") | ⏳ Propuesta: perfil personal compartible en lugar de ranking público, para proteger la nota de El Palco. |
