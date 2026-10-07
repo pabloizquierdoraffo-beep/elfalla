@@ -7,5 +7,5 @@ export const dynamic = "force-dynamic";
 export default async function InicioPage() {
   const data = await loadCurrentSession();
   if (!data) return <NoSession />;
-  return <SessionView session={data.session} myVotes={data.myVotes} palco={data.palco} canShareNight={data.canShareNight} />;
+  return <SessionView session={data.session} myVotes={data.myVotes} palco={data.palco} canShareNight={data.canShareNight} hashtags={data.hashtags} />;
 }

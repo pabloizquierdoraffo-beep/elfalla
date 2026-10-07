@@ -24,6 +24,7 @@ import {
 } from "@/lib/db/logic";
 import type { Db } from "@/lib/db/schema";
 import { mutate } from "@/lib/db/store";
+import { parseHashtags } from "@/lib/share/links";
 import { CATEGORIES, PHASE_LABEL, type Category, type PhaseKind, type StageStatus } from "@/lib/types";
 
 export type FormState = { ok?: string; error?: string } | null;
@@ -229,13 +230,15 @@ export async function blockUserAction(_: FormState, fd: FormData): Promise<FormS
 
 // ─── Ajustes ─────────────────────────────────────────────────────────────────
 
-export async function saveSponsorAction(_: FormState, fd: FormData): Promise<FormState> {
+export async function saveShareSettingsAction(_: FormState, fd: FormData): Promise<FormState> {
   const sponsor = text(fd, "sponsor");
+  const hashtags = parseHashtags(text(fd, "hashtags"));
   if (sponsor.length > 60) return { error: "El nombre del patrocinador no puede pasar de 60 caracteres." };
   return adminChange((db, now) => {
     db.settings.shareSponsor = sponsor;
-    audit(db, ACTOR, "Patrocinador de las tarjetas", sponsor || "(ninguno)", now);
-    return { ok: sponsor ? `Las tarjetas dirán «Presentado por ${sponsor}».` : "Las tarjetas ya no muestran patrocinador." };
+    db.settings.shareHashtags = hashtags;
+    audit(db, ACTOR, "Ajustes de compartir", `Patrocinador: ${sponsor || "(ninguno)"} · Hashtags: ${hashtags.map((h) => `#${h}`).join(" ") || "(ninguno)"}`, now);
+    return { ok: sponsor ? `Guardado. Las tarjetas dirán «Presentado por ${sponsor}».` : "Guardado. Las tarjetas no muestran patrocinador." };
   });
 }
 

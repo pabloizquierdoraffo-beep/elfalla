@@ -37,6 +37,26 @@ await fan.getByRole("button", { name: "Enviar voto" }).click();
 await fan.getByText("¡Voto enviado!").waitFor();
 check(true, "La aficionada vota a la comparsa en escena");
 
+// Compartir en X: se intercepta la ventana que se abriría
+await fan.evaluate(() => {
+  window.__abierto = [];
+  window.open = (url) => window.__abierto.push(String(url));
+});
+await fan.getByRole("button", { name: "Publicar en X" }).click();
+const xUrl = new URL((await fan.evaluate(() => window.__abierto))[0] ?? "https://vacio");
+check(
+  xUrl.pathname === "/intent/tweet" &&
+    xUrl.searchParams.get("text")?.startsWith("Le he dado un 78 a Los del Muelle Viejo") &&
+    xUrl.searchParams.get("url")?.endsWith("/c/nota/p3?n=78") &&
+    xUrl.searchParams.get("hashtags") === "COAC2027,CarnavalDeCadiz",
+  "«Publicar en X» abre X con el texto, el enlace y los hashtags",
+);
+await fan.getByRole("button", { name: "Facebook" }).click();
+await fan.getByRole("button", { name: "WhatsApp" }).click();
+const [, fb, wa] = await fan.evaluate(() => window.__abierto);
+check(fb?.startsWith("https://www.facebook.com/sharer/sharer.php") && wa?.startsWith("https://wa.me/"), "Facebook y WhatsApp abren su pantalla de compartir");
+await shot(fan, "compartir-botones");
+
 // El administrador
 const admin = await (await browser.newContext(phone)).newPage();
 admin.on("dialog", (d) => d.accept());
@@ -102,8 +122,8 @@ await shot(admin, "panel-05-sesiones");
 // Patrocinador de las tarjetas
 await admin.goto(`${BASE}/admin/ajustes`);
 await admin.getByLabel("Patrocinador").fill("Marca de Prueba");
-await admin.getByRole("button", { name: "Guardar patrocinador" }).click();
-await admin.getByText("Las tarjetas dirán «Presentado por Marca de Prueba».").waitFor();
+await admin.getByRole("button", { name: "Guardar", exact: true }).click();
+await admin.getByText("Guardado. Las tarjetas dirán «Presentado por Marca de Prueba».").waitFor();
 await shot(admin, "panel-06-ajustes");
 
 // Tarjetas para compartir
@@ -124,7 +144,10 @@ for (const [name, path] of [
 check((await fan.request.get(`${BASE}/tarjeta/nota/p3?n=999`)).status() === 400, "Una nota inventada fuera de 0-100 no genera tarjeta");
 await fan.goto(`${BASE}/c/nota/p3?n=78`);
 const ogImage = await fan.locator('meta[property="og:image"]').getAttribute("content");
-check(Boolean(ogImage?.includes("/tarjeta/nota/p3?n=78&formato=enlace")), "El enlace compartido lleva su vista previa para WhatsApp");
+check(Boolean(ogImage?.includes("/tarjeta/nota/p3?n=78&formato=enlace")), "El enlace compartido lleva su vista previa para WhatsApp y Facebook");
+const twitterCard = await fan.locator('meta[name="twitter:card"]').getAttribute("content");
+const twitterImage = await fan.locator('meta[name="twitter:image"]').getAttribute("content");
+check(twitterCard === "summary_large_image" && Boolean(twitterImage?.includes("/tarjeta/nota/")), "En X se ve la tarjeta en grande");
 await shot(fan, "compartido-nota");
 await admin.goto(`${BASE}/admin/registro`);
 check((await admin.locator("ol li").count()) >= 5, "Todo queda apuntado en el registro");

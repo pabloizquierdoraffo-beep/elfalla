@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { VoteScreen } from "@/components/VoteScreen";
-import { findGroup, findPerformance, findUser, sessionView, toPerformanceView } from "@/lib/db/logic";
+import { findGroup, findPerformance, findUser, sessionView, shareHashtags, toPerformanceView } from "@/lib/db/logic";
 import { readDb, todayInCadiz } from "@/lib/db/store";
 import { getVisitorId } from "@/lib/visitor";
 
@@ -41,6 +41,7 @@ export default async function VotarPage({ params }: { params: Promise<{ id: stri
       nextPhase={session.nextPhase}
       previousScore={previous?.score ?? null}
       blocked={blocked}
+      hashtags={shareHashtags(db)}
     />
   );
 }

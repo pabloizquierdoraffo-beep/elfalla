@@ -17,11 +17,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   if (!found) return {};
   const title = `Le he dado un ${found.score} a ${found.data.groupName} · El Falla`;
   const image = `/tarjeta/nota/${found.id}?n=${found.score}&formato=enlace`;
+  const description = "¿Y tú, qué nota le das? Puntúa en El Falla, el jurado de la afición.";
   return {
     title,
-    description: "¿Y tú, qué nota le das? Puntúa en El Falla, el jurado de la afición.",
-    openGraph: { title, images: [{ url: image, width: 1200, height: 630 }] },
-    twitter: { card: "summary_large_image", title, images: [image] },
+    description,
+    openGraph: { title, description, images: [{ url: image, width: 1200, height: 630 }] },
+    twitter: { card: "summary_large_image", title, description, images: [image] },
   };
 }
 

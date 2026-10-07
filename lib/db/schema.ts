@@ -74,6 +74,8 @@ export type DbSettings = PalcoSettings & {
   currentSessionId: string | null;
   /** Patrocinador que aparece en las tarjetas para compartir ("Presentado por…"). Vacío: no sale. */
   shareSponsor?: string;
+  /** Hashtags que se añaden al publicar en X y WhatsApp, sin "#". Si no hay, se usan los de por defecto. */
+  shareHashtags?: string[];
 };
 
 export type AuditEntry = { id: string; at: string; actor: string; action: string; detail: string };

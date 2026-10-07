@@ -1,8 +1,8 @@
 import { ActionForm, SubmitButton } from "@/components/admin/ActionForm";
 import { Card, Field, inputClass } from "@/components/admin/ui";
-import { SETTING_LIMITS } from "@/lib/db/logic";
+import { SETTING_LIMITS, shareHashtags } from "@/lib/db/logic";
 import { readDb } from "@/lib/db/store";
-import { saveSettingsAction, saveSponsorAction } from "../../actions";
+import { saveSettingsAction, saveShareSettingsAction } from "../../actions";
 
 export default async function AjustesPage() {
   const db = await readDb();
@@ -13,11 +13,20 @@ export default async function AjustesPage() {
           Si hay patrocinador, todas las tarjetas que comparta la gente dirán «Presentado por…». El patrocinador aparece en la
           tarjeta, nunca cambia las notas ni los cálculos (dossier, regla de independencia).
         </p>
-        <ActionForm action={saveSponsorAction} className="space-y-3">
+        <ActionForm action={saveShareSettingsAction} className="space-y-3">
           <Field label="Patrocinador" hint="Déjalo vacío para que no salga ninguno.">
             <input name="sponsor" maxLength={60} defaultValue={db.settings.shareSponsor ?? ""} placeholder="Nombre de la marca" className={inputClass} />
           </Field>
-          <SubmitButton>Guardar patrocinador</SubmitButton>
+          <Field label="Hashtags" hint="Se añaden al publicar en X y WhatsApp. Hasta 4, separados por espacios o comas.">
+            <input
+              name="hashtags"
+              maxLength={120}
+              defaultValue={shareHashtags(db).map((h) => `#${h}`).join(" ")}
+              placeholder="#COAC2027 #CarnavalDeCadiz"
+              className={inputClass}
+            />
+          </Field>
+          <SubmitButton>Guardar</SubmitButton>
         </ActionForm>
       </Card>
       <Card title="Ajustes">

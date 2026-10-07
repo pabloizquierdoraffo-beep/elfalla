@@ -18,6 +18,7 @@ type Props = {
   nextPhase: PhaseKind;
   previousScore: number | null;
   blocked: boolean;
+  hashtags: string[];
 };
 
 const ERRORS = {
@@ -28,7 +29,7 @@ const ERRORS = {
   no_visitor: "No hemos podido identificarte. Recarga la página.",
 } as const;
 
-export function VoteScreen({ performance, phase, nextPhase, previousScore, blocked }: Props) {
+export function VoteScreen({ performance, phase, nextPhase, previousScore, blocked, hashtags }: Props) {
   const [value, setValue] = useState<number | null>(null);
   const [result, setResult] = useState<{ score: number; palco: PalcoScore } | null>(null);
   const [error, setError] = useState<string | null>(blocked ? ERRORS.blocked : null);
@@ -56,7 +57,9 @@ export function VoteScreen({ performance, phase, nextPhase, previousScore, block
   }
 
   if (result) {
-    return <Confirmation performance={performance} myScore={result.score} palco={result.palco} nextPhase={nextPhase} />;
+    return (
+      <Confirmation performance={performance} myScore={result.score} palco={result.palco} nextPhase={nextPhase} hashtags={hashtags} />
+    );
   }
 
   const category = performance.group.category;
@@ -155,11 +158,13 @@ function Confirmation({
   myScore,
   palco,
   nextPhase,
+  hashtags,
 }: {
   performance: Performance;
   myScore: number;
   palco: PalcoScore;
   nextPhase: PhaseKind;
+  hashtags: string[];
 }) {
   const [answer, setAnswer] = useState<"si" | "no" | null>(null);
 
@@ -224,11 +229,12 @@ function Confirmation({
 
       <ShareButton
         className="mt-6"
-        label="Compartir mi nota"
+        label="Comparte tu nota"
         imageUrl={`/tarjeta/nota/${performance.id}?n=${myScore}`}
         pageUrl={`/c/nota/${performance.id}?n=${myScore}`}
         text={`Le he dado un ${myScore} a ${performance.group.name} en El Falla. ¿Y tú?`}
         fileName={`el-falla-mi-nota-${myScore}.png`}
+        hashtags={hashtags}
       />
 
       <Link

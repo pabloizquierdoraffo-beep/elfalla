@@ -15,5 +15,6 @@ export default async function SesionPage({ searchParams }: { searchParams: Promi
       myVotes={data.myVotes}
       palco={data.palco}
       canShareNight={data.canShareNight}
+      hashtags={data.hashtags}
     />;
 }

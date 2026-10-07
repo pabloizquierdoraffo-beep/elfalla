@@ -11,11 +11,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data) return {};
   const title = `La clasificación de la noche · ${data.title} · El Falla`;
   const image = `/tarjeta/noche/${id}?formato=enlace`;
+  const description = "Lo que opina la afición, en El Palco de El Falla.";
   return {
     title,
-    description: "Lo que opina la afición, en El Palco de El Falla.",
-    openGraph: { title, images: [{ url: image, width: 1200, height: 630 }] },
-    twitter: { card: "summary_large_image", title, images: [image] },
+    description,
+    openGraph: { title, description, images: [{ url: image, width: 1200, height: 630 }] },
+    twitter: { card: "summary_large_image", title, description, images: [image] },
   };
 }
 

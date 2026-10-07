@@ -3,6 +3,7 @@
 
 import { computePalcoScore, type PalcoScore } from "../palco";
 import type { Category, Performance, PhaseKind, Session, StageStatus } from "../types";
+import { DEFAULT_HASHTAGS } from "../share/links";
 import type { ConfirmedBy, Db, DbGroup, DbPerformance, DbSettings, DbUser } from "./schema";
 
 const ON_STAGE: StageStatus[] = ["on_stage", "probably_on_stage"];
@@ -324,7 +325,7 @@ export function removePerformance(db: Db, performanceId: string): boolean {
 // ─── Ajustes y registro ──────────────────────────────────────────────────────
 
 export const SETTING_LIMITS: Record<
-  keyof Omit<DbSettings, "currentSessionId" | "shareSponsor">,
+  keyof Omit<DbSettings, "currentSessionId" | "shareSponsor" | "shareHashtags">,
   { min: number; max: number; label: string }
 > = {
   minVotes: { min: 1, max: 1000, label: "Votos mínimos para publicar la nota" },
@@ -338,4 +339,8 @@ export const SETTING_LIMITS: Record<
 export function audit(db: Db, actor: string, action: string, detail: string, now: Date): void {
   db.audit.unshift({ id: crypto.randomUUID(), at: now.toISOString(), actor, action, detail });
   if (db.audit.length > 2000) db.audit.length = 2000;
+}
+
+export function shareHashtags(db: Db): string[] {
+  return db.settings.shareHashtags ?? DEFAULT_HASHTAGS;
 }

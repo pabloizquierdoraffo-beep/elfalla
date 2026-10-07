@@ -2,7 +2,7 @@ import "server-only";
 
 // Lo que necesita cada página pública, leído en el servidor.
 
-import { sessionView, userVotes, visiblePalcoScores } from "./db/logic";
+import { sessionView, shareHashtags, userVotes, visiblePalcoScores } from "./db/logic";
 import { readDb, todayInCadiz } from "./db/store";
 import { loadNightCard } from "./share/data";
 import { getVisitorId } from "./visitor";
@@ -16,5 +16,5 @@ export async function loadCurrentSession() {
   const myVotes = Object.fromEntries(Object.entries(mine).map(([id, v]) => [id, { score: v.score }]));
   const palco = visiblePalcoScores(db, userId, session.performances.map((p) => p.id));
   const canShareNight = (await loadNightCard(session.id)) !== null;
-  return { session, myVotes, palco, canShareNight };
+  return { session, myVotes, palco, canShareNight, hashtags: shareHashtags(db) };
 }

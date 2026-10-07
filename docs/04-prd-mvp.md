@@ -376,6 +376,18 @@ Cada momento importante genera una **tarjeta** (imagen) para WhatsApp, Instagram
 | COM-09 | **Hitos**: rachas, insignias conseguidas, perfil de jurado y puesto en los rankings generales. | 🔴 |
 | COM-10 | ✅ **Hueco de patrocinador** en todas las tarjetas: *"Presentado por [marca]"*, que se activa desde el panel. Patrocina la tarjeta, nunca el cálculo. | 🔴 |
 
+**Redes (✅ decidido):**
+
+| Red | Cómo se comparte | Prioridad |
+|---|---|---|
+| **X (Twitter)** | Botón principal **"Publicar en X"**: abre X con el texto, el enlace y los **hashtags** ya escritos. El enlace muestra la tarjeta en grande. Es la red principal porque **es donde se opina del carnaval**. | 🔴 |
+| **Instagram** | La imagen vertical va al menú de compartir del móvil (historias o muro). Si el móvil no lo permite, se descarga para subirla desde Instagram. | 🔴 |
+| **WhatsApp** | Abre WhatsApp con el texto, los hashtags y el enlace (con vista previa). | 🔴 |
+| **Facebook** | Abre la pantalla de compartir de Facebook con el enlace (con vista previa). | 🔴 |
+| **Más** | Menú de compartir del móvil, con la imagen, para cualquier otra app. | 🔴 |
+
+Los **hashtags** (por defecto `#COAC2027` y `#CarnavalDeCadiz`) se cambian desde el panel de administración.
+
 > ✅ **Decisión del responsable del producto:** todo momento importante se puede compartir, porque da visibilidad orgánica a la app y será un espacio para patrocinio. Ya funcionan COM-01 (mi nota), COM-07 (clasificación de la noche) y COM-10 (patrocinador). Las tarjetas de la porra y de los hitos se añadirán al construir esas partes, usando el mismo generador.
 
 **Reglas de todas las tarjetas:**

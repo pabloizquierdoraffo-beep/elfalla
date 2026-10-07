@@ -29,9 +29,10 @@ type Props = {
   palco: Record<string, PalcoScore>;
   /** Ya hay votaciones cerradas con nota: se puede compartir la clasificación de la noche. */
   canShareNight: boolean;
+  hashtags: string[];
 };
 
-export function SessionView({ session, myVotes, palco, canShareNight }: Props) {
+export function SessionView({ session, myVotes, palco, canShareNight, hashtags }: Props) {
   const router = useRouter();
 
   // La primera vez se enseña la bienvenida (CUE-06).
@@ -119,11 +120,12 @@ export function SessionView({ session, myVotes, palco, canShareNight }: Props) {
         {canShareNight && (
           <ShareButton
             className="mt-4"
-            label="Compartir la clasificación de la noche"
+            label="Comparte la clasificación de la noche"
             imageUrl={`/tarjeta/noche/${session.id}`}
             pageUrl={`/c/noche/${session.id}`}
             text="La clasificación de la noche en El Palco de El Falla:"
             fileName="el-falla-clasificacion-de-la-noche.png"
+            hashtags={hashtags}
           />
         )}
 

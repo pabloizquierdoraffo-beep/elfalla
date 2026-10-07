@@ -13,9 +13,10 @@ type Props = {
   myVotes: Record<string, MyVote>;
   palco: Record<string, PalcoScore>;
   canShareNight: boolean;
+  hashtags: string[];
 };
 
-export function SessionList({ session, category, myVotes, palco, canShareNight }: Props) {
+export function SessionList({ session, category, myVotes, palco, canShareNight, hashtags }: Props) {
   const performances = category
     ? session.performances.filter((p) => p.group.category === category)
     : session.performances;
@@ -69,11 +70,12 @@ export function SessionList({ session, category, myVotes, palco, canShareNight }
           <div className="px-4">
             <ShareButton
             className="mt-6"
-            label="Compartir la clasificación de la noche"
+            label="Comparte la clasificación de la noche"
             imageUrl={`/tarjeta/noche/${session.id}`}
             pageUrl={`/c/noche/${session.id}`}
             text="La clasificación de la noche en El Palco de El Falla:"
             fileName="el-falla-clasificacion-de-la-noche.png"
+            hashtags={hashtags}
           />
           </div>
         )}
