@@ -20,12 +20,13 @@ El Falla **no es una app oficial** del Ayuntamiento ni del COAC, y **no gestiona
 | [01 · Auditoría del concepto](docs/01-auditoria-del-concepto.md) | Fortalezas, riesgos, contradicciones y decisiones tomadas |
 | [02 · Algoritmo de El Palco](docs/02-algoritmo-el-palco.md) | Cómo se calcula exactamente la nota de la afición |
 | [03 · Puntos de las porras](docs/03-puntos-de-las-porras.md) | Tres sistemas de puntuación, simulados y comparados; elegido el sistema B |
+| [04 · PRD del MVP](docs/04-prd-mvp.md) | Qué hace la app y para quién (en curso: partes 1 y 2 escritas) |
 
 La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octubre de 2026).
 
 ## Próximamente (resto de entregables del dossier, sección 19)
 
-- [ ] PRD completo del MVP
+- [ ] PRD completo del MVP *(en curso)*
 - [ ] Mapa de información y navegación
 - [ ] Flujos: votar, consultar El Palco, crear/unirse a un Palco, predecir y compartir
 - [ ] Modelo de datos
