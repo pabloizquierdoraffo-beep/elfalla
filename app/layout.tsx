@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Marcellus } from "next/font/google";
+import { DM_Sans, Fraunces } from "next/font/google";
 import { TabBar } from "@/components/TabBar";
 import "./globals.css";
 
-const marcellus = Marcellus({ weight: "400", subsets: ["latin"], variable: "--font-marcellus" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+// Títulos: Fraunces, con curvas y carácter (ejes SOFT y WONK). Texto: DM Sans, cercana y muy legible.
+const fraunces = Fraunces({ subsets: ["latin"], axes: ["SOFT", "WONK", "opsz"], variable: "--font-fraunces" });
+const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
 
 export const metadata: Metadata = {
   title: "El Falla · El jurado de la afición",
@@ -25,7 +26,7 @@ const themeScript = `try{if(localStorage.getItem("elfalla:tema")==="sala")docume
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${marcellus.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="es" className={`${fraunces.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

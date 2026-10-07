@@ -6,6 +6,8 @@ Fuente: dossier, secciones 3 y 9, y la referencia visual aprobada (logo, icono, 
 
 ---
 
+> **Actualización (octubre 2026):** el responsable del producto pidió un estilo **más divertido y carnavalero** y una tipografía con más personalidad, tomando como referencia una maqueta con bloques de color por modalidad, tarjetas muy redondeadas, una portada burdeos y filtros en forma de píldora. Los cambios están en los apartados 2, 3, 4 y 9. De esa maqueta **no** se toman: fotos de agrupaciones (derechos audiovisuales), estrellas para votar (se decidió el deslizador 0-100) ni máscaras o gorros de bufón (dossier, sección 3).
+
 ## 1. Principios
 
 1. **Crema, texto oscuro y burdeos.** Los acentos de color solo cuando significan algo.
@@ -38,6 +40,17 @@ Tomados de la franja de color del dossier. **Los códigos son aproximados** y se
 | **Azul apagado** | `#5B7A9D` | `#3F5C7D` | **Porra**: predicciones, Mi Palco |
 | **Ocre** | `#DDA94F` | `#8A6118` | **Logros**: rachas, insignias, premios |
 | **Verde salvia** | `#8A9C88` | `#4F6650` | **Aciertos** y confirmaciones |
+
+### Colores de modalidad (nuevo)
+
+Bloques de color con icono que **sustituyen a las fotos** de las agrupaciones y alegran la pantalla. Siempre con texto Tinta encima.
+
+| Modalidad | Normal | Modo sala | Icono | Contraste del texto |
+|---|---|---|---|---|
+| Comparsas | `#A8BEDD` | `#2F4058` | Guitarra | 8,8 / 9,5 ✅ |
+| Chirigotas | `#B9CDB3` | `#35473B` | Bombo | 9,8 / 9,0 ✅ |
+| Coros | `#F0B3AB` | `#5C2F33` | Abanico | 9,3 / 9,9 ✅ |
+| Cuartetos | `#EBC572` | `#5C4620` | Palillos | 10,1 / 8,1 ✅ |
 
 ### Contraste comprobado
 
@@ -72,8 +85,8 @@ Para no deslumbrar en el teatro (GEN-15):
 | Uso | Propuesta | Notas |
 |---|---|---|
 | **Logo** | El lettering propio del logo, en vector | No se escribe con una fuente: es un dibujo. |
-| **Títulos** | Una fuente con remates marcados, inspirada en los rótulos clásicos | Candidatas libres de uso (licencia abierta) para comparar: *Marcellus*, *Cinzel* o *Libre Caslon Display*. Se elegirá viéndolas al lado del logo. |
-| **Texto** | Una fuente sin remates muy legible en móvil | Candidatas: *Inter* o *Source Sans 3*. |
+| **Títulos** | ✅ **Fraunces**, en negrita, con sus ejes "SOFT" (curvas suaves) y "WONK" (un toque travieso) al máximo | Con más personalidad que la primera prueba (*Marcellus*). Licencia abierta, gratuita. |
+| **Texto** | ✅ **DM Sans** | Cercana y muy legible en móvil. Licencia abierta, gratuita. |
 | **Números** (notas, puntos) | La fuente de texto con cifras del mismo ancho | Así una nota que cambia de 78,4 a 81,0 no "baila". |
 
 ### Tamaños
@@ -93,7 +106,8 @@ Los tamaños crecen si la persona tiene la letra grande en su móvil (GEN-12).
 ## 4. Espacios, formas y movimiento
 
 - **Espaciado** en pasos de 4: 4 · 8 · 12 · 16 · 24 · 32 · 48 px. Margen lateral de pantalla: 16 px.
-- **Esquinas redondeadas**: 12 px en tarjetas y botones; el icono de la app, como en la referencia.
+- **Esquinas redondeadas**: 16 px en tarjetas y botones, 24 px en las tarjetas destacadas (la de "En escena" y la hoja de votar), y **píldoras** totalmente redondas para filtros y etiquetas.
+- **Sombras suaves** en las tarjetas destacadas y los botones principales.
 - **Zona del pulgar**: los botones importantes van en la mitad de abajo.
 - **Tamaño mínimo de cualquier cosa que se pulse**: 48 × 48 px.
 - **Movimiento**: animaciones cortas (menos de medio segundo) solo para confirmar algo: voto enviado, subida de puesto, acierto. Si la persona tiene activado "reducir movimiento" en su móvil, se quitan.
@@ -159,3 +173,13 @@ Cádiz actual, directo, cercano y con gracia, sin forzar el habla (dossier, secc
 | "Crea tu Palco" | "Crear grupo privado" |
 | "Esta sería tu Final" | "Resumen de selección final" |
 | "Vota y descubre qué opina El Palco" | "Para ver la puntuación agregada debe emitir su voto" |
+
+---
+
+## 9. Pantallas con el nuevo estilo
+
+- **Portada / bienvenida**: fondo burdeos, logo en marfil y una celosía enorme y muy suave al fondo. Siempre burdeos, también en modo sala.
+- **Inicio**: saludo "¡Hola!" y "Que empiece el espectáculo"; tarjeta burdeos de **En escena** con la celosía como marca de agua; **cuatro bloques de modalidad** de colores; tarjeta "Siguiente"; lista de las que ya han actuado.
+- **Listado de la sesión**: filtros en píldora (Todas, Comparsas, Chirigotas, Coros, Cuartetos) y filas con número, bloque de color, nombre y estado.
+- **Votar**: bloque de color de la modalidad arriba (en lugar de la foto) y una hoja redondeada con el número grande y el deslizador.
+- **Voto enviado**: chispas de colores breves alrededor del ✓ (se quitan si el móvil tiene "reducir movimiento").

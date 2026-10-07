@@ -18,6 +18,11 @@
   --porra: #3f5c7d; /* Azul oscuro: texto */
   --logro: #8a6118; /* Ocre oscuro: texto */
   --acierto: #4f6650; /* Salvia oscuro: texto */
+  /* Colores de modalidad: fondos de bloques e iconos, siempre con texto Tinta. */
+  --coro: #f0b3ab;
+  --comparsa: #a8bedd;
+  --chirigota: #b9cdb3;
+  --cuarteto: #ebc572;
   color-scheme: light;
 }
 
@@ -36,6 +41,10 @@
   --porra: #9db8d6;
   --logro: #e3b866;
   --acierto: #a9c2a6;
+  --coro: #5c2f33;
+  --comparsa: #2f4058;
+  --chirigota: #35473b;
+  --cuarteto: #5c4620;
   color-scheme: dark;
 }
 
@@ -53,8 +62,12 @@
   --color-porra: var(--porra);
   --color-logro: var(--logro);
   --color-acierto: var(--acierto);
-  --font-display: var(--font-marcellus), Georgia, serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --color-coro: var(--coro);
+  --color-comparsa: var(--comparsa);
+  --color-chirigota: var(--chirigota);
+  --color-cuarteto: var(--cuarteto);
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
 }
 
 html {
@@ -72,6 +85,13 @@ body {
 
 .cifras {
   font-variant-numeric: tabular-nums;
+}
+
+/* Títulos con personalidad: Fraunces "blandita" y con su toque travieso. */
+.font-display {
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 /* Deslizador de voto: ocupa todo el ancho y se maneja con el pulgar. */
@@ -151,5 +171,27 @@ body {
   .latido,
   .aparecer {
     animation: none;
+  }
+}
+
+@keyframes chispa {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(1);
+  }
+}
+.chispa {
+  animation: chispa 0.9s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chispa {
+    display: none;
   }
 }

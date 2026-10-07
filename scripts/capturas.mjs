@@ -84,6 +84,16 @@ async function shot(page, name, fullPage = false) {
   await page.close();
 }
 
+// 7b. Listado de la sesión, todas y filtrado por comparsas
+{
+  const page = await newPage();
+  await page.goto(`${BASE}/sesion`);
+  await shot(page, "07b-sesion");
+  await page.goto(`${BASE}/sesion?modalidad=comparsa`);
+  await shot(page, "07c-sesion-comparsas");
+  await page.close();
+}
+
 // 8. Cómo funciona
 {
   const page = await newPage();

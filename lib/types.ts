@@ -9,6 +9,15 @@ export const CATEGORY_LABEL: Record<Category, string> = {
   cuarteto: "Cuarteto",
 };
 
+export const CATEGORY_PLURAL: Record<Category, string> = {
+  coro: "Coros",
+  comparsa: "Comparsas",
+  chirigota: "Chirigotas",
+  cuarteto: "Cuartetos",
+};
+
+export const CATEGORIES: Category[] = ["comparsa", "chirigota", "coro", "cuarteto"];
+
 export type PhaseKind = "preliminares" | "cuartos" | "semifinal" | "final";
 
 export const PHASE_LABEL: Record<PhaseKind, string> = {

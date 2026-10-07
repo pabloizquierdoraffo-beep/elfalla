@@ -8,7 +8,7 @@ import type { PalcoScore } from "@/lib/palco";
  */
 export function PalcoScoreBox({ score, hidden = false }: { score: PalcoScore; hidden?: boolean }) {
   return (
-    <div className="rounded-xl bg-superficie p-4">
+    <div className="rounded-2xl bg-superficie p-4">
       <p className="text-sm font-semibold tracking-wide text-marca">EL PALCO</p>
       {hidden ? (
         <p className="mt-1 text-texto-2">Vota y descubre qué opina El Palco</p>

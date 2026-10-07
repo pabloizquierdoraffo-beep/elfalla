@@ -1,15 +1,21 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { simulatedVotes } from "@/lib/demo-data";
-import { formatScore } from "@/lib/format";
 import { useLocalVotes, type LocalVote } from "@/lib/local-votes";
-import { computePalcoScore } from "@/lib/palco";
-import { CATEGORY_LABEL, PHASE_LABEL, type Performance, type Session } from "@/lib/types";
+import {
+  CATEGORIES,
+  CATEGORY_LABEL,
+  CATEGORY_PLURAL,
+  PHASE_LABEL,
+  type Performance,
+  type Session,
+} from "@/lib/types";
 import { IndependentNotice, Isotipo } from "./Brand";
-import { StageChip } from "./StageChip";
+import { CATEGORY_BG, CategoryIcon } from "./CategoryIcon";
+import { PerformanceRow } from "./PerformanceRow";
 import { ThemeToggle } from "./ThemeToggle";
 
 export const WELCOME_KEY = "elfalla:bienvenida-vista";
@@ -32,50 +38,57 @@ export function SessionView({ session }: { session: Session }) {
   );
   const next = session.performances.find((p) => p.stageStatus === "next");
   const done = session.performances.filter((p) => p.stageStatus === "finished");
-  const later = session.performances.filter((p) => p.stageStatus === "scheduled");
+  const sessionTitle = `${PHASE_LABEL[session.phase]} · Sesión ${session.number}`;
 
   return (
-    <div>
-      <header className="flex items-center justify-between px-4 pt-4">
-        <div className="flex items-center gap-2">
-          <Isotipo />
-          <span className="font-display text-xl tracking-wide text-marca">EL FALLA</span>
-        </div>
+    <div className="pb-4">
+      <header className="flex items-center justify-between px-4 pt-3">
+        <Isotipo className="h-9 w-auto" />
         <ThemeToggle />
       </header>
 
-      <div className="px-4 pb-3">
-        <h1 className="font-display text-[28px] leading-tight">
-          {PHASE_LABEL[session.phase]} · Sesión {session.number}
-        </h1>
-        <p className="text-texto-2">
-          {session.dateLabel}, {session.startsAt}
-        </p>
+      <div className="px-4 pb-4 pt-2">
+        <h1 className="font-display text-[30px] leading-tight">¡Hola!</h1>
+        <p className="text-texto-2">Que empiece el espectáculo</p>
       </div>
 
-      {onStage && <OnStageCard performance={onStage} vote={votes[onStage.id]} />}
+      {onStage && (
+        <OnStageHero performance={onStage} vote={votes[onStage.id]} sessionTitle={sessionTitle} time={session.startsAt} />
+      )}
+
+      <section className="mt-5 grid grid-cols-2 gap-3 px-4" aria-label="Modalidades">
+        {CATEGORIES.map((c) => {
+          const count = session.performances.filter((p) => p.group.category === c).length;
+          return (
+            <Link
+              key={c}
+              href={`/sesion?modalidad=${c}`}
+              className={`flex min-h-24 flex-col items-center justify-center gap-1 rounded-2xl text-texto shadow-sm active:scale-[0.98] ${CATEGORY_BG[c]}`}
+            >
+              <CategoryIcon category={c} className="h-8 w-8" />
+              <span className="font-display text-lg leading-none">{CATEGORY_PLURAL[c]}</span>
+              <span className="text-xs opacity-80">{count === 1 ? "1 hoy" : `${count} hoy`}</span>
+            </Link>
+          );
+        })}
+      </section>
+
       {next && <NextCard performance={next} />}
 
       {done.length > 0 && (
-        <Section title="Ya han actuado">
-          {done.map((p) => (
-            <DoneRow key={p.id} performance={p} vote={votes[p.id]} />
-          ))}
-        </Section>
-      )}
-
-      {later.length > 0 && (
-        <Section title="Más tarde">
-          {later.map((p) => (
-            <li key={p.id} className="flex items-baseline justify-between gap-3 py-3">
-              <span>
-                <span className="text-texto-2">{p.runningOrder}. </span>
-                {CATEGORY_LABEL[p.group.category]} · {p.group.name}
-              </span>
-              <span className="cifras shrink-0 text-sm text-texto-2">~{p.expectedTime}</span>
-            </li>
-          ))}
-        </Section>
+        <section className="mt-6 px-4">
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-display text-xl">Ya han actuado</h2>
+            <Link href="/sesion" className="text-sm font-semibold text-marca">
+              Ver sesión
+            </Link>
+          </div>
+          <ul className="mt-2">
+            {done.map((p) => (
+              <PerformanceRow key={p.id} performance={p} vote={votes[p.id]} />
+            ))}
+          </ul>
+        </section>
       )}
 
       <IndependentNotice className="px-4 pt-6" />
@@ -83,18 +96,44 @@ export function SessionView({ session }: { session: Session }) {
   );
 }
 
-function OnStageCard({ performance, vote }: { performance: Performance; vote?: LocalVote }) {
+function OnStageHero({
+  performance,
+  vote,
+  sessionTitle,
+  time,
+}: {
+  performance: Performance;
+  vote?: LocalVote;
+  sessionTitle: string;
+  time: string;
+}) {
   return (
-    <section className="mx-4 rounded-xl border-l-4 border-directo-claro bg-superficie p-4">
-      <StageChip status={performance.stageStatus} />
-      <p className="mt-3 text-sm font-semibold uppercase tracking-wide text-texto-2">
+    <section className="relative mx-4 overflow-hidden rounded-3xl bg-marca p-5 text-sobre-marca shadow-md sala:bg-[#4a1422] sala:text-[#f8f3e7]">
+      {/* La celosía como marca de agua, solo aquí (design system, apartado 5). */}
+      <Image
+        src="/marca/isotipo-marfil.png"
+        alt=""
+        width={204}
+        height={228}
+        className="pointer-events-none absolute -right-6 -top-4 h-40 w-auto opacity-10"
+      />
+      <div className="relative flex items-center justify-between">
+        <span className="flex items-center gap-1.5 rounded-full bg-directo-claro px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-texto sala:text-fondo">
+          <span className="latido h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
+          {performance.stageStatus === "on_stage" ? "En escena" : "Probablemente en escena"}
+        </span>
+        <span className="cifras text-sm opacity-80">
+          {sessionTitle} · {time}
+        </span>
+      </div>
+      <p className="relative mt-4 text-sm font-semibold uppercase tracking-wide opacity-80">
         {CATEGORY_LABEL[performance.group.category]}
       </p>
-      <h2 className="font-display text-2xl leading-tight">{performance.group.name}</h2>
-      <p className="text-texto-2">Autor: {performance.group.authors}</p>
+      <h2 className="relative font-display text-[28px] leading-tight">{performance.group.name}</h2>
+      <p className="relative opacity-80">Autor: {performance.group.authors}</p>
       <Link
         href={`/votar/${performance.id}`}
-        className="mt-4 flex min-h-14 items-center justify-center rounded-xl bg-marca text-lg font-semibold text-sobre-marca active:opacity-90"
+        className="relative mt-4 flex min-h-14 items-center justify-center rounded-2xl bg-fondo text-lg font-bold text-marca active:opacity-90 sala:bg-marca sala:text-sobre-marca"
       >
         {vote ? `Cambiar tu nota (${vote.score})` : "Puntuar"}
       </Link>
@@ -105,69 +144,26 @@ function OnStageCard({ performance, vote }: { performance: Performance; vote?: L
 function NextCard({ performance }: { performance: Performance }) {
   const [reported, setReported] = useState(false);
   return (
-    <section className="mx-4 mt-3 rounded-xl border border-borde p-4">
-      <p className="cifras text-sm font-semibold uppercase tracking-wide text-texto-2">
-        Siguiente · hacia las {performance.expectedTime}
-      </p>
-      <p className="mt-1">
-        {CATEGORY_LABEL[performance.group.category]} · {performance.group.name}
-      </p>
-      {reported ? (
-        <p className="mt-3 text-sm text-acierto">Gracias. Esperando a que lo confirmen más personas.</p>
-      ) : (
+    <section className="mx-4 mt-5 flex items-center gap-3 rounded-2xl border border-borde p-3">
+      <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${CATEGORY_BG[performance.group.category]}`}>
+        <CategoryIcon category={performance.group.category} className="h-7 w-7" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="cifras text-xs font-bold uppercase tracking-wide text-texto-2">
+          Siguiente · ~{performance.expectedTime}
+        </p>
+        <p className="truncate font-semibold">{performance.group.name}</p>
+        {reported && <p className="text-sm text-acierto">Gracias. Esperando a que lo confirmen más personas.</p>}
+      </div>
+      {!reported && (
         <button
           type="button"
           onClick={() => setReported(true)}
-          className="mt-3 min-h-12 rounded-xl border border-directo px-4 font-semibold text-directo active:bg-superficie"
+          className="min-h-12 shrink-0 rounded-xl border-2 border-directo px-3 text-sm font-bold text-directo active:bg-superficie"
         >
           ¡Ya ha salido!
         </button>
       )}
-    </section>
-  );
-}
-
-function DoneRow({ performance, vote }: { performance: Performance; vote?: LocalVote }) {
-  const others = simulatedVotes(performance.id);
-  const score = computePalcoScore(vote ? [...others, vote.score] : others);
-
-  return (
-    <li className="flex items-center justify-between gap-3 py-3">
-      <div className="min-w-0">
-        <p>
-          <span className="text-texto-2">{performance.runningOrder}. </span>
-          {CATEGORY_LABEL[performance.group.category]} · {performance.group.name}
-        </p>
-        <p className="cifras text-sm text-texto-2">
-          {vote ? (
-            <>
-              Tu nota: {vote.score} ·{" "}
-              {score.status === "no_score"
-                ? `El Palco: faltan ${score.missing} votos`
-                : `El Palco ${formatScore(score.score)}`}
-            </>
-          ) : (
-            "Votación abierta"
-          )}
-        </p>
-      </div>
-      {!vote && (
-        <Link
-          href={`/votar/${performance.id}`}
-          className="flex min-h-12 shrink-0 items-center rounded-xl border border-marca px-4 font-semibold text-marca"
-        >
-          Votar
-        </Link>
-      )}
-    </li>
-  );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="mx-4 mt-6">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-texto-2">{title}</h2>
-      <ul className="divide-y divide-borde">{children}</ul>
     </section>
   );
 }

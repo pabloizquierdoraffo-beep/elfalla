@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { IndependentNotice, Logo } from "@/components/Brand";
 import { WELCOME_KEY } from "@/components/SessionView";
 
 const SLIDES = [
@@ -16,10 +16,11 @@ const SLIDES = [
   },
   {
     title: "Este año, el palco es de todos",
-    text: null,
+    text: "El Falla es una iniciativa independiente, sin relación oficial con el Ayuntamiento de Cádiz ni con el COAC.",
   },
 ];
 
+// La bienvenida siempre va en burdeos con letras marfil (también en modo sala): es la "portada" de la marca.
 export default function BienvenidaPage() {
   const router = useRouter();
   const [step, setStep] = useState(0);
@@ -37,35 +38,41 @@ export default function BienvenidaPage() {
   const slide = SLIDES[step];
 
   return (
-    <div className="flex min-h-dvh flex-col px-6 pb-8 pt-4">
-      <div className="flex justify-end">
+    <div className="relative flex min-h-dvh flex-col overflow-hidden bg-[#6b0d26] px-6 pb-8 pt-4 text-[#f8f3e7]">
+      {/* Celosía grande y muy suave al fondo, como un palco. */}
+      <Image
+        src="/marca/isotipo-marfil.png"
+        alt=""
+        width={204}
+        height={228}
+        className="pointer-events-none absolute -bottom-16 left-1/2 h-80 w-auto -translate-x-1/2 opacity-[0.07]"
+      />
+
+      <div className="relative flex justify-end">
         {!last && (
-          <button type="button" onClick={finish} className="min-h-12 px-2 text-texto-2">
+          <button type="button" onClick={finish} className="min-h-12 px-2 opacity-80">
             Saltar ›
           </button>
         )}
       </div>
 
-      <div key={step} className="aparecer flex flex-1 flex-col items-center justify-center text-center">
-        <Logo className="h-36 w-auto" />
-        <h1 className="mt-8 font-display text-[28px] leading-tight text-marca">{slide.title}</h1>
-        {slide.text ? (
-          <p className="mt-3 max-w-xs text-lg">{slide.text}</p>
-        ) : (
-          <IndependentNotice className="mt-3 max-w-xs text-base" />
-        )}
+      <div key={step} className="aparecer relative flex flex-1 flex-col items-center justify-center text-center">
+        <Image src="/marca/logo-marfil.png" alt="El Falla" width={555} height={370} priority className="h-36 w-auto" />
+        <span className="mt-6 h-1 w-16 rounded-full bg-[#f8f3e7]/60" aria-hidden />
+        <h1 className="mt-6 font-display text-[30px] leading-tight">{slide.title}</h1>
+        <p className="mt-3 max-w-xs text-lg opacity-90">{slide.text}</p>
       </div>
 
-      <div className="mb-6 flex justify-center gap-2" aria-hidden>
+      <div className="relative mb-6 flex justify-center gap-2" aria-hidden>
         {SLIDES.map((_, i) => (
-          <span key={i} className={`h-2 w-2 rounded-full ${i === step ? "bg-marca" : "bg-arena"}`} />
+          <span key={i} className={`h-2 rounded-full transition-all ${i === step ? "w-6 bg-[#f8f3e7]" : "w-2 bg-[#f8f3e7]/40"}`} />
         ))}
       </div>
 
       <button
         type="button"
         onClick={() => (last ? finish() : setStep(step + 1))}
-        className="min-h-14 rounded-xl bg-marca text-lg font-semibold text-sobre-marca"
+        className="relative min-h-14 rounded-2xl bg-[#f8f3e7] text-lg font-bold text-[#6b0d26] shadow-md"
       >
         {last ? "Empezar" : "Siguiente"}
       </button>
