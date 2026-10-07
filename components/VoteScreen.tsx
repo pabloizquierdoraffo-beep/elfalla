@@ -10,7 +10,7 @@ import { CATEGORY_LABEL, PHASE_LABEL, type Performance, type PhaseKind } from "@
 import { CATEGORY_BG, CategoryIcon } from "./CategoryIcon";
 import { BackIcon, CheckIcon } from "./Icons";
 import { PalcoScoreBox } from "./PalcoScoreBox";
-import { StageChip } from "./StageChip";
+import { PhotoBackdrop } from "./PhotoBackdrop";
 
 type Props = { performance: Performance; phase: PhaseKind; nextPhase: PhaseKind };
 
@@ -45,25 +45,29 @@ export function VoteScreen({ performance, phase, nextPhase }: Props) {
 
   return (
     <div className="flex min-h-[calc(100dvh-5rem)] flex-col">
-      {/* Bloque de color de la modalidad: sustituye a la foto (sin imágenes con derechos). */}
-      <div className={`relative flex h-48 shrink-0 items-center justify-center ${CATEGORY_BG[category]}`}>
+      {/* Cabecera: la foto de la agrupación si la hay; si no, el telón del Falla. */}
+      <div className="relative flex h-56 shrink-0 items-center justify-center overflow-hidden text-[#f8f3e7]">
+        <PhotoBackdrop src={performance.group.photoUrl ?? "/fotos/telon.jpg"} position="center 40%" priority />
         <Link
           href="/"
           aria-label="Volver"
-          className="absolute left-3 top-3 flex h-12 w-12 items-center justify-center rounded-full bg-fondo/70 text-texto"
+          className="absolute left-3 top-3 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur"
         >
           <BackIcon className="h-6 w-6" />
         </Link>
-        <span className="absolute right-4 top-4 rounded-full bg-fondo">
-          <StageChip status={performance.stageStatus} />
+        <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-directo-claro px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-[#2a1a1f]">
+          <span className="latido h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
+          {performance.stageStatus === "on_stage" ? "En escena" : "Votación abierta"}
         </span>
-        <CategoryIcon category={category} className="h-24 w-24 text-texto opacity-80" />
+        <span className={`relative flex h-20 w-20 items-center justify-center rounded-3xl shadow-xl ${CATEGORY_BG[category]}`}>
+          <CategoryIcon category={category} className="h-11 w-11" />
+        </span>
       </div>
 
       <div className="relative -mt-6 flex flex-1 flex-col rounded-t-3xl bg-fondo px-5 pt-5">
-        <span className={`w-fit rounded-full px-3 py-0.5 text-sm font-semibold text-texto ${CATEGORY_BG[category]}`}>
+        <p className="text-xs font-bold uppercase tracking-[0.14em] text-oro">
           {CATEGORY_LABEL[category]} · {PHASE_LABEL[phase]}
-        </span>
+        </p>
         <h1 className="mt-2 font-display text-[30px] leading-tight">{performance.group.name}</h1>
         <p className="text-texto-2">Autor: {performance.group.authors}</p>
 
@@ -179,14 +183,14 @@ function Confirmation({
             <button
               type="button"
               onClick={() => setAnswer("si")}
-              className="min-h-12 rounded-xl bg-chirigota font-bold text-texto"
+              className="min-h-12 rounded-xl bg-chirigota font-bold text-[#f8f3e7]"
             >
               Sí
             </button>
             <button
               type="button"
               onClick={() => setAnswer("no")}
-              className="min-h-12 rounded-xl bg-coro font-bold text-texto"
+              className="min-h-12 rounded-xl bg-coro font-bold text-[#f8f3e7]"
             >
               No
             </button>

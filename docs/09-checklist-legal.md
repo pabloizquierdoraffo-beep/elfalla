@@ -40,7 +40,9 @@ Casi todos los puntos dependen de esto: quién firma la política de privacidad,
 
 - [ ] Confirmar que se pueden usar **nombres de agrupaciones, autores, modalidades y horarios** (datos públicos) y de qué fuentes sacarlos.
 - [ ] Confirmar que se pueden mostrar las **puntuaciones oficiales publicadas** (para "El Palco vs. Jurado Oficial" y "Ojo de jurado") y con qué condiciones.
-- [ ] **No** usar fotos, vídeos ni audios de actuaciones. Las Bases 2027 dan **derechos audiovisuales exclusivos a Onda Cádiz**.
+- [ ] **No** usar vídeos ni audios de actuaciones. Las Bases 2027 dan **derechos audiovisuales exclusivos a Onda Cádiz**.
+- [ ] **Fotos de agrupaciones** (decisión del responsable: se pondrán a partir de Cuartos). Revisar el riesgo: cada foto tiene un **autor** (fotógrafo, periódico) con derechos, además de los de Onda Cádiz. Opciones más seguras: permiso de la propia agrupación o del fotógrafo, citando su autoría.
+- [ ] **Fotos del Gran Teatro Falla** usadas de fondo (fachada, palco, telón): confirmar de dónde salen y su licencia. Una foto **propia** de la fachada tomada desde la calle es la opción más segura.
 - [ ] **No** reproducir letras de coplas.
 
 ## 4. Protección de datos (RGPD y LOPDGDD)

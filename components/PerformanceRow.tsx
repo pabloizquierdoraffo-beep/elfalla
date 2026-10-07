@@ -15,7 +15,7 @@ export function PerformanceRow({ performance, vote }: { performance: Performance
   const content = (
     <>
       <span className="cifras w-5 shrink-0 text-center font-semibold text-texto-2">{performance.runningOrder}</span>
-      <CategoryAvatar category={performance.group.category} />
+      <CategoryAvatar category={performance.group.category} photoUrl={performance.group.photoUrl} />
       <span className="min-w-0 flex-1">
         <span className="block truncate font-semibold">{performance.group.name}</span>
         <span className="block text-sm text-texto-2">{CATEGORY_LABEL[performance.group.category]}</span>

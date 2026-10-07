@@ -18,11 +18,14 @@
   --porra: #3f5c7d; /* Azul oscuro: texto */
   --logro: #8a6118; /* Ocre oscuro: texto */
   --acierto: #4f6650; /* Salvia oscuro: texto */
-  /* Colores de modalidad: fondos de bloques e iconos, siempre con texto Tinta. */
-  --coro: #f0b3ab;
-  --comparsa: #a8bedd;
-  --chirigota: #b9cdb3;
-  --cuarteto: #ebc572;
+  /* Oro de los palcos del teatro: etiquetas y detalles. */
+  --oro: #8a6118;
+  --oro-claro: #d9b77a;
+  /* Colores de modalidad: tonos profundos con texto Marfil encima. */
+  --coro: #8e2f45;
+  --comparsa: #2e4a70;
+  --chirigota: #2f5240;
+  --cuarteto: #8a5a12;
   color-scheme: light;
 }
 
@@ -41,10 +44,12 @@
   --porra: #9db8d6;
   --logro: #e3b866;
   --acierto: #a9c2a6;
-  --coro: #5c2f33;
-  --comparsa: #2f4058;
-  --chirigota: #35473b;
-  --cuarteto: #5c4620;
+  --oro: #d9b77a;
+  --oro-claro: #d9b77a;
+  --coro: #7a2a3c;
+  --comparsa: #2a4466;
+  --chirigota: #2b4a3a;
+  --cuarteto: #7a5112;
   color-scheme: dark;
 }
 
@@ -62,6 +67,8 @@
   --color-porra: var(--porra);
   --color-logro: var(--logro);
   --color-acierto: var(--acierto);
+  --color-oro: var(--oro);
+  --color-oro-claro: var(--oro-claro);
   --color-coro: var(--coro);
   --color-comparsa: var(--comparsa);
   --color-chirigota: var(--chirigota);

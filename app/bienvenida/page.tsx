@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { WELCOME_KEY } from "@/components/SessionView";
 
 const SLIDES = [
@@ -39,14 +40,8 @@ export default function BienvenidaPage() {
 
   return (
     <div className="relative flex min-h-dvh flex-col overflow-hidden bg-[#6b0d26] px-6 pb-8 pt-4 text-[#f8f3e7]">
-      {/* Celosía grande y muy suave al fondo, como un palco. */}
-      <Image
-        src="/marca/isotipo-marfil.png"
-        alt=""
-        width={204}
-        height={228}
-        className="pointer-events-none absolute -bottom-16 left-1/2 h-80 w-auto -translate-x-1/2 opacity-[0.07]"
-      />
+      {/* El patio de butacas desde el palco, bajo un velo burdeos. */}
+      <PhotoBackdrop src="/fotos/palco.jpg" priority />
 
       <div className="relative flex justify-end">
         {!last && (
@@ -58,8 +53,8 @@ export default function BienvenidaPage() {
 
       <div key={step} className="aparecer relative flex flex-1 flex-col items-center justify-center text-center">
         <Image src="/marca/logo-marfil.png" alt="El Falla" width={555} height={370} priority className="h-36 w-auto" />
-        <span className="mt-6 h-1 w-16 rounded-full bg-[#f8f3e7]/60" aria-hidden />
-        <h1 className="mt-6 font-display text-[30px] leading-tight">{slide.title}</h1>
+        <span className="mt-6 h-px w-20 bg-[#d9b77a]" aria-hidden />
+        <h1 className="mt-6 font-display text-[32px] leading-tight">{slide.title}</h1>
         <p className="mt-3 max-w-xs text-lg opacity-90">{slide.text}</p>
       </div>
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { MoonIcon, SunIcon } from "./Icons";
 
 /** Botón del modo sala (GEN-15). */
-export function ThemeToggle() {
+export function ThemeToggle({ onPhoto = false }: { onPhoto?: boolean }) {
   const [sala, setSala] = useState(false);
 
   useEffect(() => {
@@ -29,7 +29,9 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-pressed={sala}
       aria-label={sala ? "Quitar modo sala" : "Activar modo sala"}
-      className="flex h-12 w-12 items-center justify-center rounded-full text-texto-2 active:bg-superficie"
+      className={`flex h-12 w-12 items-center justify-center rounded-full ${
+        onPhoto ? "text-[#f8f3e7] active:bg-white/10" : "text-texto-2 active:bg-superficie"
+      }`}
     >
       {sala ? <SunIcon className="h-6 w-6" /> : <MoonIcon className="h-6 w-6" />}
     </button>

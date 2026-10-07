@@ -33,8 +33,13 @@ export function IndependentNotice({ className = "" }: { className?: string }) {
 /** Mientras no haya base de datos, todo es de prueba. */
 export function DemoBanner() {
   return (
-    <p className="bg-arena/60 px-4 py-1.5 text-center text-sm text-texto">
-      Versión de prueba · agrupaciones y votos inventados
+    <p className="w-fit rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs text-[#f8f3e7]/90 backdrop-blur">
+      Versión de prueba · datos inventados
     </p>
   );
+}
+
+/** Etiqueta pequeña dorada encima de los títulos de sección. */
+export function Eyebrow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <p className={`text-xs font-bold uppercase tracking-[0.14em] text-oro ${className}`}>{children}</p>;
 }

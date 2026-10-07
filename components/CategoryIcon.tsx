@@ -57,13 +57,25 @@ export const CATEGORY_BG: Record<Category, string> = {
   cuarteto: "bg-cuarteto",
 };
 
-/** Cuadradito de color con el icono: sustituye a las fotos de las agrupaciones. */
-export function CategoryAvatar({ category, size = "md" }: { category: Category; size?: "md" | "lg" }) {
+/** Foto de la agrupación si la tiene; si no, cuadradito de color con el icono de su modalidad. */
+export function CategoryAvatar({
+  category,
+  photoUrl,
+  size = "md",
+}: {
+  category: Category;
+  photoUrl?: string;
+  size?: "md" | "lg";
+}) {
   const dims = size === "lg" ? "h-16 w-16 rounded-2xl" : "h-12 w-12 rounded-xl";
-  const icon = size === "lg" ? "h-9 w-9" : "h-7 w-7";
+  const icon = size === "lg" ? "h-9 w-9" : "h-6 w-6";
+  if (photoUrl) {
+    // Fotos subidas desde el panel: se muestran tal cual, recortadas al cuadrado.
+    return <img src={photoUrl} alt="" className={`shrink-0 object-cover shadow-sm ${dims}`} />;
+  }
   return (
     <span
-      className={`flex shrink-0 items-center justify-center text-texto ${dims} ${CATEGORY_BG[category]}`}
+      className={`flex shrink-0 items-center justify-center text-[#f8f3e7] shadow-sm ${dims} ${CATEGORY_BG[category]}`}
       title={CATEGORY_LABEL[category]}
     >
       <CategoryIcon category={category} className={icon} />

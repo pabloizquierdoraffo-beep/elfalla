@@ -40,6 +40,8 @@ export type Group = {
   name: string;
   category: Category;
   authors: string;
+  /** Foto opcional (decisión del responsable: a partir de Cuartos). Sin foto se ve el bloque de color. */
+  photoUrl?: string;
 };
 
 export type Performance = {

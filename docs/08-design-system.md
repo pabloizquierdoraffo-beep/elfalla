@@ -183,3 +183,27 @@ Cádiz actual, directo, cercano y con gracia, sin forzar el habla (dossier, secc
 - **Listado de la sesión**: filtros en píldora (Todas, Comparsas, Chirigotas, Coros, Cuartetos) y filas con número, bloque de color, nombre y estado.
 - **Votar**: bloque de color de la modalidad arriba (en lugar de la foto) y una hoja redondeada con el número grande y el deslizador.
 - **Voto enviado**: chispas de colores breves alrededor del ✓ (se quitan si el móvil tiene "reducir movimiento").
+
+---
+
+## 10. Versión "teatro" (más profesional)
+
+Segunda petición del responsable del producto: un diseño **más profesional**, con el Gran Teatro Falla presente.
+
+- **Fotos del teatro de fondo**, ligeramente difuminadas y bajo un **velo burdeos** degradado (más suave arriba, casi opaco abajo) para que el texto marfil se lea siempre:
+  - Inicio → la **fachada**;
+  - Bienvenida y listado de la sesión → el **patio de butacas desde el palco**;
+  - Votar → el **telón rojo** (o la foto de la agrupación, si la tiene).
+- El contenido sube sobre la foto como una **hoja** marfil con esquinas de 28 px.
+- Tarjeta **"En escena" de cristal** (fondo translúcido con desenfoque) sobre la foto.
+- **Oro de los palcos** para las etiquetas pequeñas en mayúsculas espaciadas (`#8A6118` sobre marfil, `#D9B77A` sobre burdeos).
+- **Modalidades en tonos profundos** con letras marfil, sustituyendo a los pastel:
+
+| Modalidad | Color | Contraste del texto marfil |
+|---|---|---|
+| Comparsas | `#2E4A70` | 8,1 ✅ |
+| Chirigotas | `#2F5240` | 7,9 ✅ |
+| Coros | `#8E2F45` | 7,2 ✅ |
+| Cuartetos | `#8A5A12` | 5,3 ✅ |
+
+- **Fotos de agrupaciones**: opcionales (a partir de Cuartos). Si hay foto, sustituye al bloque de color.

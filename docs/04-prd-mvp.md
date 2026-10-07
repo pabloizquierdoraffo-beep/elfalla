@@ -294,7 +294,7 @@ Todo lo que pide el dossier (5.4) en una sola pantalla:
 
 | Código | Contenido | Prioridad |
 |---|---|---|
-| FIC-01 | Nombre, modalidad, autor o autores, y fases en las que ha actuado. **Solo texto**, sin fotos ni vídeos. | 🔴 |
+| FIC-01 | Nombre, modalidad, autor o autores, y fases en las que ha actuado. **Foto opcional** de la agrupación (decisión del responsable del producto: se añadirán a partir de Cuartos; ver checklist legal). Sin foto, se muestra el bloque de color de su modalidad. Nunca vídeo ni audio. | 🔴 |
 | FIC-02 | **Tu puntuación** y la **nota de El Palco** (con las reglas de 2.4), por cada fase. | 🔴 |
 | FIC-03 | **Posición** en su modalidad dentro del ranking de El Palco. | 🔴 |
 | FIC-04 | **% que cree que pasa** (del sondeo SON-01). | 🔴 |
