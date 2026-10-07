@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { shareLinks } from "@/lib/share/links";
+import { CompartirIcon } from "./AppIcons";
 
 type Props = {
   imageUrl: string;
@@ -93,7 +94,7 @@ export function ShareButton({ imageUrl, pageUrl, text, fileName, hashtags, label
           <FacebookLogo className="h-5 w-5" /> Facebook
         </button>
         <button type="button" onClick={() => shareImage(false)} disabled={busy} className={small}>
-          <MoreIcon className="h-5 w-5" /> Más
+          <CompartirIcon className="h-5 w-5" /> Más
         </button>
       </div>
       {busy && <p className="mt-2 text-center text-sm text-texto-2">Preparando la imagen…</p>}
@@ -135,14 +136,6 @@ function FacebookLogo({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
       <path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4a21 21 0 0 0-2.3-.1c-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z" />
-    </svg>
-  );
-}
-
-function MoreIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M12 3v12M7 8l5-5 5 5M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5" />
     </svg>
   );
 }

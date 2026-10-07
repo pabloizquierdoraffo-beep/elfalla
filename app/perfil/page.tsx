@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PerfilIcon } from "@/components/AppIcons";
 import { ComingSoon } from "@/components/ComingSoon";
 import { isAdmin } from "@/lib/admin-auth";
 
@@ -10,6 +11,7 @@ export default async function PerfilPage() {
     <>
       <ComingSoon
         title="Tu perfil"
+        icon={PerfilIcon}
         when="semana 9"
         items={["Tu historial de notas", "Tus Palcos", "Rachas e insignias", "Tu carácter como jurado"]}
       />

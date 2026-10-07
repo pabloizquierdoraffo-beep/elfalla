@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HomeIcon, LatticeIcon, ListIcon, PersonIcon, SliderIcon } from "./Icons";
+import { InicioIcon, PalcoIcon, PerfilIcon, PorraIcon, VotarIcon } from "./AppIcons";
 
 const TABS = [
-  { href: "/", label: "Inicio", Icon: HomeIcon, match: (p: string) => p === "/" },
-  { href: "/puntuar", label: "Puntuar", Icon: SliderIcon, match: (p: string) => p.startsWith("/votar") },
-  { href: "/porra", label: "Porra", Icon: ListIcon, match: (p: string) => p.startsWith("/porra"), porra: true },
-  { href: "/el-palco", label: "El Palco", Icon: LatticeIcon, match: (p: string) => p.startsWith("/el-palco") },
-  { href: "/perfil", label: "Perfil", Icon: PersonIcon, match: (p: string) => p.startsWith("/perfil") },
+  { href: "/", label: "Inicio", Icon: InicioIcon, match: (p: string) => p === "/" },
+  { href: "/puntuar", label: "Puntuar", Icon: VotarIcon, match: (p: string) => p.startsWith("/votar") },
+  { href: "/porra", label: "Porra", Icon: PorraIcon, match: (p: string) => p.startsWith("/porra"), porra: true },
+  { href: "/el-palco", label: "El Palco", Icon: PalcoIcon, match: (p: string) => p.startsWith("/el-palco") },
+  { href: "/perfil", label: "Perfil", Icon: PerfilIcon, match: (p: string) => p.startsWith("/perfil") },
 ];
 
 export function TabBar() {

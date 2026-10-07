@@ -14,49 +14,6 @@ const base = {
   "aria-hidden": true,
 };
 
-export function HomeIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" />
-    </svg>
-  );
-}
-
-export function SliderIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <path d="M3 12h18" />
-      <circle cx="14" cy="12" r="3.2" fill="currentColor" />
-      <path d="M3 6h6M3 18h10" opacity="0.5" />
-    </svg>
-  );
-}
-
-export function ListIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <path d="m4 6 1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6h9M11 12h9M11 18h9" />
-    </svg>
-  );
-}
-
-export function LatticeIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <path d="M6 3c0 4 12 6 12 10s-12 4-12 8M18 3c0 4-12 6-12 10s12 4 12 8M4 21h16" />
-    </svg>
-  );
-}
-
-export function PersonIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" />
-    </svg>
-  );
-}
-
 export function MoonIcon({ className }: IconProps) {
   return (
     <svg {...base} className={className}>

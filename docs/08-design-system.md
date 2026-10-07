@@ -207,3 +207,26 @@ Segunda petición del responsable del producto: un diseño **más profesional**,
 | Cuartetos | `#8A5A12` | 5,3 ✅ |
 
 - **Fotos de agrupaciones**: opcionales (a partir de Cuartos). Si hay foto, sustituye al bloque de color.
+
+---
+
+## 11. Sistema de iconos (decidido)
+
+El responsable del producto eligió un juego de iconos **rellenos y redondeados** a partir de una referencia visual (de esa referencia se toman **los iconos, no los colores**, y nunca el texto «App oficial»). Están en `components/AppIcons.tsx` y se pueden ver todos juntos en la página interna `/iconos`.
+
+| Icono | Uso |
+|---|---|
+| Casa con la celosía | Inicio |
+| Urna con papeleta | Votar / Puntuar |
+| Portapapeles con marcas | La Porra |
+| Palco del teatro | El Palco |
+| Persona | Perfil |
+| Grupo de personas | Comparsas |
+| Gorro de bufón | Chirigotas |
+| Máscaras | Cuartetos |
+| Personas con nota musical | Coros |
+| Resultados, ranking (podio con corona), calendario, buscar, favoritos, notificaciones, compartir, estadísticas, directo, guardados, grupos, comentarios, ajustes, tendencias, premio (copa con celosía) | Partes futuras de la app |
+
+> El dossier (sección 3) pedía evitar máscaras y gorros de bufón; el responsable del producto decidió usarlos para chirigotas y cuartetos. Queda anotado como decisión suya.
+
+Los iconos toman el color de donde se colocan, así que siempre usan la paleta de la marca.
