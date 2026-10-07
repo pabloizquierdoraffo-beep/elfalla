@@ -5,6 +5,8 @@
 La **nota de El Palco** es la puntuación colectiva de la afición para una agrupación en una fase concreta (por ejemplo: "Comparsa X, Cuartos"). Va de 0 a 100. Todo lo de este documento es 🎭 **regla de El Falla**, no del concurso oficial.
 
 > **Mensaje para el usuario:** "El Palco elimina las puntuaciones extremas para reflejar mejor la opinión general."
+>
+> **Explicación ampliada (página "Cómo funciona El Palco"):** "Igual que en el jurado se quita la nota más alta y la más baja, El Palco quita, de cada 5 votos, uno por arriba y uno por abajo."
 
 ---
 
@@ -14,9 +16,21 @@ Un voto es **válido** si cumple todo esto:
 
 1. Lo ha enviado una persona **con cuenta y sesión iniciada**.
 2. Es el **único voto de esa persona** para esa agrupación en esa fase. Si lo cambia, cuenta solo el último.
-3. Se envió **dentro de la ventana de votación**: desde que empieza la actuación hasta 24 horas después de que acabe la sesión (propuesta del documento 01, apartado 3.3).
+3. Se envió **dentro de la ventana de votación** (✅ decidido, ver abajo).
 4. La cuenta **no está bloqueada** por moderación ni marcada como sospechosa (ver apartado 6).
-5. Es un número entero entre 0 y 100. Da igual que venga del voto rápido o del jurado completo; si la persona hizo los dos, cuenta el jurado completo (documento 01, apartado 3.1).
+5. Es un número entero entre 0 y 100. Da igual que venga del voto rápido o del jurado completo: **una persona, un voto**. Si la persona hizo los dos, cuenta el jurado completo (✅ decidido, documento 01, apartado 3.1).
+
+### Ventana de votación (✅ decidido)
+
+- **Se abre** cuando empieza la actuación.
+- **Se cierra una hora antes de que empiece la siguiente sesión del concurso**, según el horario previsto que el admin tiene cargado (si la sesión se retrasa, no cambia el cierre).
+- **Excepción, la última sesión de cada fase:** después de ella el jurado oficial publica su fallo. Para que nadie vote sabiendo ya el resultado oficial, la votación se cierra **en cuanto el fallo se publica**, aunque la siguiente sesión sea días después. Si la siguiente sesión llega antes que el fallo, se aplica la regla normal (una hora antes).
+- La sesión de la Final no tiene "siguiente sesión": se cierra con el fallo.
+- Mientras está abierta, la persona puede **cambiar su voto**; cuenta el último.
+
+### Nota oculta hasta votar (✅ decidido)
+
+Mientras la votación de una actuación está abierta, la nota de El Palco **solo se muestra a quien ya ha votado** ("Vota y descubre qué opina El Palco"). Cuando se cierra, la ve todo el mundo.
 
 ---
 
@@ -25,22 +39,25 @@ Un voto es **válido** si cumple todo esto:
 1. **Junta** todos los votos válidos de esa agrupación en esa fase. Llama **N** a cuántos hay.
 2. **Si N es menor que 30** → no hay nota. Se muestra "Faltan X votos para la nota de El Palco".
 3. **Ordena** los votos de menor a mayor.
-4. **Calcula cuántos quitar por cada lado:** `K = N × porcentaje de recorte`, **redondeado hacia abajo**.
+4. **Calcula cuántos quitar por cada lado:** `K = N ÷ 5`, **redondeado hacia abajo**. Es decir, por cada 5 votos se quita uno arriba y uno abajo.
 5. **Quita** los K votos más bajos y los K votos más altos.
 6. **Haz la media** de los que quedan.
 7. **Redondea a un decimal** (78,45 → 78,5).
 8. **Publica** la nota junto con el número de votos válidos (N). Si N está entre 30 y 99, añade la etiqueta "Nota provisional".
 
-### Cuántos votos se quitan
+### La regla del recorte: "como en el jurado" (✅ decidido)
 
-Con el 5 % del dossier y con el 10 % que se propone en el apartado 4:
+🏛️ En el jurado oficial hay 5 vocales y se quita la nota más alta y la más baja. 🎭 El Palco aplica **la misma proporción** a la afición: de cada 5 votos, se quita uno por arriba y uno por abajo (un 20 % por cada lado). Si el número de votos no es múltiplo de 5, se redondea hacia abajo.
 
-| Votos (N) | Se quitan por lado con 5 % | Se quitan por lado con 10 % |
+| Votos (N) | Se quitan por cada lado | Votos que cuentan para la media |
 |---|---|---|
-| 30 | 1 | 3 |
-| 50 | 2 | 5 |
-| 100 | 5 | 10 |
-| 500 | 25 | 50 |
+| 30 | 6 | 18 |
+| 34 | 6 | 22 |
+| 50 | 10 | 30 |
+| 100 | 20 | 60 |
+| 500 | 100 | 300 |
+
+> Ojo con la forma de contarlo: se puede decir que la regla está **inspirada** en el jurado oficial, pero nunca dar a entender que El Palco tiene relación con el jurado o con el COAC.
 
 ---
 
@@ -53,11 +70,16 @@ Estos son 30 votos inventados, ya ordenados. Hay uno de 5 (alguien que quiere hu
 71 · 71 · 72 · 73 · 73 · 74 · 75 · 79 · 81 · 81 · 84 · 86 · 87 · 95 · 100
 ```
 
-- **Media normal:** 2.088 ÷ 30 = **69,6**
-- **Recorte del 5 %:** K = 30 × 0,05 = 1,5 → **1**. Se quitan el 5 y el 100. Quedan 28 votos que suman 1.983. Media = 1.983 ÷ 28 = 70,82 → **70,8**
-- **Recorte del 10 %:** K = 30 × 0,10 = 3. Se quitan 5, 52, 54 y 87, 95, 100. Quedan 24 votos que suman 1.695. Media = 1.695 ÷ 24 = 70,625 → **70,6**
+- **Media normal (sin quitar nada):** 2.088 ÷ 30 = **69,6**
+- **Cuántos quitar:** K = 30 ÷ 5 = **6** por cada lado.
+- **Se quitan por abajo:** 5 · 52 · 54 · 56 · 56 · 60
+- **Se quitan por arriba:** 81 · 84 · 86 · 87 · 95 · 100
+- **Quedan 18 votos:** 61 · 62 · 67 · 68 · 68 · 69 · 69 · 69 · 70 · 71 · 71 · 72 · 73 · 73 · 74 · 75 · 79 · 81
+- **Media:** 1.272 ÷ 18 = 70,67 → **70,7**
 
-En la ficha se vería: **El Palco 70,8 · 30 votos · Nota provisional**.
+En la ficha se vería: **El Palco 70,7 · 30 votos · Nota provisional**.
+
+(Fíjate en que hay dos votos de 81: se quita uno y el otro se queda. Se quitan posiciones, no valores.)
 
 ---
 
@@ -78,6 +100,8 @@ Cuánto puede "bailar" la nota por puro azar, según el número de votos (en 95 
 | **100** | **69,7 y 74,4** | **± 2,3** |
 | 500 | 70,9 y 73,0 | ± 1,1 |
 
+*(Con la regla elegida, quitar 1 de cada 5 por lado, los márgenes son prácticamente los mismos: ± 4,6 con 30 votos.)*
+
 **Conclusión:** 30 votos es un mínimo razonable para publicar, pero todavía puede moverse unos 4 puntos. Por eso se propone:
 
 - **Menos de 30 votos:** no hay nota.
@@ -91,21 +115,19 @@ Se simuló una agrupación con 200 votos honestos (opinión real: 72) a la que s
 | Método | Inflar 10 % | Inflar 20 % | Hundir 10 % | Hundir 20 % | Margen con 30 votos |
 |---|---|---|---|---|---|
 | Media normal (sin recorte) | 74,7 | 77,6 | 64,8 | 57,5 | — |
-| Recorte 5 % (dossier) | 74,8 | 77,9 | 66,7 | 58,6 | ± 4,4 |
-| **Recorte 10 %** | 74,5 | 77,9 | **69,5** | 60,6 | ± 4,4 |
-| Recorte 20 % | 74,0 | 77,0 | 70,1 | 67,0 | ± 4,6 |
+| Recorte 5 % (dossier original) | 74,8 | 77,9 | 66,7 | 58,6 | ± 4,4 |
+| Recorte 10 % | 74,5 | 77,9 | 69,5 | 60,6 | ± 4,4 |
+| **1 de cada 5 por lado (20 %) ✅** | **74,0** | **77,0** | **70,1** | **67,0** | **± 4,6** |
 | Mediana (el voto del medio) | 73,6 | 75,9 | 70,3 | 68,2 | ± 5,2 |
 
 **Qué nos dice:**
 
 - El recorte del 5 % casi no se diferencia de la media normal frente a un grupo organizado. Solo quita un puñado de votos sueltos extremos.
-- Ningún método aguanta solo a un grupo que sea el 20 % de los votos. **La defensa principal tiene que estar en las cuentas y la detección de abusos (apartado 6), no en la fórmula.**
-- El recorte del 10 % mejora claramente frente a quien intenta **hundir** (que es el ataque más dañino) y no añade nada de ruido.
-- Recortar más (20 %, mediana) protege algo más, pero significa ignorar el 40 % de los votos o más: "¿me han tirado el voto?" es difícil de explicar.
+- La regla elegida, **1 de cada 5 por lado**, aguanta mucho mejor que el 5 % o el 10 % a quien intenta **hundir** una agrupación (el ataque más dañino), casi tanto como la mediana: con un 20 % de votos en contra organizados, la nota baja de 72 a 67, mientras que con el 5 % caería hasta 58,6. Y casi no añade ruido (± 4,6 frente a ± 4,4).
+- Ningún método aguanta del todo a un grupo muy grande. **La defensa principal sigue estando en las cuentas y la detección de abusos (apartado 6), no solo en la fórmula.**
+- El precio: con esta regla, el 40 % de los votos no entra en la media. Por eso es importante explicarlo bien. La comparación con el jurado ("de cada 5, se quita la más alta y la más baja") lo hace fácil de entender, y no es que se tire el voto de nadie: todos los votos sirven para decidir cuáles son los extremos.
 
-**Recomendación: recortar el 10 % por cada lado.** El mensaje al usuario sigue siendo el mismo. El porcentaje se guarda como un ajuste del panel de administración, así se puede cambiar sin tocar la app.
-
-> Esta es una de las decisiones que necesito que confirmes (documento 01, pregunta 2). Si prefieres mantener el 5 % del dossier, el resto del documento vale igual.
+**Decisión: ✅ 1 de cada 5 por lado.** La proporción se guarda como un ajuste del panel de administración, así se puede cambiar sin tocar la app si hiciera falta.
 
 ---
 
@@ -116,9 +138,11 @@ Se simuló una agrupación con 200 votos honestos (opinión real: 72) a la que s
 | Menos de 30 votos | No hay nota. "Faltan X votos." No aparece en el ranking. |
 | Exactamente 30 votos | Hay nota, con etiqueta "provisional". |
 | Todos votan lo mismo (p. ej. todos 80) | La nota es 80,0. El recorte no cambia nada. |
-| Hay votos repetidos en los extremos (p. ej. tres votos de 100 y K = 1) | Se quita solo uno de ellos: se cuentan posiciones, no valores distintos. |
+| Hay votos repetidos en el corte (p. ej. dos votos de 81 y solo cabe quitar uno) | Se quita solo uno de ellos: se cuentan posiciones, no valores distintos. |
 | Alguien cambia su voto | Se usa solo el último. La nota se recalcula. |
 | Voto enviado después del cierre | Se rechaza con un mensaje amable: "La votación de esta actuación ya está cerrada". |
+| Se cambia el horario de la siguiente sesión | El admin actualiza el horario y el cierre se mueve con él. |
+| El fallo oficial se publica antes de lo previsto | En cuanto el admin marca el fallo como publicado, se cierra la votación de esa fase. |
 | Una cuenta se bloquea por abuso | Sus votos dejan de contar y la nota se recalcula. Queda apuntado en el registro de auditoría. |
 | Agrupación que no actúa (se retira, se cancela la sesión) | No se abre la votación. Si ya estaba abierta, el admin la anula y los votos no se publican. |
 | Empate de nota en el ranking | Desempata quien tenga más votos válidos; si siguen empatadas, comparten puesto y se ordenan alfabéticamente. |
@@ -148,7 +172,7 @@ Para quien programe más adelante. Es la misma receta del apartado 2, escrita en
 AJUSTES
   MINIMO_VOTOS        = 30
   MINIMO_CONSOLIDADA  = 100
-  RECORTE             = 0.10      # 0.05 si se mantiene el dossier
+  PROPORCION_JURADO   = 5         # de cada 5 votos se quita 1 arriba y 1 abajo
 
 FUNCION nota_el_palco(agrupacion, fase):
   votos = votos_validos(agrupacion, fase)          # apartado 1, uno por usuario (el último)
@@ -158,7 +182,7 @@ FUNCION nota_el_palco(agrupacion, fase):
     DEVOLVER { estado: "sin_nota", votos: N, faltan: MINIMO_VOTOS - N }
 
   ordenar(votos) de menor a mayor
-  K = redondear_hacia_abajo(N * RECORTE)
+  K = redondear_hacia_abajo(N / PROPORCION_JURADO)
   centrales = votos desde la posición K hasta la posición N - K   # quita K por cada lado
   media = suma(centrales) / cantidad(centrales)
   nota = redondear(media, 1 decimal)

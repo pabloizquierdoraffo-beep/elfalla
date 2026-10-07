@@ -51,7 +51,7 @@ El dossier define los dos tipos de voto, pero no dice cómo se combinan.
 - B. Solo cuenta el jurado completo. El voto rápido sería un "termómetro" aparte. Más riguroso, pero muy pocas personas rellenarán la ficha completa y casi ninguna agrupación llegaría al mínimo.
 - C. Los dos cuentan, pero el jurado completo pesa más (por ejemplo, el doble). Difícil de explicar y abre la puerta a discusiones.
 
-**Recomendación: A.** Es simple, se explica en una frase y da volumen de votos.
+**✅ Decidido: A.** Una persona, un voto. Es simple, se explica en una frase y da volumen de votos.
 
 **Sub-decisión: cómo es el voto rápido.** El dossier pide evitar las "estrellitas". Propuesta: un deslizador grande de 0 a 100, que se mueve con el pulgar, con marcas visibles cada 10.
 
@@ -72,9 +72,9 @@ Consecuencia: la predicción de cuartetos para Semifinal se hace **eligiendo ent
 
 ### 3.3 ¿Hasta cuándo se puede votar una actuación? 🎭
 
-- **A. Desde que empieza la actuación hasta 24 horas después de terminar la sesión (recomendada).** Da margen a quien la ve en diferido sin dejar que se vote semanas después.
-- B. Solo durante la sesión. Muy "en directo", pero deja fuera a quien no puede verla esa noche.
-- C. Hasta el fallo de la fase. En Clasificatoria serían semanas: los votos tardíos estarían influidos por la clasificación ya visible.
+**✅ Decidido:** desde que empieza la actuación **hasta una hora antes de que empiece la siguiente sesión**. Da margen a quien la ve en diferido sin dejar que se vote semanas después.
+
+Matiz añadido: en la **última sesión de cada fase**, la votación se cierra **en cuanto se publica el fallo oficial**, para que nadie vote conociendo ya el resultado del jurado. Detalle en el documento 02.
 
 Se puede **cambiar el voto** mientras la ventana está abierta; cuenta el último.
 
@@ -82,7 +82,7 @@ Se puede **cambiar el voto** mientras la ventana está abierta; cuenta el últim
 
 Si la persona ve "El Palco: 84" antes de votar, tiende a acercarse a esa cifra y la nota deja de ser independiente.
 
-**Recomendación:** mientras la votación de esa actuación esté abierta, la nota solo se muestra **después de votar** ("Vota y descubre qué opina El Palco"). Cuando se cierra, la ve todo el mundo. Además engancha.
+**✅ Decidido:** mientras la votación de esa actuación esté abierta, la nota solo se muestra **después de votar** ("Vota y descubre qué opina El Palco"). Cuando se cierra, la ve todo el mundo. Además engancha.
 
 ### 3.5 ¿El Palco "arrastra" puntos entre fases como el jurado oficial? 🎭 / 🏛️
 
@@ -95,9 +95,11 @@ Si la persona ve "El Palco: 84" antes de votar, tiende a acercarse a esa cifra y
 
 🏛️ Cada vocal oficial puntúa sobre 100, se quitan la nota más alta y la más baja y se **suman** las tres restantes: el total oficial va de 0 a 300. El Palco va de 0 a 100. Para la tarjeta "El Palco vs. Jurado Oficial" hay que dividir la nota oficial entre 3, y explicarlo en letra pequeña. Además, solo se pueden usar puntuaciones oficiales que se hayan publicado públicamente, revisando sus condiciones de uso.
 
-### 3.7 La media recortada al 5 % protege menos de lo que parece
+### 3.7 La media recortada al 5 % protegía menos de lo que parece
 
-Las simulaciones del documento 02 muestran que quitar el 5 % de cada extremo apenas frena a un grupo organizado que vote en bloque. No es un fallo del dossier (ya pide más medidas en la sección 14), pero conviene saberlo para no confiar solo en el algoritmo. Ver alternativas y recomendación en el documento 02.
+Las simulaciones del documento 02 muestran que quitar el 5 % de cada extremo apenas frena a un grupo organizado que vote en bloque.
+
+**✅ Decidido:** El Palco usa **la misma proporción que el jurado oficial**. Allí, de 5 vocales se quita la nota más alta y la más baja; en El Palco, de cada 5 votos se quita uno por arriba y uno por abajo. Aguanta mucho mejor a quien intenta hundir una agrupación y se explica muy fácil. Aun así, la defensa principal sigue siendo el control de cuentas (sección 14 del dossier). Detalle en el documento 02.
 
 ### 3.8 Datos de las porras en la ficha pública
 
@@ -129,12 +131,12 @@ Se respetan todas las de la sección 18: nombre **El Falla**, una sola celosía 
 
 ---
 
-## 6. Preguntas que necesito que decidas
+## 6. Decisiones tomadas
 
-Como pide el dossier, como máximo cinco, y solo las que bloquean:
-
-1. **Voto rápido + jurado completo** (3.1): ¿te vale "una persona, un voto; si hace los dos, cuenta el completo"?
-2. **Recorte de El Palco** (documento 02): ¿mantenemos el 5 % del dossier o subimos al 10 % que recomiendo?
-3. **Sistema de puntos de las porras** (documento 03): ¿te convence el sistema B?
-4. **Ventana de votación** (3.3): ¿hasta 24 horas después de la sesión?
-5. **Nota oculta hasta votar** (3.4): ¿te gusta la idea?
+| # | Tema | Decisión |
+|---|---|---|
+| 1 | Voto rápido + jurado completo (3.1) | ✅ Una persona, un voto. Si hace los dos, cuenta el completo. |
+| 2 | Recorte de El Palco (3.7) | ✅ Como el jurado: de cada 5 votos se quita uno arriba y uno abajo. |
+| 3 | Sistema de puntos de las porras (documento 03) | ⏳ Pendiente. Recomendación: sistema B. |
+| 4 | Ventana de votación (3.3) | ✅ Hasta una hora antes de la siguiente sesión; en la última sesión de cada fase, hasta el fallo oficial. |
+| 5 | Nota oculta hasta votar (3.4) | ✅ Sí. |
