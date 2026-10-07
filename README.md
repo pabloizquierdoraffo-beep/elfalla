@@ -2,7 +2,7 @@
 
 > *El jurado de la afición.* — "Este año, el palco es de todos."
 
-El Falla es una app independiente para el Concurso Oficial de Agrupaciones Carnavalescas (COAC) de Cádiz. Tiene dos productos bajo una misma marca:
+El Falla es una **web app** (se usa desde el navegador del móvil, sin descargar nada) independiente para el Concurso Oficial de Agrupaciones Carnavalescas (COAC) de Cádiz. Tiene dos productos bajo una misma marca:
 
 1. **El Palco**: la afición puntúa cada actuación y se calcula una nota colectiva.
 2. **Mi Palco / Porras**: grupos privados de amigos que predicen quién pasa de fase, quién llega a la Final y quién gana.

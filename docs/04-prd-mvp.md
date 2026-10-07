@@ -31,7 +31,7 @@ Durante el COAC, la afición ya puntúa actuaciones, discute quién debería pas
 
 ## 1.2 La solución
 
-Una app móvil con dos usos bajo la marca **El Falla**:
+Una **web app** (se usa desde el navegador del móvil, sin descargar nada) con dos usos bajo la marca **El Falla**:
 
 1. **El Palco**: cada persona puntúa las actuaciones y la app calcula la nota de la afición.
 2. **Mi Palco**: grupos privados de amigos que predicen quién pasa cada fase y quién gana.
@@ -103,7 +103,7 @@ Las métricas salen de la sección 13 del dossier. Los objetivos numéricos se f
 | CUE-02 | En el registro se pide un **alias** (nombre visible) y el **año de nacimiento**. ✅ **Edad mínima: 14 años** (decidido; se confirmará en la revisión legal). | 🔴 |
 | CUE-03 | Se puede **empezar a votar sin cuenta**: la persona rellena su voto y, al pulsar "Enviar", se le pide registrarse. Su voto **no se pierde** y se envía al terminar el registro. | 🔴 |
 | CUE-04 | Los alias pasan por un **filtro de palabras ofensivas**. | 🔴 |
-| CUE-05 | La persona puede **borrar su cuenta** desde la propia app. Sus votos dejan de contar. *(Es obligatorio para publicar en la tienda de Apple.)* | 🔴 |
+| CUE-05 | La persona puede **borrar su cuenta** desde la propia app. Sus votos dejan de contar. *(Lo exige el RGPD.)* | 🔴 |
 | CUE-06 | **Onboarding** de máximo 3 pantallas que se pueden saltar: qué es El Palco, qué es Mi Palco, y "El Falla es una iniciativa independiente, no oficial". | 🔴 |
 
 **Se cumple si…** una persona que nunca ha usado la app puede pasar de abrirla a tener su primer voto enviado en **menos de 1 minuto**.
@@ -377,7 +377,7 @@ Cada momento importante genera una **tarjeta** (imagen) para WhatsApp, Instagram
 - Llevan **marca, agrupación o fase, el dato principal y una llamada discreta** a la app. Nunca parecen un anuncio.
 - Incluyen siempre, en pequeño: *"Iniciativa independiente"*.
 - Dos formatos: **vertical** (Stories) y **cuadrado** (WhatsApp y X).
-- El enlace de la tarjeta abre la app si está instalada; si no, una página web sencilla con la tarjeta y botones para descargarla.
+- El enlace de la tarjeta **abre directamente El Falla** en el navegador, en la pantalla correspondiente (la agrupación, el ranking o el Palco). Al pegarlo en WhatsApp se ve una vista previa con la imagen de la tarjeta.
 - **No se puede compartir la nota de El Palco de una actuación con la votación abierta**, para no adelantársela a quien todavía no ha votado (coherente con PAL-01). Sí la puntuación propia.
 
 ## 3.5 Perfil
@@ -392,6 +392,8 @@ Cada momento importante genera una **tarjeta** (imagen) para WhatsApp, Instagram
 ## 3.6 Notificaciones
 
 Pocas y útiles. La persona elige cuáles recibir; **nunca más de 2 al día** en total (salvo las que pida expresamente).
+
+> **Importante al ser web app:** en Android las notificaciones funcionan desde el navegador. En **iPhone solo funcionan si la persona ha añadido El Falla a su pantalla de inicio** (ver GEN-04b). Por eso las notificaciones son un extra, nunca la única forma de enterarse de algo: lo importante también se ve al abrir la web.
 
 | Código | Aviso | Prioridad |
 |---|---|---|
@@ -537,11 +539,12 @@ Los requisitos generales no son pantallas, sino **cualidades que toda la app tie
 
 | Código | Requisito | Prioridad |
 |---|---|---|
-| GEN-01 | Funciona en **iPhone y Android**, instalable desde sus tiendas. | 🔴 |
-| GEN-02 | Los **enlaces compartidos** (tarjetas, invitaciones a Palcos) funcionan también para quien **no tiene la app**: abren una página web con la información y el botón para descargarla. | 🔴 |
+| GEN-01 | ✅ **Web app**: se usa desde el **navegador del móvil** (iPhone y Android), **sin descargar nada de ninguna tienda**. También funciona en ordenador. | 🔴 |
+| GEN-02 | Cualquier **enlace compartido** (tarjetas, invitaciones a Palcos, fichas) abre directamente la pantalla correspondiente. | 🔴 |
+| GEN-04b | Se puede **"Añadir a pantalla de inicio"**: queda un icono de El Falla como si fuera una app y se abre a pantalla completa. Se sugiere con un aviso amable **después** del primer voto (nunca antes), con instrucciones para iPhone, donde no es automático. | 🟠 |
 | GEN-03 | Todo en **español**. | 🔴 |
 
-*Cómo se consigue (app nativa, web instalable, etc.) se decidirá en el documento de arquitectura.*
+✅ *Decidido por el responsable del producto: web app, para quitar la fricción de descargar una app. Ventajas añadidas: no depende de la revisión de Apple y Google, y se puede actualizar en cualquier momento.*
 
 ## 4.2 Rapidez y aguante
 
@@ -560,7 +563,7 @@ En el teatro y en las calles llenas la cobertura suele ser mala.
 
 | Código | Requisito | Prioridad |
 |---|---|---|
-| GEN-08 | Si no hay conexión al enviar un voto o una predicción, **se guarda en el móvil** y se envía sola en cuanto vuelve la conexión. Se muestra *"Pendiente de envío"*. | 🔴 |
+| GEN-08 | Si no hay conexión al enviar un voto o una predicción, **se guarda en el móvil** y se envía sola en cuanto vuelve la conexión, siempre que la web siga abierta o se vuelva a abrir. Se muestra *"Pendiente de envío"*. | 🔴 |
 | GEN-09 | Para que cuente, el voto tiene que **llegar** antes del cierre. Si no llega a tiempo, se avisa con claridad. | 🔴 |
 | GEN-10 | La última información descargada (sesión de hoy, mis Palcos) **se ve aunque no haya conexión**. | 🟠 |
 
@@ -623,8 +626,10 @@ La app **no se lanza** hasta que todo esto esté marcado:
 - [ ] Avisos automáticos de fallo funcionando (GEN-23).
 - [ ] Copia de seguridad recuperada con éxito al menos una vez (GEN-21).
 
-**Tiendas**
-- [ ] App **aprobada** en App Store y Google Play **al menos 2 semanas antes** de la primera sesión del COAC.
+**Web**
+- [ ] Web **publicada en su dominio definitivo al menos 2 semanas antes** de la primera sesión del COAC, para probarla con gente real.
+- [ ] Probada en los navegadores principales del móvil (Safari en iPhone, Chrome en Android) y añadida a pantalla de inicio en ambos.
+- [ ] Vista previa de los enlaces comprobada en WhatsApp, Instagram y X.
 
 **Legal** (revisado por un profesional)
 - [ ] Política de privacidad y términos de uso.
@@ -643,4 +648,4 @@ La app **no se lanza** hasta que todo esto esté marcado:
 Estas dos ya miran al siguiente paso (arquitectura y calendario):
 
 1. **¿Quién va a construir la app?** ¿Lo hacemos tú y yo (yo escribo el código y tú lo revisas y pruebas), o hay más personas o una empresa?
-2. **¿Qué presupuesto mensual aproximado hay** para servidores y servicios durante el COAC? No hace falta una cifra exacta; me basta con un orden de magnitud (por ejemplo, "lo mínimo posible", "unos 50 €", "unos cientos"). Aparte, publicar en las tiendas tiene un coste fijo: la cuenta de desarrollador de Apple es anual y la de Google es un pago único.
+2. **¿Qué presupuesto mensual aproximado hay** para servidores y servicios durante el COAC? No hace falta una cifra exacta; me basta con un orden de magnitud (por ejemplo, "lo mínimo posible", "unos 50 €", "unos cientos"). Al ser web app no hay que pagar cuentas de desarrollador de Apple ni Google; sí hará falta un **dominio** (la dirección web, del estilo *elfalla.xx*), que cuesta poco al año.
