@@ -1,9 +1,13 @@
+import { NoSession } from "@/components/NoSession";
 import { SessionList } from "@/components/SessionList";
-import { demoSession } from "@/lib/demo-data";
-import { CATEGORIES, type Category } from "@/lib/types";
+import { loadCurrentSession } from "@/lib/public-data";
+import { CATEGORIES } from "@/lib/types";
+
+export const dynamic = "force-dynamic";
 
 export default async function SesionPage({ searchParams }: { searchParams: Promise<{ modalidad?: string }> }) {
-  const { modalidad } = await searchParams;
-  const category = CATEGORIES.find((c) => c === modalidad) as Category | undefined;
-  return <SessionList session={demoSession} category={category} />;
+  const [{ modalidad }, data] = await Promise.all([searchParams, loadCurrentSession()]);
+  if (!data) return <NoSession />;
+  const category = CATEGORIES.find((c) => c === modalidad);
+  return <SessionList session={data.session} category={category} myVotes={data.myVotes} palco={data.palco} />;
 }

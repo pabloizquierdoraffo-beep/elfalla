@@ -51,19 +51,33 @@ La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octu
 
 ## La web (código)
 
-**Estado:** base de la semana 2 con **datos de prueba** (agrupaciones y votos inventados). Todavía no hay cuentas ni base de datos: los votos se guardan solo en el propio móvil.
+**Estado:** semana 2. Agrupaciones y votos de prueba (inventados). Los votos ya se guardan **en el servidor**, en un archivo provisional (`.data/elfalla.json`) que se sustituirá por la base de datos real antes de la beta. Mientras no haya cuentas, cada móvil recibe un identificador anónimo.
 
-Pantallas que ya funcionan: bienvenida, Inicio con la sesión en directo, votar (voto rápido), voto enviado con la nota de El Palco, "Cómo funciona El Palco" y el modo sala. Porra, El Palco (ranking) y Perfil muestran "Próximamente".
+**Parte pública:** bienvenida, Inicio con la sesión en directo, listado de la sesión por modalidad, votar, voto enviado con la nota de El Palco (oculta hasta votar), "¡Ya ha salido!", "Cómo funciona El Palco" y modo sala.
 
-**Tecnología:** Next.js 15 · React 19 · Tailwind CSS 4 · TypeScript. El cálculo de la nota de El Palco está en `lib/palco.ts` y tiene pruebas automáticas en `lib/palco.test.ts`.
+**Panel de administración** (`/admin`, o desde Perfil → "Acceso del equipo"), protegido con contraseña:
 
-**Para arrancarla en un ordenador** (hace falta Node.js 22):
+| Sección | Qué permite |
+|---|---|
+| Directo | Elegir la sesión que se ve en la web, poner agrupaciones en escena, marcar "No actúa", abrir y cerrar votaciones (una a una o todas) |
+| Agrupaciones | Crear y editar (nombre, modalidad, autores, foto), retirar y volver a activar |
+| Sesiones | Crear sesiones, añadir actuaciones, cambiar el orden, quitar actuaciones sin votos |
+| Usuarios | Ver quién vota, bloquear (con motivo) y desbloquear. Los votos de un bloqueado dejan de contar |
+| Ajustes | Votos mínimos, regla del recorte, cifras del "¡Ya ha salido!"… sin tocar código |
+| Registro | Todo lo que se hace en el panel, con fecha y hora |
+
+**Tecnología:** Next.js 15 · React 19 · Tailwind CSS 4 · TypeScript. Reglas de negocio en `lib/db/logic.ts` y cálculo de El Palco en `lib/palco.ts`, ambos con pruebas automáticas.
+
+**Para arrancarla en un ordenador** (hace falta Node.js 22). Copia `.env.example` como `.env.local` y pon una contraseña en `ADMIN_PASSWORD`. Después:
 
 ```bash
 npm install
-npm run dev        # abre http://localhost:3000
-npm test           # pruebas automáticas
+npm run dev        # abre http://localhost:3000 (panel en /admin)
+npm test           # pruebas automáticas de las reglas
 npm run lint       # comprobación de tipos
 ```
 
-**Capturas de pantalla** como en un móvil: con la web arrancada (`npm run build && npm start`), ejecutar `npm run capturas`. Se guardan en la carpeta `capturas/`.
+**Pruebas con navegador** (con la web arrancada con `npm run build && npm start`):
+
+- `npm run capturas` → capturas de las pantallas públicas, como en un móvil.
+- `ADMIN_PASSWORD=… npm run prueba:panel` → prueba de punta a punta del panel (votar, bloquear, poner en escena, cerrar votaciones, crear agrupaciones). Usar con un archivo de datos nuevo (`ELFALLA_DATA_FILE`).

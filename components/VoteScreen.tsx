@@ -1,27 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
-import { simulatedVotes } from "@/lib/demo-data";
+import { useRef, useState, useTransition } from "react";
+import { submitVote } from "@/app/actions";
 import { formatScore } from "@/lib/format";
-import { useLocalVotes } from "@/lib/local-votes";
-import { computePalcoScore } from "@/lib/palco";
+import type { PalcoScore } from "@/lib/palco";
 import { CATEGORY_LABEL, PHASE_LABEL, type Performance, type PhaseKind } from "@/lib/types";
 import { CATEGORY_BG, CategoryIcon } from "./CategoryIcon";
 import { BackIcon, CheckIcon } from "./Icons";
 import { PalcoScoreBox } from "./PalcoScoreBox";
 import { PhotoBackdrop } from "./PhotoBackdrop";
 
-type Props = { performance: Performance; phase: PhaseKind; nextPhase: PhaseKind };
+type Props = {
+  performance: Performance;
+  phase: PhaseKind;
+  nextPhase: PhaseKind;
+  previousScore: number | null;
+  blocked: boolean;
+};
 
-export function VoteScreen({ performance, phase, nextPhase }: Props) {
-  const { votes, saveVote } = useLocalVotes();
-  const previous = votes[performance.id];
+const ERRORS = {
+  closed: "La votación de esta actuación ya está cerrada.",
+  blocked: "Tu acceso está bloqueado y no puedes votar.",
+  invalid: "Esa nota no es válida.",
+  not_found: "Esta actuación ya no está disponible.",
+  no_visitor: "No hemos podido identificarte. Recarga la página.",
+} as const;
+
+export function VoteScreen({ performance, phase, nextPhase, previousScore, blocked }: Props) {
   const [value, setValue] = useState<number | null>(null);
-  const [sent, setSent] = useState(false);
+  const [result, setResult] = useState<{ score: number; palco: PalcoScore } | null>(null);
+  const [error, setError] = useState<string | null>(blocked ? ERRORS.blocked : null);
+  const [pending, startTransition] = useTransition();
   const lastTen = useRef<number | null>(null);
 
-  const shown = value ?? previous?.score ?? null;
+  const shown = value ?? previousScore;
 
   function onSlide(v: number) {
     // Vibración suave cada 10 puntos, si el móvil lo permite.
@@ -33,12 +46,16 @@ export function VoteScreen({ performance, phase, nextPhase }: Props) {
 
   function send() {
     if (shown === null) return;
-    saveVote(performance.id, shown);
-    setSent(true);
+    const score = shown;
+    startTransition(async () => {
+      const response = await submitVote(performance.id, score);
+      if (response.ok) setResult({ score, palco: response.palco });
+      else setError(ERRORS[response.error]);
+    });
   }
 
-  if (sent && shown !== null) {
-    return <Confirmation performance={performance} myScore={shown} nextPhase={nextPhase} />;
+  if (result) {
+    return <Confirmation performance={performance} myScore={result.score} palco={result.palco} nextPhase={nextPhase} />;
   }
 
   const category = performance.group.category;
@@ -95,21 +112,26 @@ export function VoteScreen({ performance, phase, nextPhase }: Props) {
               <span key={n}>{n % 50 === 0 ? n : "·"}</span>
             ))}
           </div>
-          {previous && value === null && (
+          {previousScore !== null && value === null && (
             <p className="mt-4 text-center text-sm text-texto-2">
-              Tu nota: {previous.score}. Puedes cambiarla hasta mañana a las 19:00.
+              Tu nota: {previousScore}. Puedes cambiarla mientras la votación siga abierta.
             </p>
           )}
           <p className="mt-5 text-center text-sm text-texto-2">Ficha de jurado completa: próximamente</p>
         </div>
 
+        {error && (
+          <p role="alert" className="mb-3 rounded-xl bg-superficie px-4 py-3 text-center text-directo">
+            {error}
+          </p>
+        )}
         <button
           type="button"
           onClick={send}
-          disabled={shown === null}
+          disabled={shown === null || pending || blocked}
           className="mb-4 min-h-14 rounded-2xl bg-marca text-lg font-bold text-sobre-marca shadow-md disabled:opacity-40 disabled:shadow-none"
         >
-          {previous && value === null ? "Mantener mi nota" : "Enviar voto"}
+          {pending ? "Enviando…" : previousScore !== null && value === null ? "Mantener mi nota" : "Enviar voto"}
         </button>
       </div>
     </div>
@@ -130,13 +152,14 @@ const SPARKS = [
 function Confirmation({
   performance,
   myScore,
+  palco,
   nextPhase,
 }: {
   performance: Performance;
   myScore: number;
+  palco: PalcoScore;
   nextPhase: PhaseKind;
 }) {
-  const palco = computePalcoScore([...simulatedVotes(performance.id), myScore]);
   const [answer, setAnswer] = useState<"si" | "no" | null>(null);
 
   let comparison: string | null = null;

@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useLocalVotes, type LocalVote } from "@/lib/local-votes";
+import { useEffect, useState, useTransition } from "react";
+import { reportOnStageAction } from "@/app/actions";
+import type { PalcoScore } from "@/lib/palco";
 import {
   CATEGORIES,
   CATEGORY_LABEL,
@@ -15,15 +16,20 @@ import {
 } from "@/lib/types";
 import { DemoBanner, Eyebrow, IndependentNotice } from "./Brand";
 import { CATEGORY_BG, CategoryAvatar, CategoryIcon } from "./CategoryIcon";
-import { PerformanceRow } from "./PerformanceRow";
+import { PerformanceRow, type MyVote } from "./PerformanceRow";
 import { PhotoBackdrop } from "./PhotoBackdrop";
 import { ThemeToggle } from "./ThemeToggle";
 
 export const WELCOME_KEY = "elfalla:bienvenida-vista";
 
-export function SessionView({ session }: { session: Session }) {
+type Props = {
+  session: Session;
+  myVotes: Record<string, MyVote>;
+  palco: Record<string, PalcoScore>;
+};
+
+export function SessionView({ session, myVotes, palco }: Props) {
   const router = useRouter();
-  const { votes } = useLocalVotes();
 
   // La primera vez se enseña la bienvenida (CUE-06).
   useEffect(() => {
@@ -60,7 +66,7 @@ export function SessionView({ session }: { session: Session }) {
           <p className="mt-6 text-xs font-bold uppercase tracking-[0.14em] text-oro-claro">
             {PHASE_LABEL[session.phase]} · Sesión {session.number} · {session.dateLabel} {session.startsAt}
           </p>
-          {onStage && <OnStageCard performance={onStage} vote={votes[onStage.id]} />}
+          {onStage && <OnStageCard performance={onStage} vote={myVotes[onStage.id]} />}
         </div>
       </section>
 
@@ -101,7 +107,7 @@ export function SessionView({ session }: { session: Session }) {
             </div>
             <ul className="-mx-2 mt-2">
               {done.map((p) => (
-                <PerformanceRow key={p.id} performance={p} vote={votes[p.id]} />
+                <PerformanceRow key={p.id} performance={p} vote={myVotes[p.id]} palco={palco[p.id]} />
               ))}
             </ul>
           </section>
@@ -114,7 +120,7 @@ export function SessionView({ session }: { session: Session }) {
 }
 
 /** Tarjeta "En escena" sobre la foto, con efecto cristal. */
-function OnStageCard({ performance, vote }: { performance: Performance; vote?: LocalVote }) {
+function OnStageCard({ performance, vote }: { performance: Performance; vote?: MyVote }) {
   return (
     <section className="mt-3 rounded-3xl border border-white/15 bg-white/10 p-4 shadow-xl backdrop-blur-md">
       <div className="flex items-center gap-3">
@@ -140,8 +146,33 @@ function OnStageCard({ performance, vote }: { performance: Performance; vote?: L
   );
 }
 
+const REPORT_MESSAGES = {
+  too_soon: "La anterior acaba de salir. Espera un poco.",
+  not_next: "Ya no es la siguiente: actualiza la página.",
+  blocked: "Tu acceso está bloqueado.",
+  not_found: "Esta actuación ya no está en la sesión.",
+  no_visitor: "No hemos podido identificarte. Recarga la página.",
+} as const;
+
 function NextCard({ performance }: { performance: Performance }) {
-  const [reported, setReported] = useState(false);
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+  const [message, setMessage] = useState<string | null>(null);
+  const reported = message !== null;
+
+  function report() {
+    startTransition(async () => {
+      const result = await reportOnStageAction(performance.id);
+      if (!result.ok) return setMessage(REPORT_MESSAGES[result.error]);
+      if (result.confirmed) {
+        setMessage("¡Confirmado! Ya está en escena.");
+        router.refresh();
+      } else {
+        setMessage("Gracias. Esperando a que lo confirmen más personas.");
+      }
+    });
+  }
+
   return (
     <section className="mt-6 rounded-2xl bg-superficie p-3 shadow-sm">
       <div className="flex items-center gap-3">
@@ -155,14 +186,15 @@ function NextCard({ performance }: { performance: Performance }) {
         {!reported && (
           <button
             type="button"
-            onClick={() => setReported(true)}
-            className="min-h-11 shrink-0 rounded-xl bg-directo px-3 text-sm font-bold text-fondo active:opacity-90"
+            onClick={report}
+            disabled={pending}
+            className="min-h-11 shrink-0 rounded-xl bg-directo px-3 text-sm font-bold text-fondo active:opacity-90 disabled:opacity-60"
           >
             ¡Ya ha salido!
           </button>
         )}
       </div>
-      {reported && <p className="mt-2 text-sm text-acierto">Gracias. Esperando a que lo confirmen más personas.</p>}
+      {message && <p className="mt-2 text-sm text-acierto">{message}</p>}
     </section>
   );
 }

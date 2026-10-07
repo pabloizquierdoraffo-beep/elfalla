@@ -1,15 +1,19 @@
-"use client";
-
 import Link from "next/link";
-import { useLocalVotes } from "@/lib/local-votes";
+import type { PalcoScore } from "@/lib/palco";
 import { CATEGORIES, CATEGORY_PLURAL, PHASE_LABEL, type Category, type Session } from "@/lib/types";
 import { BackIcon } from "./Icons";
-import { PerformanceRow } from "./PerformanceRow";
+import { PerformanceRow, type MyVote } from "./PerformanceRow";
 import { PhotoBackdrop } from "./PhotoBackdrop";
 
 /** Listado de una sesión, filtrable por modalidad (SES-06). */
-export function SessionList({ session, category }: { session: Session; category?: Category }) {
-  const { votes } = useLocalVotes();
+type Props = {
+  session: Session;
+  category?: Category;
+  myVotes: Record<string, MyVote>;
+  palco: Record<string, PalcoScore>;
+};
+
+export function SessionList({ session, category, myVotes, palco }: Props) {
   const performances = category
     ? session.performances.filter((p) => p.group.category === category)
     : session.performances;
@@ -53,7 +57,7 @@ export function SessionList({ session, category }: { session: Session; category?
 
         <ul className="mt-3 px-2">
           {performances.map((p) => (
-            <PerformanceRow key={p.id} performance={p} vote={votes[p.id]} />
+            <PerformanceRow key={p.id} performance={p} vote={myVotes[p.id]} palco={palco[p.id]} />
           ))}
         </ul>
         {performances.length === 0 && (

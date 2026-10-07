@@ -151,3 +151,12 @@ El detalle por semanas irá en el **roadmap** (otro documento). Orden previsto:
 - [Supabase Pricing 2026: Free Tier Limits & Real Costs (designrevision.com)](https://designrevision.com/blog/supabase-pricing)
 - [Supabase Backup 2026: Free Tier, Retention, PITR Cost (axonbuild.com)](https://axonbuild.com/blog/supabase-backup/)
 - [Supabase · Available regions (documentación oficial)](https://supabase.com/docs/guides/platform/regions)
+
+---
+
+## 8. Estado actual (octubre 2026)
+
+- Los datos se guardan provisionalmente en un **archivo JSON en el servidor** (`lib/db/store.ts`). Todas las reglas están en `lib/db/logic.ts`, separadas del almacenamiento, así que pasar a Supabase (u otra base de datos) solo exige reescribir `store.ts`.
+- **Sin cuentas todavía:** cada móvil recibe un identificador anónimo en una cookie. Sirve para "un voto por persona" y para poder bloquear, pero se puede saltar borrando cookies; las cuentas reales (CUE-01) lo resolverán.
+- **Panel de administración** con una contraseña en `ADMIN_PASSWORD` y freno a los intentos repetidos. Antes del lanzamiento se sustituirá por cuentas con rol de administrador y doble verificación (GEN-20).
+- Este almacenamiento en archivo **no sirve en Vercel** (no guarda archivos entre peticiones): antes de publicar hay que tener la base de datos real.

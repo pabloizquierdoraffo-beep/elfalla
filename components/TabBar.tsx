@@ -14,7 +14,7 @@ const TABS = [
 
 export function TabBar() {
   const pathname = usePathname();
-  if (pathname.startsWith("/bienvenida")) return null;
+  if (pathname.startsWith("/bienvenida") || pathname.startsWith("/admin")) return null;
 
   return (
     <nav
