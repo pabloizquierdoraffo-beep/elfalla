@@ -39,7 +39,7 @@ Las porras son el segundo producto de El Falla: grupos privados de amigos ("Palc
 - Cada puesto exacto en la Final (ronda 4): **1 punto**.
 - **Máximo: 105 puntos.**
 
-### Sistema B · "Peso creciente" (recomendado)
+### Sistema B · "Peso creciente" (✅ elegido)
 
 - Ronda 1 (Cuartos): **1 punto** por acierto.
 - Ronda 2 (Semifinal): **2 puntos** por acierto.
@@ -132,7 +132,7 @@ Con A, la porra está casi decidida antes de la Final. Con B y C, la Final y el 
 | Emoción hasta la Final | ❌ | ✅ | ✅ |
 | Pocos empates | ⚠️ | ✅ | ✅ |
 
-### ✅ Recomendación: Sistema B · "Peso creciente"
+### ✅ Decidido: Sistema B · "Peso creciente"
 
 Es el único que cumple todos los criterios del dossier. Se explica en una línea:
 

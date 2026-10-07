@@ -24,8 +24,10 @@ Un voto es **válido** si cumple todo esto:
 
 - **Se abre** cuando empieza la actuación.
 - **Se cierra una hora antes de que empiece la siguiente sesión del concurso**, según el horario previsto que el admin tiene cargado (si la sesión se retrasa, no cambia el cierre).
-- **Excepción, la última sesión de cada fase:** después de ella el jurado oficial publica su fallo. Para que nadie vote sabiendo ya el resultado oficial, la votación se cierra **en cuanto el fallo se publica**, aunque la siguiente sesión sea días después. Si la siguiente sesión llega antes que el fallo, se aplica la regla normal (una hora antes).
-- La sesión de la Final no tiene "siguiente sesión": se cierra con el fallo.
+- **Excepción, la última sesión de cada fase:** después de ella el jurado oficial publica su fallo. Para que nadie pueda votar sabiendo ya el resultado oficial, la votación se cierra **antes de que salga el fallo** (✅ decidido):
+  - El admin carga la **hora prevista del fallo** de cada fase, y la votación se cierra a esa hora.
+  - El admin tiene además un botón **"Cerrar votación ya"** por si el fallo se adelanta.
+- La sesión de la Final no tiene "siguiente sesión": se aplica la misma regla, se cierra antes del fallo.
 - Mientras está abierta, la persona puede **cambiar su voto**; cuenta el último.
 
 ### Nota oculta hasta votar (✅ decidido)
@@ -142,7 +144,7 @@ Se simuló una agrupación con 200 votos honestos (opinión real: 72) a la que s
 | Alguien cambia su voto | Se usa solo el último. La nota se recalcula. |
 | Voto enviado después del cierre | Se rechaza con un mensaje amable: "La votación de esta actuación ya está cerrada". |
 | Se cambia el horario de la siguiente sesión | El admin actualiza el horario y el cierre se mueve con él. |
-| El fallo oficial se publica antes de lo previsto | En cuanto el admin marca el fallo como publicado, se cierra la votación de esa fase. |
+| El fallo oficial se va a publicar antes de lo previsto | El admin pulsa "Cerrar votación ya" antes de que salga. Los votos posteriores se rechazan. |
 | Una cuenta se bloquea por abuso | Sus votos dejan de contar y la nota se recalcula. Queda apuntado en el registro de auditoría. |
 | Agrupación que no actúa (se retira, se cancela la sesión) | No se abre la votación. Si ya estaba abierta, el admin la anula y los votos no se publican. |
 | Empate de nota en el ranking | Desempata quien tenga más votos válidos; si siguen empatadas, comparten puesto y se ordenan alfabéticamente. |

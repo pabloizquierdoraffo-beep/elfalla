@@ -13,11 +13,13 @@ El Falla **no es una app oficial** del Ayuntamiento ni del COAC, y **no gestiona
 
 **Fase 1 — "Solo papel".** Todavía no hay código. Primero definimos bien las reglas y comprobamos que el concepto aguanta.
 
+✅ **Fase 1 cerrada:** todas las decisiones están tomadas (ver [docs/01, apartado 6](docs/01-auditoria-del-concepto.md#6-decisiones-tomadas)).
+
 | Documento | Qué contiene |
 |---|---|
-| [01 · Auditoría del concepto](docs/01-auditoria-del-concepto.md) | Fortalezas, riesgos, contradicciones y decisiones pendientes |
+| [01 · Auditoría del concepto](docs/01-auditoria-del-concepto.md) | Fortalezas, riesgos, contradicciones y decisiones tomadas |
 | [02 · Algoritmo de El Palco](docs/02-algoritmo-el-palco.md) | Cómo se calcula exactamente la nota de la afición |
-| [03 · Puntos de las porras](docs/03-puntos-de-las-porras.md) | Tres sistemas de puntuación, simulados y comparados, con una recomendación |
+| [03 · Puntos de las porras](docs/03-puntos-de-las-porras.md) | Tres sistemas de puntuación, simulados y comparados; elegido el sistema B |
 
 La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octubre de 2026).
 

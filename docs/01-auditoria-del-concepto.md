@@ -74,7 +74,7 @@ Consecuencia: la predicción de cuartetos para Semifinal se hace **eligiendo ent
 
 **✅ Decidido:** desde que empieza la actuación **hasta una hora antes de que empiece la siguiente sesión**. Da margen a quien la ve en diferido sin dejar que se vote semanas después.
 
-Matiz añadido: en la **última sesión de cada fase**, la votación se cierra **en cuanto se publica el fallo oficial**, para que nadie vote conociendo ya el resultado del jurado. Detalle en el documento 02.
+Matiz añadido: en la **última sesión de cada fase**, la votación se cierra **antes de que salga el fallo oficial** (✅ decidido), para que nadie vote conociendo ya el resultado del jurado. Detalle en el documento 02.
 
 Se puede **cambiar el voto** mientras la ventana está abierta; cuenta el último.
 
@@ -137,6 +137,6 @@ Se respetan todas las de la sección 18: nombre **El Falla**, una sola celosía 
 |---|---|---|
 | 1 | Voto rápido + jurado completo (3.1) | ✅ Una persona, un voto. Si hace los dos, cuenta el completo. |
 | 2 | Recorte de El Palco (3.7) | ✅ Como el jurado: de cada 5 votos se quita uno arriba y uno abajo. |
-| 3 | Sistema de puntos de las porras (documento 03) | ⏳ Pendiente. Recomendación: sistema B. |
-| 4 | Ventana de votación (3.3) | ✅ Hasta una hora antes de la siguiente sesión; en la última sesión de cada fase, hasta el fallo oficial. |
+| 3 | Sistema de puntos de las porras (documento 03) | ✅ Sistema B: 1 punto por acierto en Cuartos, 2 en Semifinal, 4 en la Final, y 5 por puesto exacto (2 si te quedas a uno). |
+| 4 | Ventana de votación (3.3) | ✅ Hasta una hora antes de la siguiente sesión; en la última sesión de cada fase, se cierra antes de que salga el fallo oficial. |
 | 5 | Nota oculta hasta votar (3.4) | ✅ Sí. |
