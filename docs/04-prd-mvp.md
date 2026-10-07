@@ -8,8 +8,8 @@
 
 | Parte | Contenido | Estado |
 |---|---|---|
-| 1 | Visión, usuarios y alcance | ✅ Escrita, pendiente de revisión |
-| 2 | El Palco: cuenta, sesiones, votar, nota, sondeos, ficha | ✅ Escrita, pendiente de revisión |
+| 1 | Visión, usuarios y alcance | ✅ Escrita |
+| 2 | El Palco: cuenta, sesiones, votar, nota, sondeos, ficha | ✅ Escrita y revisada (falta confirmar "en escena") |
 | 3 | Mi Palco (porras), compartir, perfil, notificaciones, ajustes y admin | ⏳ Próxima entrega |
 | 4 | Requisitos generales (rendimiento, privacidad, accesibilidad) y criterios de lanzamiento | ⏳ Próxima entrega |
 
@@ -99,7 +99,7 @@ Las métricas salen de la sección 13 del dossier. Los objetivos numéricos se f
 | Código | Requisito | Prioridad |
 |---|---|---|
 | CUE-01 | Registrarse e iniciar sesión con **Apple**, **Google** o **enlace por email** (sin contraseñas). | 🔴 |
-| CUE-02 | En el registro se pide un **alias** (nombre visible) y el **año de nacimiento**. Menores de 14 años no pueden registrarse (a validar con revisión legal). | 🔴 |
+| CUE-02 | En el registro se pide un **alias** (nombre visible) y el **año de nacimiento**. ✅ **Edad mínima: 14 años** (decidido; se confirmará en la revisión legal). | 🔴 |
 | CUE-03 | Se puede **empezar a votar sin cuenta**: la persona rellena su voto y, al pulsar "Enviar", se le pide registrarse. Su voto **no se pierde** y se envía al terminar el registro. | 🔴 |
 | CUE-04 | Los alias pasan por un **filtro de palabras ofensivas**. | 🔴 |
 | CUE-05 | La persona puede **borrar su cuenta** desde la propia app. Sus votos dejan de contar. *(Es obligatorio para publicar en la tienda de Apple.)* | 🔴 |
@@ -113,11 +113,35 @@ Las métricas salen de la sección 13 del dossier. Los objetivos numéricos se f
 |---|---|---|
 | SES-01 | La pantalla de **Inicio** muestra la **sesión de hoy**: fase, hora y lista de agrupaciones en orden de actuación. | 🔴 |
 | SES-02 | Cada agrupación de la sesión tiene un **estado visible**: *Próximamente* · **En escena** · *Votación abierta* · *Votación cerrada*. | 🔴 |
-| SES-03 | El estado **"En escena"** lo marca a mano una persona del equipo desde el panel de administración (ver pregunta 2 al final). | 🔴 |
+| SES-03 | La app sabe qué agrupación está **en escena** combinando varias señales (ver "Cómo sabemos quién está en escena", justo debajo). | 🔴 |
 | SES-04 | Cuando una agrupación está **en escena**, aparece arriba del todo con un botón grande **"Puntuar"**. | 🔴 |
 | SES-05 | Si no hay sesión hoy, Inicio muestra la **próxima sesión** y los sondeos o rankings más recientes. | 🔴 |
 | SES-06 | **Listado por fase y modalidad**: todas las agrupaciones de una fase, filtrables por coros, comparsas, chirigotas y cuartetos. | 🔴 |
 | SES-07 | **Buscador** por nombre de agrupación o autor. | 🟠 |
+
+### Cómo sabemos quién está en escena
+
+Idea propuesta: detectarlo automáticamente con el directo de YouTube o con los tuits de los medios que retransmiten (por ejemplo, el aviso de "va a empezar tal agrupación").
+
+**Análisis:**
+
+| Opción | A favor | En contra |
+|---|---|---|
+| **Analizar el directo de YouTube** | Totalmente automático. | 🏛️ Las Bases 2027 dan a Onda Cádiz derechos audiovisuales exclusivos; procesar su emisión de forma automática necesita revisión jurídica y probablemente su permiso (dossier, sección 15). Además, reconocer quién canta en un vídeo es técnicamente complejo y caro. |
+| **Leer los tuits de un medio** | Ese aviso existe y es muy fiable en el momento. | Leer X (Twitter) de forma automática exige su API, que es de pago y cara. Si el medio cambia la forma de escribir el tuit, se retrasa o no lo publica, la app se equivoca. Depende de un tercero con el que no hay acuerdo. |
+| **Horario + orden de actuación** | Gratis, sin depender de nadie. El orden de cada sesión se conoce de antemano. | Las sesiones se retrasan, así que la hora exacta falla. |
+| **La propia afición avisa** | Gratis. Quien está en el teatro o viendo la tele lo sabe al instante. | Hay que protegerlo de bromas (se exige que lo confirmen varias personas). |
+| **Botón del equipo** | Exacto. | Necesita a alguien atento cada noche. |
+
+**Propuesta para el MVP (pendiente de confirmar): combinar las tres opciones gratuitas.**
+
+1. **Por defecto, el horario.** Con el orden de actuación, la app sabe siempre quién es *la siguiente*. Cuando llega la hora prevista, la marca como "Probablemente en escena".
+2. **La afición confirma.** En la tarjeta de la siguiente agrupación hay un botón **"¡Ya ha salido!"**. Cuando lo pulsan suficientes personas distintas en poco tiempo (por ejemplo, 5 en 2 minutos; cifra a ajustar), pasa a **"En escena"**. Solo se puede avanzar a la siguiente del orden, nunca saltar.
+3. **El equipo corrige si hace falta.** Desde el móvil, cualquier admin puede marcar o desmarcar "En escena". No hace falta que esté pendiente: solo interviene si algo falla.
+
+**Para después (V2):** si se llega a un acuerdo formal con un medio que retransmita, se podría recibir el aviso directamente de su sistema. No se da por hecho ningún acuerdo.
+
+**Qué afecta a la votación:** la votación de una agrupación se abre cuando pasa a "En escena" (por cualquiera de las tres vías). Si nadie la marca, se abre igualmente a la hora prevista + 15 minutos, para que nunca quede alguien sin poder votar.
 
 ## 2.3 Votar
 
@@ -155,7 +179,7 @@ Las métricas salen de la sección 13 del dossier. Los objetivos numéricos se f
 | Código | Requisito | Prioridad |
 |---|---|---|
 | JUR-01 | La ficha muestra las piezas **en el orden en que se cantan**, para ir rellenando durante la actuación. | 🟠 |
-| JUR-02 | 🎭 Cada pieza se puntúa **del 0 al 10** (más fácil de pensar) y la app la convierte sola a los puntos oficiales. Ejemplo: un 8 en un pasodoble de comparsa = 8/10 × 22 = **17,6 puntos**. *(Recomendación: ver pregunta 1.)* | 🟠 |
+| JUR-02 | 🎭 Cada pieza se puntúa **del 0 al 10** (más fácil de pensar) y la app la convierte sola a los puntos oficiales. Ejemplo: un 8 en un pasodoble de comparsa = 8/10 × 22 = **17,6 puntos**. ✅ *Decidido.* | 🟠 |
 | JUR-03 | El **total sobre 100** se va sumando a la vista. Al enviar se redondea a número entero, que es el voto que cuenta para El Palco. | 🟠 |
 | JUR-04 | Se puede **dejar a medias** y seguir más tarde mientras la votación esté abierta. Para enviar hay que puntuar todas las piezas. | 🟠 |
 | JUR-05 | Si la persona ya hizo voto rápido, la ficha completa **lo sustituye** al enviarse (se le avisa). | 🟠 |
@@ -213,10 +237,10 @@ Todo lo que pide el dossier (5.4) en una sola pantalla:
 
 ---
 
-## Preguntas de esta entrega
+## Decisiones de esta entrega
 
-Solo tres, y solo las que cambian el diseño:
-
-1. **Jurado completo:** ¿cada pieza se puntúa del **0 al 10** y la app hace la conversión a los puntos oficiales (recomendado), o prefieres que la persona ponga directamente los puntos oficiales (por ejemplo, de 0 a 22 en un pasodoble)?
-2. **"En escena":** para saber qué agrupación está actuando en cada momento, alguien del equipo tiene que pulsar un botón en el panel durante cada sesión. **¿Habrá alguien que pueda hacerlo cada noche del COAC?** Si no, la alternativa es usar el horario previsto, que es menos preciso porque las sesiones se retrasan.
-3. **Edad mínima de 14 años:** ¿te parece bien como punto de partida? (Lo revisará un profesional en el checklist legal.)
+| # | Tema | Decisión |
+|---|---|---|
+| 1 | Jurado completo | ✅ Cada pieza del 0 al 10; la app lo convierte a los puntos oficiales. |
+| 2 | Quién está en escena | ⏳ Propuesta: horario + aviso de la afición + corrección del equipo. YouTube y X descartados para el MVP (derechos, coste y fragilidad). |
+| 3 | Edad mínima | ✅ 14 años. |
