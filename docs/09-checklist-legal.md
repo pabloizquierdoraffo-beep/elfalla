@@ -12,8 +12,13 @@
 
 Casi todos los puntos dependen de esto: quién firma la política de privacidad, quién firma con los patrocinadores, quién entrega los premios y quién factura.
 
-- [ ] Decidir el titular: persona física, autónomo/a, sociedad (por ejemplo, una SL) o asociación.
-- [ ] Si habrá patrocinadores que paguen, cómo se factura.
+- [x] **Titular decidido: Pablo Izquierdo Raffo, como autónomo.**
+- [ ] Confirmar con su gestoría que la actividad de El Falla (web, patrocinios, premios) encaja en su alta de autónomo (epígrafe del IAE) o si hay que añadir uno.
+- [ ] Cómo se facturan los patrocinios (IVA, retenciones).
+- [ ] Al ser persona física, el **aviso legal** de la web mostrará su nombre y NIF (lo exige la LSSI). Valorar con el profesional qué dirección de contacto publicar.
+- [ ] Valorar si, si El Falla crece, conviene pasar más adelante a una sociedad (por responsabilidad y por patrocinios grandes).
+
+> 🔒 Los datos personales del titular (NIF, dirección, teléfono) **no se guardan en este repositorio**: se pondrán directamente en el aviso legal de la web cuando toque.
 
 ---
 
