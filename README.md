@@ -23,6 +23,9 @@ El Falla **no es una app oficial** del Ayuntamiento ni del COAC, y **no gestiona
 | [04 · PRD del MVP](docs/04-prd-mvp.md) | Qué hace la app y para quién (las 4 partes escritas) |
 | [05 · Arquitectura técnica](docs/05-arquitectura.md) | Cómo se construye: piezas, costes y forma de trabajar |
 | [06 · Roadmap](docs/06-roadmap.md) | Calendario semana a semana hasta el COAC 2027 (8 ene - 5 feb) |
+| [07 · Modelo de datos](docs/07-modelo-de-datos.md) | Qué información se guarda, cómo se relaciona y quién puede ver qué |
+| [08 · Design system](docs/08-design-system.md) | Colores, letras, tamaños y componentes |
+| [09 · Checklist legal](docs/09-checklist-legal.md) | Puntos para la revisión profesional (privacidad, marca, premios, patrocinio) |
 
 La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octubre de 2026).
 
@@ -33,14 +36,14 @@ La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octu
 - [x] PRD completo del MVP
 - [ ] Mapa de información y navegación
 - [ ] Flujos: votar, consultar El Palco, crear/unirse a un Palco, predecir y compartir
-- [ ] Modelo de datos
+- [x] Modelo de datos
 - [ ] API / acciones de backend
 - [x] Arquitectura técnica para llegar al COAC 2027
 - [ ] Sistema anti-abuso y moderación
 - [ ] Wireframes textuales pantalla por pantalla
-- [ ] Design system (tokens, componentes y estados)
+- [x] Design system (tokens, componentes y estados)
 - [ ] Panel de administración mínimo
 - [ ] Plan de analítica y eventos
 - [x] Roadmap por semanas hasta la publicación
-- [ ] Checklist legal y de privacidad para revisión profesional
+- [x] Checklist legal y de privacidad para revisión profesional
 - [ ] Plan de pruebas y criterios de aceptación
