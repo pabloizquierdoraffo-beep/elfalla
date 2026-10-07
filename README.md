@@ -55,6 +55,8 @@ La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octu
 
 **Parte pública:** bienvenida, Inicio con la sesión en directo, listado de la sesión por modalidad, votar, voto enviado con la nota de El Palco (oculta hasta votar), "¡Ya ha salido!", "Cómo funciona El Palco" y modo sala.
 
+**Compartir:** al votar, botón "Compartir mi nota"; cuando se cierran las votaciones de la sesión, "Compartir la clasificación de la noche". Se genera una imagen con la marca (vertical para estados e historias) y un enlace con vista previa para WhatsApp. Las imágenes salen de `/tarjeta/…` y los enlaces de `/c/…`.
+
 **Panel de administración** (`/admin`, o desde Perfil → "Acceso del equipo"), protegido con contraseña:
 
 | Sección | Qué permite |
@@ -63,7 +65,7 @@ La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octu
 | Agrupaciones | Crear y editar (nombre, modalidad, autores, foto), retirar y volver a activar |
 | Sesiones | Crear sesiones, añadir actuaciones, cambiar el orden, quitar actuaciones sin votos |
 | Usuarios | Ver quién vota, bloquear (con motivo) y desbloquear. Los votos de un bloqueado dejan de contar |
-| Ajustes | Votos mínimos, regla del recorte, cifras del "¡Ya ha salido!"… sin tocar código |
+| Ajustes | Patrocinador de las tarjetas, votos mínimos, regla del recorte, cifras del "¡Ya ha salido!"… sin tocar código |
 | Registro | Todo lo que se hace en el panel, con fecha y hora |
 
 **Tecnología:** Next.js 15 · React 19 · Tailwind CSS 4 · TypeScript. Reglas de negocio en `lib/db/logic.ts` y cálculo de El Palco en `lib/palco.ts`, ambos con pruebas automáticas.

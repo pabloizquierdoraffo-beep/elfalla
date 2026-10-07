@@ -9,5 +9,11 @@ export default async function SesionPage({ searchParams }: { searchParams: Promi
   const [{ modalidad }, data] = await Promise.all([searchParams, loadCurrentSession()]);
   if (!data) return <NoSession />;
   const category = CATEGORIES.find((c) => c === modalidad);
-  return <SessionList session={data.session} category={category} myVotes={data.myVotes} palco={data.palco} />;
+  return <SessionList
+      session={data.session}
+      category={category}
+      myVotes={data.myVotes}
+      palco={data.palco}
+      canShareNight={data.canShareNight}
+    />;
 }

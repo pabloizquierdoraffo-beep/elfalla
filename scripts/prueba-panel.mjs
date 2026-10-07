@@ -99,8 +99,33 @@ await admin.getByText("Los Nuevos del Barrio añadida a la sesión.").waitFor();
 check(true, "Se crea una agrupación y se añade al final de la sesión");
 await shot(admin, "panel-05-sesiones");
 
+// Patrocinador de las tarjetas
 await admin.goto(`${BASE}/admin/ajustes`);
+await admin.getByLabel("Patrocinador").fill("Marca de Prueba");
+await admin.getByRole("button", { name: "Guardar patrocinador" }).click();
+await admin.getByText("Las tarjetas dirán «Presentado por Marca de Prueba».").waitFor();
 await shot(admin, "panel-06-ajustes");
+
+// Tarjetas para compartir
+for (const [name, path] of [
+  ["tarjeta-nota-historia", "/tarjeta/nota/p3?n=78"],
+  ["tarjeta-nota-enlace", "/tarjeta/nota/p1?n=85&formato=enlace"],
+  ["tarjeta-noche-historia", "/tarjeta/noche/s3"],
+  ["tarjeta-noche-enlace", "/tarjeta/noche/s3?formato=enlace"],
+]) {
+  const res = await fan.request.get(`${BASE}${path}`);
+  const ok = res.ok() && res.headers()["content-type"] === "image/png";
+  check(ok, `La tarjeta ${name} se genera como imagen`);
+  if (ok) {
+    const { writeFile } = await import("node:fs/promises");
+    await writeFile(`${OUT}/${name}.png`, await res.body());
+  }
+}
+check((await fan.request.get(`${BASE}/tarjeta/nota/p3?n=999`)).status() === 400, "Una nota inventada fuera de 0-100 no genera tarjeta");
+await fan.goto(`${BASE}/c/nota/p3?n=78`);
+const ogImage = await fan.locator('meta[property="og:image"]').getAttribute("content");
+check(Boolean(ogImage?.includes("/tarjeta/nota/p3?n=78&formato=enlace")), "El enlace compartido lleva su vista previa para WhatsApp");
+await shot(fan, "compartido-nota");
 await admin.goto(`${BASE}/admin/registro`);
 check((await admin.locator("ol li").count()) >= 5, "Todo queda apuntado en el registro");
 await shot(admin, "panel-07-registro");

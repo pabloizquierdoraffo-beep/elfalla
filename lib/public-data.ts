@@ -4,6 +4,7 @@ import "server-only";
 
 import { sessionView, userVotes, visiblePalcoScores } from "./db/logic";
 import { readDb, todayInCadiz } from "./db/store";
+import { loadNightCard } from "./share/data";
 import { getVisitorId } from "./visitor";
 
 export async function loadCurrentSession() {
@@ -14,5 +15,6 @@ export async function loadCurrentSession() {
   const mine = userId ? userVotes(db, userId) : {};
   const myVotes = Object.fromEntries(Object.entries(mine).map(([id, v]) => [id, { score: v.score }]));
   const palco = visiblePalcoScores(db, userId, session.performances.map((p) => p.id));
-  return { session, myVotes, palco };
+  const canShareNight = (await loadNightCard(session.id)) !== null;
+  return { session, myVotes, palco, canShareNight };
 }

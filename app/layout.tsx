@@ -8,6 +8,8 @@ const fraunces = Fraunces({ subsets: ["latin"], axes: ["SOFT", "WONK", "opsz"], 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
 
 export const metadata: Metadata = {
+  // Dirección pública de la web, necesaria para las vistas previas de los enlaces compartidos.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: "El Falla · El jurado de la afición",
   description:
     "Puntúa cada actuación del COAC, descubre qué opina El Palco y juega la porra con tus amigos. Iniciativa independiente.",

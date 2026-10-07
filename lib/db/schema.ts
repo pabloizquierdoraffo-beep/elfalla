@@ -72,6 +72,8 @@ export type DbSettings = PalcoSettings & {
   minMinutesBetweenPerformances: number;
   /** La sesión que se ve en Inicio. */
   currentSessionId: string | null;
+  /** Patrocinador que aparece en las tarjetas para compartir ("Presentado por…"). Vacío: no sale. */
+  shareSponsor?: string;
 };
 
 export type AuditEntry = { id: string; at: string; actor: string; action: string; detail: string };

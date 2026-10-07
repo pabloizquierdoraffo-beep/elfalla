@@ -324,7 +324,7 @@ export function removePerformance(db: Db, performanceId: string): boolean {
 // ─── Ajustes y registro ──────────────────────────────────────────────────────
 
 export const SETTING_LIMITS: Record<
-  keyof Omit<DbSettings, "currentSessionId">,
+  keyof Omit<DbSettings, "currentSessionId" | "shareSponsor">,
   { min: number; max: number; label: string }
 > = {
   minVotes: { min: 1, max: 1000, label: "Votos mínimos para publicar la nota" },

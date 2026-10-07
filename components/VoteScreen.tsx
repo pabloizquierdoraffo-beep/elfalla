@@ -10,6 +10,7 @@ import { CATEGORY_BG, CategoryIcon } from "./CategoryIcon";
 import { BackIcon, CheckIcon } from "./Icons";
 import { PalcoScoreBox } from "./PalcoScoreBox";
 import { PhotoBackdrop } from "./PhotoBackdrop";
+import { ShareButton } from "./ShareButton";
 
 type Props = {
   performance: Performance;
@@ -221,9 +222,18 @@ function Confirmation({
         )}
       </div>
 
+      <ShareButton
+        className="mt-6"
+        label="Compartir mi nota"
+        imageUrl={`/tarjeta/nota/${performance.id}?n=${myScore}`}
+        pageUrl={`/c/nota/${performance.id}?n=${myScore}`}
+        text={`Le he dado un ${myScore} a ${performance.group.name} en El Falla. ¿Y tú?`}
+        fileName={`el-falla-mi-nota-${myScore}.png`}
+      />
+
       <Link
         href="/"
-        className="mt-6 flex min-h-14 items-center justify-center rounded-2xl bg-marca text-lg font-bold text-sobre-marca"
+        className="mt-3 flex min-h-14 items-center justify-center rounded-2xl bg-marca text-lg font-bold text-sobre-marca"
       >
         Volver al directo
       </Link>

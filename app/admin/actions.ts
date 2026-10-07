@@ -229,6 +229,16 @@ export async function blockUserAction(_: FormState, fd: FormData): Promise<FormS
 
 // ─── Ajustes ─────────────────────────────────────────────────────────────────
 
+export async function saveSponsorAction(_: FormState, fd: FormData): Promise<FormState> {
+  const sponsor = text(fd, "sponsor");
+  if (sponsor.length > 60) return { error: "El nombre del patrocinador no puede pasar de 60 caracteres." };
+  return adminChange((db, now) => {
+    db.settings.shareSponsor = sponsor;
+    audit(db, ACTOR, "Patrocinador de las tarjetas", sponsor || "(ninguno)", now);
+    return { ok: sponsor ? `Las tarjetas dirán «Presentado por ${sponsor}».` : "Las tarjetas ya no muestran patrocinador." };
+  });
+}
+
 export async function saveSettingsAction(_: FormState, fd: FormData): Promise<FormState> {
   const values: Partial<Record<keyof typeof SETTING_LIMITS, number>> = {};
   for (const [key, limits] of Object.entries(SETTING_LIMITS) as [keyof typeof SETTING_LIMITS, (typeof SETTING_LIMITS)[keyof typeof SETTING_LIMITS]][]) {

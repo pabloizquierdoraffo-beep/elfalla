@@ -371,6 +371,12 @@ Cada momento importante genera una **tarjeta** (imagen) para WhatsApp, Instagram
 | COM-04 | **Ranking de mi Palco**. | 🔴 |
 | COM-05 | **Resultado de El Palco**: el ranking de la afición de una fase. | 🟠 |
 | COM-06 | **El Palco vs. Jurado Oficial**, después de cada fallo. | 🟠 |
+| COM-07 | ✅ **La clasificación de la noche**: el ranking de El Palco de la sesión, en cuanto se cierran sus votaciones. | 🔴 |
+| COM-08 | **Mi porra** de cada ronda (Cuartos, Semifinal, Final y orden), al guardarla. | 🔴 |
+| COM-09 | **Hitos**: rachas, insignias conseguidas, perfil de jurado y puesto en los rankings generales. | 🔴 |
+| COM-10 | ✅ **Hueco de patrocinador** en todas las tarjetas: *"Presentado por [marca]"*, que se activa desde el panel. Patrocina la tarjeta, nunca el cálculo. | 🔴 |
+
+> ✅ **Decisión del responsable del producto:** todo momento importante se puede compartir, porque da visibilidad orgánica a la app y será un espacio para patrocinio. Ya funcionan COM-01 (mi nota), COM-07 (clasificación de la noche) y COM-10 (patrocinador). Las tarjetas de la porra y de los hitos se añadirán al construir esas partes, usando el mismo generador.
 
 **Reglas de todas las tarjetas:**
 

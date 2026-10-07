@@ -4,6 +4,7 @@ import { CATEGORIES, CATEGORY_PLURAL, PHASE_LABEL, type Category, type Session }
 import { BackIcon } from "./Icons";
 import { PerformanceRow, type MyVote } from "./PerformanceRow";
 import { PhotoBackdrop } from "./PhotoBackdrop";
+import { ShareButton } from "./ShareButton";
 
 /** Listado de una sesión, filtrable por modalidad (SES-06). */
 type Props = {
@@ -11,9 +12,10 @@ type Props = {
   category?: Category;
   myVotes: Record<string, MyVote>;
   palco: Record<string, PalcoScore>;
+  canShareNight: boolean;
 };
 
-export function SessionList({ session, category, myVotes, palco }: Props) {
+export function SessionList({ session, category, myVotes, palco, canShareNight }: Props) {
   const performances = category
     ? session.performances.filter((p) => p.group.category === category)
     : session.performances;
@@ -62,6 +64,18 @@ export function SessionList({ session, category, myVotes, palco }: Props) {
         </ul>
         {performances.length === 0 && (
           <p className="px-4 py-8 text-center text-texto-2">Hoy no actúa ninguna agrupación de esta modalidad.</p>
+        )}
+        {canShareNight && (
+          <div className="px-4">
+            <ShareButton
+            className="mt-6"
+            label="Compartir la clasificación de la noche"
+            imageUrl={`/tarjeta/noche/${session.id}`}
+            pageUrl={`/c/noche/${session.id}`}
+            text="La clasificación de la noche en El Palco de El Falla:"
+            fileName="el-falla-clasificacion-de-la-noche.png"
+          />
+          </div>
         )}
       </div>
     </div>
