@@ -9,8 +9,8 @@
 | Parte | Contenido | Estado |
 |---|---|---|
 | 1 | Visión, usuarios y alcance | ✅ Escrita |
-| 2 | El Palco: cuenta, sesiones, votar, nota, sondeos, ficha | ✅ Escrita y revisada (falta confirmar "en escena") |
-| 3 | Mi Palco (porras), compartir, perfil, notificaciones, ajustes y admin | ⏳ Próxima entrega |
+| 2 | El Palco: cuenta, sesiones, votar, nota, sondeos, ficha | ✅ Escrita y revisada |
+| 3 | Mi Palco (porras), compartir, perfil, notificaciones, ajustes y admin | ✅ Escrita, pendiente de revisión |
 | 4 | Requisitos generales (rendimiento, privacidad, accesibilidad) y criterios de lanzamiento | ⏳ Próxima entrega |
 
 **Cómo leer las prioridades**
@@ -133,15 +133,82 @@ Idea propuesta: detectarlo automáticamente con el directo de YouTube o con los 
 | **La propia afición avisa** | Gratis. Quien está en el teatro o viendo la tele lo sabe al instante. | Hay que protegerlo de bromas (se exige que lo confirmen varias personas). |
 | **Botón del equipo** | Exacto. | Necesita a alguien atento cada noche. |
 
-**Propuesta para el MVP (pendiente de confirmar): combinar las tres opciones gratuitas.**
-
-1. **Por defecto, el horario.** Con el orden de actuación, la app sabe siempre quién es *la siguiente*. Cuando llega la hora prevista, la marca como "Probablemente en escena".
-2. **La afición confirma.** En la tarjeta de la siguiente agrupación hay un botón **"¡Ya ha salido!"**. Cuando lo pulsan suficientes personas distintas en poco tiempo (por ejemplo, 5 en 2 minutos; cifra a ajustar), pasa a **"En escena"**. Solo se puede avanzar a la siguiente del orden, nunca saltar.
-3. **El equipo corrige si hace falta.** Desde el móvil, cualquier admin puede marcar o desmarcar "En escena". No hace falta que esté pendiente: solo interviene si algo falla.
+**✅ Decidido para el MVP: combinar las tres señales gratuitas.** YouTube y X quedan descartados para el MVP.
 
 **Para después (V2):** si se llega a un acuerdo formal con un medio que retransmita, se podría recibir el aviso directamente de su sistema. No se da por hecho ningún acuerdo.
 
-**Qué afecta a la votación:** la votación de una agrupación se abre cuando pasa a "En escena" (por cualquiera de las tres vías). Si nadie la marca, se abre igualmente a la hora prevista + 15 minutos, para que nunca quede alguien sin poder votar.
+#### Las tres señales y quién manda
+
+| Orden | Señal | Qué aporta | Cuándo manda |
+|---|---|---|---|
+| 1 | **El equipo** (botón en el panel) | Exactitud total | Siempre. Lo que marca el equipo no lo cambia nadie más. |
+| 2 | **La afición** (botón "¡Ya ha salido!") | Rapidez, sin coste | Si el equipo no ha intervenido. |
+| 3 | **El horario** (orden + hora prevista) | Siempre disponible | Solo cuando no hay ninguna de las otras dos. |
+
+#### Los estados de cada actuación
+
+```
+Programada ──► Siguiente ──► Probablemente en escena ──► En escena ──► Terminada
+```
+
+- **Programada**: actúa más tarde en la sesión.
+- **Siguiente**: es la próxima en el orden. Se muestra con su hora prevista: *"Siguiente: [agrupación] · hacia las 22:40"*.
+- **Probablemente en escena**: ha llegado su hora prevista, pero nadie lo ha confirmado todavía.
+- **En escena**: confirmado por la afición o por el equipo. Se abre la votación.
+- **Terminada**: cuando la siguiente pasa a "En escena" (o al acabar la sesión, para la última). Su votación sigue abierta según las reglas de siempre.
+
+#### Cómo funciona cada señal
+
+**1. El horario, que aprende el retraso de la noche**
+
+- El equipo carga antes de cada sesión el **orden de actuación** y la **hora prevista** de cada agrupación.
+- Cuando una agrupación se confirma en escena con retraso, **la app mueve las horas previstas de todas las siguientes** ese mismo retraso. Ejemplo: si la tercera sale 20 minutos tarde, la cuarta pasa de "hacia las 22:40" a "hacia las 23:00".
+- Así, aunque nadie confirme nada, la estimación mejora a lo largo de la noche.
+
+**2. La afición confirma**
+
+- El botón **"¡Ya ha salido!"** aparece **solo en la agrupación "Siguiente"**, desde 10 minutos antes de su hora prevista (ya ajustada).
+- Pasa a "En escena" cuando lo pulsan **5 personas distintas en menos de 2 minutos**. Las dos cifras son ajustes del panel: al principio, con pocos usuarios, puede convenir bajar a 3.
+- Protecciones contra bromas:
+  - Solo cuentan personas **con cuenta**, y cada una pulsa **una vez** por actuación.
+  - Solo se puede avanzar **a la siguiente del orden**, nunca saltar ni volver atrás.
+  - **Tiempo mínimo**: no se puede confirmar una agrupación si la anterior salió hace menos de 10 minutos (ajustable). Evita que alguien "adelante" la sesión.
+  - Si el equipo deshace una confirmación de la afición, queda apuntado en el registro de auditoría.
+
+**3. El equipo corrige**
+
+Desde el móvil, el equipo puede:
+- **Marcar** o **desmarcar** "En escena".
+- **Marcar "No actúa"** si una agrupación se retira: se salta y no se abre su votación.
+- **Cambiar el orden** si hay un cambio de última hora.
+
+No hace falta que alguien esté pendiente toda la noche: el equipo solo interviene si algo falla.
+
+#### Qué pasa con la votación
+
+- La votación de una agrupación **se abre cuando pasa a "En escena"**, por cualquiera de las vías.
+- **Red de seguridad:** si nadie la marca, se abre igualmente a su **hora prevista ajustada + 15 minutos**. Así nunca se queda nadie sin poder votar.
+
+#### Casos raros
+
+| Caso | Qué pasa |
+|---|---|
+| Pocos usuarios conectados (primeros días) y nadie pulsa | Funciona el horario; la votación se abre con la red de seguridad. |
+| Alguien pulsa "¡Ya ha salido!" durante un descanso | Hacen falta 5 personas a la vez y el tiempo mínimo; si aun así ocurre, el equipo lo deshace. |
+| Una agrupación cambia de orden sin aviso | La afición no puede saltar el orden: el equipo lo cambia; mientras, funciona la red de seguridad. |
+| La sesión se retrasa mucho al empezar | La primera confirmación (afición o equipo) mueve todas las horas previstas. |
+
+#### Requisitos
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| ESC-01 | Estados de actuación y paso de uno a otro tal como se describe arriba. | 🔴 |
+| ESC-02 | Horario con orden de actuación, hora prevista y ajuste automático del retraso. | 🔴 |
+| ESC-03 | Botón "¡Ya ha salido!" con sus protecciones. Cifras configurables en el panel. | 🔴 |
+| ESC-04 | Controles del equipo desde el móvil: marcar, desmarcar, "No actúa" y cambiar el orden. | 🔴 |
+| ESC-05 | Red de seguridad: apertura de la votación a la hora prevista ajustada + 15 minutos. | 🔴 |
+| ESC-06 | Todo cambio de estado queda en el registro de auditoría, indicando qué señal lo provocó. | 🔴 |
+| ESC-07 | En la tarjeta "En escena" se indica cómo se ha confirmado: *"Confirmado por la afición"* o *"Confirmado"*. | 🟢 |
 
 ## 2.3 Votar
 
@@ -237,10 +304,136 @@ Todo lo que pide el dossier (5.4) en una sola pantalla:
 
 ---
 
-## Decisiones de esta entrega
+## Decisiones de las partes 1 y 2
 
 | # | Tema | Decisión |
 |---|---|---|
 | 1 | Jurado completo | ✅ Cada pieza del 0 al 10; la app lo convierte a los puntos oficiales. |
-| 2 | Quién está en escena | ⏳ Propuesta: horario + aviso de la afición + corrección del equipo. YouTube y X descartados para el MVP (derechos, coste y fragilidad). |
+| 2 | Quién está en escena | ✅ Horario que aprende el retraso + aviso de la afición + corrección del equipo. YouTube y X descartados para el MVP (derechos, coste y fragilidad). |
 | 3 | Edad mínima | ✅ 14 años. |
+
+---
+
+# Parte 3 · Mi Palco, compartir, perfil, notificaciones y administración
+
+## 3.1 Mi Palco: crear y unirse
+
+Un **Palco** es un grupo privado de amigos que juegan la porra juntos. Las reglas de juego y de puntos están en el **documento 03** (sistema B).
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| MPA-01 | **Crear un Palco** en un paso: solo se pide el nombre. Quien lo crea es su **anfitrión**. | 🔴 |
+| MPA-02 | Los nombres de Palco pasan por el **filtro de palabras ofensivas**. | 🔴 |
+| MPA-03 | **Invitar**: cada Palco tiene un **enlace** y un **código de 6 caracteres**. Botón directo para enviarlo por WhatsApp. | 🔴 |
+| MPA-04 | **Unirse** con el enlace o escribiendo el código. Si la persona no tiene cuenta, se registra y entra al Palco directamente, sin repetir pasos. | 🔴 |
+| MPA-05 | Una persona puede estar en **varios Palcos** (máximo 10, ajustable). Cada Palco tiene un máximo de **50 miembros** (ajustable). | 🔴 |
+| MPA-06 | El anfitrión puede **cambiar el nombre**, **expulsar** a alguien y **cambiar el código** (el anterior deja de funcionar). | 🟠 |
+| MPA-07 | Cualquiera puede **salir** de un Palco. | 🔴 |
+| MPA-08 | Se puede **unir tarde**: juega desde la ronda que esté abierta; las anteriores le cuentan 0. | 🔴 |
+
+## 3.2 Predecir
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| PRE-01 | **Una sola porra por persona**: la persona hace su predicción una vez y **cuenta igual en todos sus Palcos** (ver pregunta 1). | 🔴 |
+| PRE-02 | Cada ronda muestra las agrupaciones **por modalidad**, con un contador visible: *"Comparsas: 12 de 18"*. | 🔴 |
+| PRE-03 | No se puede guardar una modalidad con más o menos agrupaciones de las que tocan. | 🔴 |
+| PRE-04 | En la ronda de **Orden**, se ordenan las finalistas de cada modalidad arrastrándolas a los puestos 1.º a 4.º. | 🔴 |
+| PRE-05 | Cuenta atrás visible: *"Cierra en 5 h 20 min"*. Se puede cambiar todo hasta el cierre. | 🔴 |
+| PRE-06 | Al cerrarse la ronda, la predicción **queda bloqueada** y se muestra un candado. | 🔴 |
+| PRE-07 | **Nadie ve las predicciones de los demás hasta que la ronda se cierra.** Después, dentro de cada Palco se pueden ver las de los compañeros. | 🔴 |
+| PRE-08 | Cuando el equipo carga el resultado oficial, los **puntos se calculan solos** y se avisa a la persona. | 🔴 |
+| PRE-09 | Separación con El Palco: la pantalla de predecir **nunca** muestra botones de puntuar, y viceversa. | 🔴 |
+
+**Se cumple si…** una persona puede hacer la predicción completa de una ronda en **menos de 3 minutos**.
+
+## 3.3 Ranking del Palco y pestaña "Porra"
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| POR-01 | La pestaña **Porra** muestra mis Palcos, la **ronda abierta** con su cuenta atrás y un botón grande *"Haz tu predicción"* (o *"Revisa tu predicción"* si ya la hizo). | 🔴 |
+| POR-02 | **Ranking de cada Palco**: puntos, aciertos y posiciones exactas, con los desempates del documento 03. | 🔴 |
+| POR-03 | **Evolución por fase**: puntos de cada ronda y si has subido o bajado de puesto (flechas). | 🟠 |
+| POR-04 | Detalle de cada persona del Palco: qué eligió y en qué acertó (solo rondas cerradas). | 🟠 |
+| POR-05 | **Ranking general** de todas las personas que juegan la porra (ver pregunta 2). | 🟢 |
+
+## 3.4 Compartir
+
+Cada momento importante genera una **tarjeta** (imagen) para WhatsApp, Instagram Stories y X (dossier, sección 10).
+
+| Código | Tarjeta | Prioridad |
+|---|---|---|
+| COM-01 | **Mi puntuación**: "Le he dado un 87 a [agrupación]". Si ya hay nota de El Palco, se añade. | 🔴 |
+| COM-02 | **Mi Final**: mis 16 finalistas. | 🔴 |
+| COM-03 | **Mi corte** de Cuartos o Semifinal. | 🟠 |
+| COM-04 | **Ranking de mi Palco**. | 🔴 |
+| COM-05 | **Resultado de El Palco**: el ranking de la afición de una fase. | 🟠 |
+| COM-06 | **El Palco vs. Jurado Oficial**, después de cada fallo. | 🟠 |
+
+**Reglas de todas las tarjetas:**
+
+- Llevan **marca, agrupación o fase, el dato principal y una llamada discreta** a la app. Nunca parecen un anuncio.
+- Incluyen siempre, en pequeño: *"Iniciativa independiente"*.
+- Dos formatos: **vertical** (Stories) y **cuadrado** (WhatsApp y X).
+- El enlace de la tarjeta abre la app si está instalada; si no, una página web sencilla con la tarjeta y botones para descargarla.
+- **No se puede compartir la nota de El Palco de una actuación con la votación abierta**, para no adelantársela a quien todavía no ha votado (coherente con PAL-01). Sí la puntuación propia.
+
+## 3.5 Perfil
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| PER-01 | Alias, y botón para cambiarlo. | 🔴 |
+| PER-02 | **Mi historial**: todos mis votos, por fase, con mi nota y la de El Palco. | 🔴 |
+| PER-03 | **Mis Palcos**, con mi puesto en cada uno. | 🔴 |
+| PER-04 | **Mis estadísticas**: número de votos y "¿eres más exigente que El Palco?" (la diferencia media entre mis notas y las de El Palco). | 🟠 |
+
+## 3.6 Notificaciones
+
+Pocas y útiles. La persona elige cuáles recibir; **nunca más de 2 al día** en total (salvo las que pida expresamente).
+
+| Código | Aviso | Prioridad |
+|---|---|---|
+| NOT-01 | *"Empieza la sesión"* — una vez al día de sesión. | 🔴 |
+| NOT-02 | *"La ronda cierra en 2 horas y te falta tu predicción"* — solo si le falta. | 🔴 |
+| NOT-03 | *"Ya tienes los puntos de la ronda"* — tras cada resultado oficial. | 🔴 |
+| NOT-04 | *"Alguien se ha unido a tu Palco"* — solo al anfitrión, agrupado (máximo 1 al día). | 🟢 |
+| NOT-05 | *"Avísame cuando salga [agrupación]"* — la persona lo activa en la ficha de una agrupación. | 🟢 |
+
+## 3.7 Ajustes y legales
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| AJU-01 | Activar o desactivar cada tipo de notificación. | 🔴 |
+| AJU-02 | **Cómo funciona El Palco** y **cómo funcionan los puntos de la porra**. | 🔴 |
+| AJU-03 | Política de privacidad, términos de uso y aviso **"El Falla es una iniciativa independiente y no tiene relación oficial con el Ayuntamiento de Cádiz ni con el COAC"**. | 🔴 |
+| AJU-04 | **Borrar mi cuenta** (CUE-05). | 🔴 |
+| AJU-05 | **Pedir mis datos** (derecho de acceso del RGPD). En el MVP basta con un formulario que llega al equipo. | 🔴 |
+| AJU-06 | **Denunciar** un alias o un nombre de Palco ofensivo. | 🟠 |
+| AJU-07 | Contacto. | 🔴 |
+
+## 3.8 Panel de administración
+
+Una web privada para el equipo, que **funciona bien desde el móvil**. Es imprescindible: sin ella no hay datos de agrupaciones ni resultados.
+
+| Código | Qué permite | Prioridad |
+|---|---|---|
+| ADM-01 | **Temporada**: crear fases, sesiones (fecha y hora), agrupaciones (nombre, modalidad, autores) y el **orden de actuación** de cada sesión. | 🔴 |
+| ADM-02 | **En directo**: los controles de "en escena" (ESC-04). | 🔴 |
+| ADM-03 | **Hora prevista del fallo** de cada fase y botón **"Cerrar votación ya"**. | 🔴 |
+| ADM-04 | **Resultados oficiales**: quién pasa cada fase, orden de la Final y, si se publican, las puntuaciones oficiales. Al guardarlos se calculan los puntos de las porras. Antes de guardar, se pide **confirmar dos veces** (un error aquí afecta a todo el mundo). | 🔴 |
+| ADM-05 | **Abrir y cerrar rondas** de predicción (con hora programada). | 🔴 |
+| ADM-06 | **Sondeos**: activar los de cada noche (SON-03). | 🟠 |
+| ADM-07 | **Moderación**: ver denuncias, cambiar alias o nombres de Palco ofensivos, bloquear cuentas. | 🔴 |
+| ADM-08 | **Alertas de votos raros** (documento 02, apartado 6) y opción de **apartar votos sospechosos** de la nota. | 🟠 |
+| ADM-09 | **Ajustes** sin tocar la app: mínimo de votos (30), proporción de recorte (5), puntos de la porra (1-2-4-5-2), cifras del botón "¡Ya ha salido!" (5 personas en 2 minutos), límites de Palcos. | 🔴 |
+| ADM-10 | **Registro de auditoría**: quién hizo qué y cuándo. | 🔴 |
+| ADM-11 | **Dos tipos de acceso**: *administrador* (todo) y *operador de directo* (solo ADM-02), para poder dar acceso a alguien de confianza solo para las noches de sesión. | 🟢 |
+| ADM-12 | **Corregir un resultado oficial** cargado por error: se recalculan los puntos y se avisa a los afectados. | 🔴 |
+
+---
+
+## Preguntas de esta entrega
+
+1. **Una porra por persona para todos sus Palcos (recomendado)**, o una porra distinta en cada Palco. Con una sola, la persona predice una vez y compite en todos sus grupos a la vez: menos trabajo, más justo, y permite calcular el "% que la incluye en su Final". Con una por Palco, puede "jugar distinto" en cada grupo, pero tiene que rellenarlo varias veces.
+2. **Ranking general de la porra** (todas las personas de la app, no solo tu Palco): ¿lo quieres? Da emoción y es un buen espacio para un patrocinador ("Patrocinador de Porras", dossier sección 12). Lo he dejado como 🟢 "si da tiempo".
+3. **Límites**: ¿te parecen bien **50 personas por Palco** y **10 Palcos por persona** para empezar? Se pueden cambiar en el panel en cualquier momento.
