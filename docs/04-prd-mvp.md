@@ -10,8 +10,8 @@
 |---|---|---|
 | 1 | Visión, usuarios y alcance | ✅ Escrita |
 | 2 | El Palco: cuenta, sesiones, votar, nota, sondeos, ficha | ✅ Escrita y revisada |
-| 3 | Mi Palco (porras), compartir, perfil, notificaciones, ajustes, admin y gamificación | ✅ Escrita (falta confirmar 3.9) |
-| 4 | Requisitos generales (rendimiento, privacidad, accesibilidad) y criterios de lanzamiento | ⏳ Próxima entrega |
+| 3 | Mi Palco (porras), compartir, perfil, notificaciones, ajustes, admin y gamificación | ✅ Escrita y revisada |
+| 4 | Requisitos generales (rendimiento, privacidad, accesibilidad) y criterios de lanzamiento | ✅ Escrita, pendiente de revisión |
 
 **Cómo leer las prioridades**
 
@@ -74,14 +74,14 @@ Las métricas salen de la sección 13 del dossier. Los objetivos numéricos se f
 | Registro e inicio de sesión | Apuestas, dinero, botes o pagos (**nunca**) |
 | Calendario de sesiones y agrupaciones | Fotos, vídeo o audio de actuaciones |
 | Voto rápido y jurado completo | Comentarios públicos o chat |
-| Nota y ranking de El Palco | Gamificación que premie *cómo* se puntúa (ver 3.9) |
+| Nota y ranking de El Palco | |
 | Sondeos | Acumulado de puntos de El Palco entre fases |
 | Mi Palco: crear, unirse, predecir, ranking | Históricos de años anteriores |
 | Tarjetas para compartir | Integraciones con medios |
 | Perfil e historial propio | Recomendaciones personalizadas |
 | Notificaciones básicas | Promociones avanzadas de patrocinadores |
 | Panel de administración | |
-| **Gamificación**: rachas, rankings generales, insignias y perfiles de jurado (decidido por el responsable del producto; el dossier la dejaba para la V2) | |
+| **Gamificación y premios**: rankings públicos, rachas, insignias y perfiles de jurado (decidido por el responsable del producto; el dossier la dejaba para la V2) | |
 
 ## 1.7 Principios que guían todas las decisiones
 
@@ -434,57 +434,86 @@ Una web privada para el equipo, que **funciona bien desde el móvil**. Es impres
 
 ---
 
-## 3.9 Gamificación
+## 3.9 Gamificación y premios
 
-Decisión del responsable del producto: la app tiene que tener **rankings, rachas y retos** que enganchen. Aquí se ordenan en dos grupos, porque no todos son igual de seguros para El Palco.
+✅ **Decisión del responsable del producto:** los rankings son **públicos**, y algunos tendrán **premios** de marcas colaboradoras. Además de enganchar, es lo que hace atractiva la app para patrocinadores (dossier, sección 12).
 
-### ⚠️ La regla que protege a El Palco
+Ejemplos de premio: a quien más actuaciones haya puntuado en todo el concurso, y a quien más haya acertado en la porra desde la Clasificatoria hasta la Final.
 
-El objetivo número 3 del MVP es que **la nota de El Palco sea creíble**. Hay que evitar premiar públicamente **el valor** de las notas que pone la gente, porque entonces la gente vota para ganar el premio y no lo que de verdad piensa:
+### ⚠️ Lo que cambia al haber premios
 
-- Si hay un **ranking público del "más derrotista"**, alguien votará 0 a todo para encabezarlo. Es exactamente el ataque de "hundir" del documento 02, pero hecho por diversión. La nota de El Palco se estropea.
-- Si hay un **ranking público del "mejor jurado"** (quien más se parece al jurado oficial), la gente dejará de votar *lo que le ha gustado* y votará *lo que cree que pondrá el jurado*. Eso rompe la separación "puntuar ≠ predecir", que el dossier pide no cambiar sin justificarlo (sección 18). Además, ese ranking ya existe en otra forma: **la porra general** premia a quien mejor adivina al jurado.
+Un premio hace que merezca la pena hacer trampas. Por eso cada ranking lleva sus protecciones (apartado D), y los premios necesitan unas **bases legales** (apartado E). Así la nota de El Palco sigue siendo creíble aunque haya premios en juego.
 
-**Propuesta:** los premios por **cuánto participas** son rankings públicos. Lo que dice **cómo puntúas** se enseña como **perfil personal**, que cada uno ve y puede compartir con orgullo, pero que no compite contra nadie.
+### A · Rankings públicos
 
-### A · Rankings públicos (premian participar)
+| Código | Ranking | Qué premia | Cuándo se actualiza | ¿Puede tener premio? | Prioridad |
+|---|---|---|---|---|---|
+| GAM-01 | **La Porra** (ranking general) | Acertar quién pasa cada fase y el orden de la Final (sistema B). | Tras cada fallo oficial | ✅ Sí | 🔴 |
+| GAM-02 | **El más fiel** | Más actuaciones puntuadas en todo el concurso. | En directo | ✅ Sí | 🔴 |
+| GAM-03 | **Rachas** | Más noches de sesión seguidas votando. Una noche sin sesión no rompe la racha. | En directo | ✅ Sí | 🔴 |
+| GAM-04 | **Ojo de jurado** | Quien más se parece al Jurado Oficial con sus notas. | Cuando se publican las puntuaciones oficiales de cada fase (suelen salir unos días después del fallo) | ✅ Sí | 🟠 |
+| GAM-05 | **Jurado de oficio** | Más fichas de jurado completo rellenadas. | En directo | ✅ Sí | 🟠 |
+| GAM-06 | **El más exigente** y **el más generoso** | Quien puntúa más por debajo o por encima de la afición. | Al cerrar cada fase | ❌ Solo título y diversión | 🟠 |
+
+- Todos los rankings se pueden ver **por fase** (Clasificatoria, Cuartos, Semifinal, Final) y **de toda la temporada**.
+- Todos tienen también su versión **dentro de cada Palco** ("el más fiel de mi Palco").
+- Siempre se ve **mi puesto**, aunque esté en el 3.500.
+- Un ranking puede ir **"presentado por [marca]"**. La marca patrocina el ranking, **nunca el cálculo**: las reglas son las mismas con o sin patrocinador (dossier, regla de independencia).
+
+### B · Cómo se calcula cada ranking
+
+**GAM-04 · Ojo de jurado**
+
+1. Cuando se publican las puntuaciones oficiales de una fase, para cada actuación se pasa la nota oficial a escala de 100 (total oficial ÷ 3).
+2. Para cada persona se mira, en las actuaciones que puntuó, **cuántos puntos se ha separado** de la nota oficial, y se hace la media.
+3. **Gana quien menos se separa.**
+4. Para entrar en el ranking hay que haber puntuado **un mínimo de actuaciones en esa fase** (propuesta: la mitad de las de la fase). Así no gana alguien que puntuó una sola actuación y tuvo suerte.
+
+**GAM-06 · El más exigente / el más generoso**
+
+1. Para cada persona: media de *(su nota − nota de El Palco)* en las actuaciones que puntuó.
+2. Muy por debajo de cero → exigente; muy por encima → generoso.
+3. **Filtro anti-trampa:** solo entra quien **distingue** entre agrupaciones, es decir, quien pone notas más altas a las que la afición valora más (su orden se parece razonablemente al de El Palco). Quien pone 0 a todo no distingue nada y **queda fuera**. Así no compensa hundir notas para salir el primero.
+4. Mínimo de 10 actuaciones puntuadas.
+
+**Desempates de los rankings con premio**
+
+- *El más fiel* (es fácil que haya empates, porque mucha gente puede puntuarlo todo): 1) más fichas de jurado completo, 2) racha más larga, 3) quien llegó antes a esa cifra.
+- *La Porra*: los del documento 03.
+- *Ojo de jurado*: más actuaciones puntuadas.
+
+### C · Perfil e insignias
 
 | Código | Qué | Prioridad |
 |---|---|---|
-| GAM-01 | **Ranking general de la porra** (POR-05). | 🔴 |
-| GAM-02 | **Rachas**: noches de sesión seguidas votando al menos una actuación. *"🔥 7 noches seguidas"*. Una noche sin sesión no rompe la racha. | 🔴 |
-| GAM-03 | **Ranking de rachas** y **ranking de "más actuaciones puntuadas"** de la temporada. | 🟠 |
-| GAM-04 | **Ranking de jurados completos**: quién ha rellenado más fichas de jurado completo. Premia el esfuerzo, no la nota. | 🟠 |
-| GAM-05 | Cada ranking general tiene también su versión **dentro de cada Palco** ("el más fiel de mi Palco"). | 🟠 |
-
-### B · Perfil de jurado (personal, se puede compartir)
-
-Se calcula al cerrar cada fase, con un mínimo de 10 votos para que tenga sentido.
-
-| Código | Qué | Prioridad |
-|---|---|---|
-| GAM-06 | **Tu carácter como jurado**, comparando tus notas con las de El Palco: *El Exigente* (puntúas bastante por debajo de la afición), *El Generoso* (por encima), *El Equilibrado* (como la afición). Los nombres finales se escribirán con el tono de la marca: con gracia, sin caricatura ni insultos. | 🟠 |
-| GAM-07 | **Ojo de jurado**: *"Tus notas se parecen a las del Jurado Oficial en un 82 %"*. Solo se calcula **después del fallo**, con las puntuaciones oficiales publicadas. | 🟠 |
-| GAM-08 | Tarjeta para **compartir el perfil**: *"Soy El Exigente de El Falla"*. | 🟠 |
-
-### C · Insignias
-
-| Código | Ejemplos | Prioridad |
-|---|---|---|
-| GAM-09 | *Primera nota* · *Has votado toda una sesión* · *10 noches seguidas* · *Has puntuado la Final completa* · *Has acertado las 4 finalistas de una modalidad* · *Has clavado el orden de una Final* · *Has creado un Palco con 10 amigos*. | 🟠 |
-| GAM-10 | Las insignias se ven en el perfil y se pueden compartir. | 🟠 |
+| GAM-07 | En el perfil, **tu carácter como jurado** (*El Exigente*, *El Generoso*, *El Equilibrado*) y tu porcentaje de **Ojo de jurado**. Los nombres finales se escribirán con el tono de la marca: con gracia, sin insultos. | 🟠 |
+| GAM-08 | **Insignias**: *Primera nota* · *Has votado toda una sesión* · *10 noches seguidas* · *Has puntuado la Final completa* · *Has acertado las 4 finalistas de una modalidad* · *Has clavado el orden de una Final* · *Top 10 de un ranking*. | 🟠 |
+| GAM-09 | Tarjetas para **compartir** el puesto en un ranking, el perfil de jurado y las insignias. | 🟠 |
 
 ### D · Protecciones
 
 | Código | Qué | Prioridad |
 |---|---|---|
-| GAM-11 | Los votos de cuentas bloqueadas o sospechosas **no cuentan** para rachas, rankings ni insignias. | 🔴 |
-| GAM-12 | Opción **"No aparecer en rankings generales"** en ajustes (sigue jugando, pero sin mostrar su alias a desconocidos). | 🟠 |
-| GAM-13 | El ranking de "más actuaciones puntuadas" puede animar a votar sin haber visto la actuación. La regla de recorte de El Palco y la detección de votos raros (documento 02) lo amortiguan; el equipo lo vigilará la primera semana. | 🔴 |
+| GAM-10 | Los votos de cuentas bloqueadas o sospechosas **no cuentan** para ningún ranking ni insignia. | 🔴 |
+| GAM-11 | **Una persona, una cuenta.** Para **recoger un premio** hay que identificarse (nombre real y documento). Si se descubre que alguien tenía varias cuentas, pierde el premio. Así se quita el incentivo de crear cuentas falsas. | 🔴 |
+| GAM-12 | Antes de dar un premio, el equipo **revisa** la actividad del ganador (votos raros, patrones de robot). | 🔴 |
+| GAM-13 | Filtro de "distingue entre agrupaciones" en los rankings de carácter (GAM-06). | 🟠 |
+| GAM-14 | Opción **"No aparecer en rankings generales"** en ajustes. Quien la active sigue jugando, pero no opta a premios. | 🟠 |
+| GAM-15 | **Riesgo aceptado:** con "Ojo de jurado" en juego, algunas personas votarán lo que creen que pondrá el jurado en lugar de lo que les ha gustado. Es el precio de tener este ranking. El equipo vigilará si la nota de la afición empieza a parecerse "demasiado" a la oficial y, si pasa, se puede replantear el ranking para la temporada siguiente. | 🔴 |
 
-### Calendario
+### E · Premios: lo que hay que tener en cuenta
 
-Todo lo 🟠 de gamificación se calcula en el servidor, así que **puede activarse durante el COAC** sin publicar una nueva versión de la app en las tiendas, siempre que las pantallas estén preparadas desde el lanzamiento. Así no retrasa el lanzamiento.
+Esto entrará en el checklist legal para revisión profesional:
+
+- **Bases legales** publicadas para cada premio: quién puede participar, cómo se gana, fechas, desempates y cómo se entrega.
+- Participar es **siempre gratis**. Nadie paga nada por jugar (dossier: sin apuestas ni dinero).
+- **Edad:** la app admite desde 14 años, pero algunos premios (y cualquier premio de marcas de bebidas alcohólicas) deberán ser **solo para mayores de 18**.
+- **Impuestos:** los premios a partir de cierto valor tienen obligaciones fiscales. Lo revisará un profesional.
+- El premio lo da la **marca colaboradora** o El Falla, **nunca** el Ayuntamiento ni el COAC, salvo acuerdo formal.
+
+### F · Calendario
+
+Todo esto se calcula en el servidor, así que los rankings y las insignias **pueden activarse durante el COAC** sin publicar una nueva versión de la app, siempre que las pantallas estén preparadas desde el lanzamiento. Las bases legales de los premios, en cambio, tienen que estar publicadas **antes** de que empiece el periodo de cada premio.
 
 ---
 
@@ -496,4 +525,122 @@ Todo lo 🟠 de gamificación se calcula en el servidor, así que **puede activa
 | 2 | Ranking general de la porra | ✅ Sí, imprescindible. |
 | 3 | Límites de Palcos y miembros | ✅ Sin límites. Solo protección anti-robots. |
 | 4 | Gamificación | ✅ Sí, en el MVP. |
-| 5 | Rankings que premian *cómo* se puntúa ("más derrotista", "mejor jurado") | ⏳ Propuesta: perfil personal compartible en lugar de ranking público, para proteger la nota de El Palco. |
+| 5 | Rankings públicos y premios | ✅ Todos los rankings son públicos. Premios para La Porra, El más fiel, Rachas, Ojo de jurado y Jurado de oficio, con protecciones y bases legales. "Exigente" y "generoso" son públicos pero sin premio. |
+
+---
+
+# Parte 4 · Requisitos generales y criterios de lanzamiento
+
+Los requisitos generales no son pantallas, sino **cualidades que toda la app tiene que cumplir**.
+
+## 4.1 Dónde funciona
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| GEN-01 | Funciona en **iPhone y Android**, instalable desde sus tiendas. | 🔴 |
+| GEN-02 | Los **enlaces compartidos** (tarjetas, invitaciones a Palcos) funcionan también para quien **no tiene la app**: abren una página web con la información y el botón para descargarla. | 🔴 |
+| GEN-03 | Todo en **español**. | 🔴 |
+
+*Cómo se consigue (app nativa, web instalable, etc.) se decidirá en el documento de arquitectura.*
+
+## 4.2 Rapidez y aguante
+
+Durante el COAC el uso se concentra en pocas horas por noche, y en los momentos clave (cuando sale una agrupación, al acabar la actuación, tras un fallo) mucha gente hace lo mismo a la vez.
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| GEN-04 | La app se abre y muestra la sesión de hoy en **menos de 3 segundos** con una conexión normal. | 🔴 |
+| GEN-05 | Al pulsar "Enviar" en un voto, la confirmación aparece **al instante** (menos de 1 segundo). | 🔴 |
+| GEN-06 | Aguanta **picos de miles de personas votando en el mismo minuto** sin caerse ni ir lenta. Se comprobará con una **prueba de carga** antes del lanzamiento. | 🔴 |
+| GEN-07 | Los rankings y notas pueden tardar **unos segundos** en actualizarse; nadie lo nota. | 🔴 |
+
+## 4.3 Mala cobertura
+
+En el teatro y en las calles llenas la cobertura suele ser mala.
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| GEN-08 | Si no hay conexión al enviar un voto o una predicción, **se guarda en el móvil** y se envía sola en cuanto vuelve la conexión. Se muestra *"Pendiente de envío"*. | 🔴 |
+| GEN-09 | Para que cuente, el voto tiene que **llegar** antes del cierre. Si no llega a tiempo, se avisa con claridad. | 🔴 |
+| GEN-10 | La última información descargada (sesión de hoy, mis Palcos) **se ve aunque no haya conexión**. | 🟠 |
+
+## 4.4 Accesibilidad y uso en la sala
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| GEN-11 | Botones grandes (mínimo el tamaño recomendado por Apple y Google para dedos) y **uso con una sola mano**: lo importante, en la mitad de abajo de la pantalla. | 🔴 |
+| GEN-12 | Respeta el **tamaño de letra** que la persona tenga configurado en su móvil. | 🔴 |
+| GEN-13 | **Contraste suficiente** entre texto y fondo, y nunca se depende solo del color para dar información. | 🔴 |
+| GEN-14 | Funciona con el **lector de pantalla** del móvil (para personas ciegas o con baja visión). | 🟠 |
+| GEN-15 | **"Modo sala"**: versión oscura de los colores de la marca para no deslumbrar en el teatro a oscuras. | 🟠 |
+
+## 4.5 Privacidad y seguridad
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| GEN-16 | Se piden **solo los datos imprescindibles**: identificador de inicio de sesión, alias, año de nacimiento. | 🔴 |
+| GEN-17 | Los datos se guardan en **servidores dentro de la Unión Europea**. | 🔴 |
+| GEN-18 | **Nunca se ceden datos a patrocinadores.** Si en el futuro una marca quiere contactar con usuarios, hará falta un permiso aparte, explícito y desmarcado por defecto. | 🔴 |
+| GEN-19 | La analítica de uso respeta el consentimiento de la persona (aviso de cookies o equivalente en la app). | 🔴 |
+| GEN-20 | El acceso al panel de administración exige **doble verificación** (contraseña + código en el móvil). | 🔴 |
+| GEN-21 | **Copias de seguridad** diarias de los datos, y comprobado que se pueden recuperar. | 🔴 |
+| GEN-22 | Los datos de identidad de los ganadores de premios se guardan aparte, solo el tiempo necesario, y solo los ve el equipo. | 🔴 |
+
+## 4.6 Fiabilidad durante el COAC
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| GEN-23 | El equipo recibe un **aviso automático** si la app falla o va lenta durante una sesión. | 🔴 |
+| GEN-24 | Si algo grave falla, se puede activar un **mensaje de aviso** en la app ("Estamos teniendo problemas, tus votos están a salvo") sin publicar una nueva versión. | 🟠 |
+| GEN-25 | Cualquier cambio en la app se prueba **antes** de llegar a los usuarios; **no se publican cambios grandes durante una sesión**. | 🔴 |
+
+## 4.7 Marca e independencia
+
+| Código | Requisito | Prioridad |
+|---|---|---|
+| GEN-26 | El aviso **"Iniciativa independiente"** aparece en el onboarding, en ajustes, en las tarjetas compartidas y en la web. | 🔴 |
+| GEN-27 | No se usan escudos, logotipos ni tipografías institucionales del Ayuntamiento o del COAC, ni fotos, vídeos o audios de actuaciones. | 🔴 |
+| GEN-28 | Textos con el tono de la marca: Cádiz actual, directo, cercano y con gracia, sin forzar el habla (dossier, sección 9). | 🔴 |
+
+---
+
+## 4.8 Lista de "listo para lanzar"
+
+La app **no se lanza** hasta que todo esto esté marcado:
+
+**Producto**
+- [ ] Todos los requisitos 🔴 de este PRD funcionan y han pasado sus pruebas.
+- [ ] Las pantallas de gamificación están preparadas (aunque algún ranking se active más tarde).
+- [ ] Páginas "Cómo funciona El Palco" y "Cómo funcionan los puntos de la porra" publicadas.
+
+**Datos**
+- [ ] Agrupaciones de la temporada, sesiones y orden de actuación de la Clasificatoria cargados y revisados por dos personas.
+- [ ] Rondas de predicción programadas.
+
+**Técnica**
+- [ ] **Prueba de carga** superada (GEN-06).
+- [ ] **Simulacro completo** de una sesión con un grupo de personas reales: votar, "¡Ya ha salido!", cierre de votación, cargar un resultado, puntos de la porra.
+- [ ] Avisos automáticos de fallo funcionando (GEN-23).
+- [ ] Copia de seguridad recuperada con éxito al menos una vez (GEN-21).
+
+**Tiendas**
+- [ ] App **aprobada** en App Store y Google Play **al menos 2 semanas antes** de la primera sesión del COAC.
+
+**Legal** (revisado por un profesional)
+- [ ] Política de privacidad y términos de uso.
+- [ ] Revisión de la marca "El Falla" y de que nada parezca oficial.
+- [ ] Bases legales de cada premio publicadas antes de su periodo.
+- [ ] Revisión de patrocinios con marcas de bebidas alcohólicas y menores.
+
+**Equipo**
+- [ ] Calendario de quién está de guardia cada noche de sesión (para corregir "en escena", moderar y atender incidencias).
+- [ ] Plan de qué hacer si algo falla en directo.
+
+---
+
+## Preguntas de la parte 4
+
+Estas dos ya miran al siguiente paso (arquitectura y calendario):
+
+1. **¿Quién va a construir la app?** ¿Lo hacemos tú y yo (yo escribo el código y tú lo revisas y pruebas), o hay más personas o una empresa?
+2. **¿Qué presupuesto mensual aproximado hay** para servidores y servicios durante el COAC? No hace falta una cifra exacta; me basta con un orden de magnitud (por ejemplo, "lo mínimo posible", "unos 50 €", "unos cientos"). Aparte, publicar en las tiendas tiene un coste fijo: la cuenta de desarrollador de Apple es anual y la de Google es un pago único.
