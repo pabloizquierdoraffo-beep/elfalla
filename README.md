@@ -22,8 +22,11 @@ El Falla **no es una app oficial** del Ayuntamiento ni del COAC, y **no gestiona
 | [03 · Puntos de las porras](docs/03-puntos-de-las-porras.md) | Tres sistemas de puntuación, simulados y comparados; elegido el sistema B |
 | [04 · PRD del MVP](docs/04-prd-mvp.md) | Qué hace la app y para quién (las 4 partes escritas) |
 | [05 · Arquitectura técnica](docs/05-arquitectura.md) | Cómo se construye: piezas, costes y forma de trabajar |
+| [06 · Roadmap](docs/06-roadmap.md) | Calendario semana a semana hasta el COAC 2027 (8 ene - 5 feb) |
 
 La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octubre de 2026).
+
+**Dominio previsto:** elfalla.es (pendiente de comprar).
 
 ## Próximamente (resto de entregables del dossier, sección 19)
 
@@ -38,6 +41,6 @@ La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octu
 - [ ] Design system (tokens, componentes y estados)
 - [ ] Panel de administración mínimo
 - [ ] Plan de analítica y eventos
-- [ ] Roadmap por semanas hasta la publicación
+- [x] Roadmap por semanas hasta la publicación
 - [ ] Checklist legal y de privacidad para revisión profesional
 - [ ] Plan de pruebas y criterios de aceptación

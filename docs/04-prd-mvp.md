@@ -515,7 +515,7 @@ Esto entrará en el checklist legal para revisión profesional:
 
 ### F · Calendario
 
-Todo esto se calcula en el servidor, así que los rankings y las insignias **pueden activarse durante el COAC** sin publicar una nueva versión de la app, siempre que las pantallas estén preparadas desde el lanzamiento. Las bases legales de los premios, en cambio, tienen que estar publicadas **antes** de que empiece el periodo de cada premio.
+Al ser **web app**, los rankings, las insignias y cualquier pantalla nueva **pueden publicarse durante el COAC** sin esperar a ninguna tienda (siempre fuera del horario de las sesiones). Las bases legales de los premios, en cambio, tienen que estar publicadas **antes** de que empiece el periodo de cada premio.
 
 ---
 
