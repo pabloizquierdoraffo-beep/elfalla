@@ -48,3 +48,22 @@ La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octu
 - [x] Roadmap por semanas hasta la publicación
 - [x] Checklist legal y de privacidad para revisión profesional
 - [ ] Plan de pruebas y criterios de aceptación
+
+## La web (código)
+
+**Estado:** base de la semana 2 con **datos de prueba** (agrupaciones y votos inventados). Todavía no hay cuentas ni base de datos: los votos se guardan solo en el propio móvil.
+
+Pantallas que ya funcionan: bienvenida, Inicio con la sesión en directo, votar (voto rápido), voto enviado con la nota de El Palco, "Cómo funciona El Palco" y el modo sala. Porra, El Palco (ranking) y Perfil muestran "Próximamente".
+
+**Tecnología:** Next.js 15 · React 19 · Tailwind CSS 4 · TypeScript. El cálculo de la nota de El Palco está en `lib/palco.ts` y tiene pruebas automáticas en `lib/palco.test.ts`.
+
+**Para arrancarla en un ordenador** (hace falta Node.js 22):
+
+```bash
+npm install
+npm run dev        # abre http://localhost:3000
+npm test           # pruebas automáticas
+npm run lint       # comprobación de tipos
+```
+
+**Capturas de pantalla** como en un móvil: con la web arrancada (`npm run build && npm start`), ejecutar `npm run capturas`. Se guardan en la carpeta `capturas/`.

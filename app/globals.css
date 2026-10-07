@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+/* "sala:" aplica estilos solo en modo sala. */
+@custom-variant sala (&:where([data-theme="sala"], [data-theme="sala"] *));
+
+/* Tokens del design system (documento 08). */
+:root {
+  --fondo: #f8f3e7; /* Marfil Cádiz */
+  --superficie: #efe6d3; /* entre Marfil y Arena: tarjetas */
+  --arena: #d9c9a8;
+  --texto: #2a1a1f; /* Tinta */
+  --texto-2: #6f6266; /* Gris cálido */
+  --marca: #6b0d26; /* Burdeos Falla */
+  --sobre-marca: #f8f3e7;
+  --borde: #d9c9a8;
+  --directo: #a6463f; /* Coral oscuro: texto */
+  --directo-claro: #c96b63;
+  --porra: #3f5c7d; /* Azul oscuro: texto */
+  --logro: #8a6118; /* Ocre oscuro: texto */
+  --acierto: #4f6650; /* Salvia oscuro: texto */
+  color-scheme: light;
+}
+
+/* Modo sala: oscuro, para no deslumbrar en el teatro. */
+:root[data-theme="sala"] {
+  --fondo: #1c1114;
+  --superficie: #2a1c20;
+  --arena: #4a3a3e;
+  --texto: #f8f3e7;
+  --texto-2: #c9bcb4;
+  --marca: #d98a9e;
+  --sobre-marca: #1c1114;
+  --borde: #4a3a3e;
+  --directo: #e8948c;
+  --directo-claro: #e8948c;
+  --porra: #9db8d6;
+  --logro: #e3b866;
+  --acierto: #a9c2a6;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-fondo: var(--fondo);
+  --color-superficie: var(--superficie);
+  --color-arena: var(--arena);
+  --color-texto: var(--texto);
+  --color-texto-2: var(--texto-2);
+  --color-marca: var(--marca);
+  --color-sobre-marca: var(--sobre-marca);
+  --color-borde: var(--borde);
+  --color-directo: var(--directo);
+  --color-directo-claro: var(--directo-claro);
+  --color-porra: var(--porra);
+  --color-logro: var(--logro);
+  --color-acierto: var(--acierto);
+  --font-display: var(--font-marcellus), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+html {
+  background: var(--fondo);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem; /* 17 px */
+  line-height: 1.45;
+}
+
+.cifras {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Deslizador de voto: ocupa todo el ancho y se maneja con el pulgar. */
+.deslizador {
+  appearance: none;
+  width: 100%;
+  height: 48px;
+  background: transparent;
+  touch-action: none;
+}
+.deslizador::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--marca) var(--relleno, 0%), var(--arena) var(--relleno, 0%));
+}
+.deslizador::-moz-range-track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--arena);
+}
+.deslizador::-moz-range-progress {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--marca);
+}
+.deslizador::-webkit-slider-thumb {
+  appearance: none;
+  width: 36px;
+  height: 36px;
+  margin-top: -13px;
+  border-radius: 999px;
+  background: var(--marca);
+  border: 4px solid var(--fondo);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.3);
+}
+.deslizador::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--marca);
+  border: 4px solid var(--fondo);
+}
+.deslizador[data-intacto="true"]::-webkit-slider-thumb {
+  background: var(--texto-2);
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+}
+.latido {
+  animation: latido 1.4s ease-in-out infinite;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.aparecer {
+  animation: aparecer 0.35s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .latido,
+  .aparecer {
+    animation: none;
+  }
+}
