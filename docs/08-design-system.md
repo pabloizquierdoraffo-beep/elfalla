@@ -212,7 +212,9 @@ Segunda petición del responsable del producto: un diseño **más profesional**,
 
 ## 11. Sistema de iconos (decidido)
 
-El responsable del producto eligió un juego de iconos **rellenos y redondeados** a partir de una referencia visual (de esa referencia se toman **los iconos, no los colores**, y nunca el texto «App oficial»). Están en `components/AppIcons.tsx` y se pueden ver todos juntos en la página interna `/iconos`.
+El responsable del producto eligió un juego de iconos **rellenos y redondeados** a partir de una referencia visual, y pidió que fueran **exactamente iguales**. Por eso no se dibujaron a mano: las formas se **calcaron de la imagen de referencia** (se separó cada icono del fondo y se convirtió a vector). De esa referencia se toman **las formas, no los colores**, y nunca el texto «App oficial». Están en `components/AppIcons.tsx` y se pueden ver todos juntos en la página interna `/iconos`.
+
+*Nota técnica:* la referencia tiene unos 75 píxeles por icono, así que a tamaños muy grandes los bordes pueden verse algo irregulares. Si en el futuro hay los iconos originales en vector (SVG), basta con sustituir los trazos en ese archivo.
 
 | Icono | Uso |
 |---|---|
