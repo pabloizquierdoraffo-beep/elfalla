@@ -26,6 +26,7 @@ El Falla **no es una app oficial** del Ayuntamiento ni del COAC, y **no gestiona
 | [07 · Modelo de datos](docs/07-modelo-de-datos.md) | Qué información se guarda, cómo se relaciona y quién puede ver qué |
 | [08 · Design system](docs/08-design-system.md) | Colores, letras, tamaños y componentes |
 | [09 · Checklist legal](docs/09-checklist-legal.md) | Puntos para la revisión profesional (privacidad, marca, premios, patrocinio) |
+| [10 · Wireframes de El Palco](docs/10-wireframes-el-palco.md) | Dibujo de cada pantalla de El Palco |
 
 La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octubre de 2026).
 
@@ -40,7 +41,7 @@ La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octu
 - [ ] API / acciones de backend
 - [x] Arquitectura técnica para llegar al COAC 2027
 - [ ] Sistema anti-abuso y moderación
-- [ ] Wireframes textuales pantalla por pantalla
+- [ ] Wireframes textuales pantalla por pantalla *(El Palco hecho; faltan Mi Palco, perfil y admin)*
 - [x] Design system (tokens, componentes y estados)
 - [ ] Panel de administración mínimo
 - [ ] Plan de analítica y eventos
