@@ -1,9 +1,8 @@
 import { Card, formatDateTime } from "@/components/admin/ui";
-import { readDb } from "@/lib/db/store";
+import { listAudit } from "@/lib/db/firestore-store";
 
 export default async function RegistroPage() {
-  const db = await readDb();
-  const entries = db.audit.slice(0, 200);
+  const entries = await listAudit(200);
   return (
     <Card title="Registro de cambios">
       <p className="mb-3 text-sm text-texto-2">Todo lo que se hace desde el panel queda apuntado aquí (ADM-10).</p>

@@ -3,7 +3,7 @@ import { ActionForm, SubmitButton } from "@/components/admin/ActionForm";
 import { Card, Field, inputClass } from "@/components/admin/ui";
 import { CategoryAvatar } from "@/components/CategoryIcon";
 import { findGroup, sessionPerformances } from "@/lib/db/logic";
-import { readDb } from "@/lib/db/store";
+import { read } from "@/lib/db/firestore-store";
 import { CATEGORY_LABEL, PHASE_LABEL, type PhaseKind } from "@/lib/types";
 import {
   addPerformanceAction,
@@ -13,7 +13,11 @@ import {
 } from "../../actions";
 
 export default async function SesionesPage({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
-  const [{ id }, db] = await Promise.all([searchParams, readDb()]);
+  const [{ id }, base] = await Promise.all([searchParams, read({ allSessions: true, allGroups: true })]);
+  const selectedId = base.sessions.some((s) => s.id === id) ? id : base.settings.currentSessionId;
+  const db = selectedId
+    ? await read({ allSessions: true, allGroups: true, sessionPerformancesOf: [selectedId] })
+    : base;
   const sessions = [...db.sessions].sort((a, b) => (a.date + a.startsAt).localeCompare(b.date + b.startsAt));
   const selected = sessions.find((s) => s.id === id) ?? sessions.find((s) => s.id === db.settings.currentSessionId);
   const performances = selected ? sessionPerformances(db, selected.id) : [];

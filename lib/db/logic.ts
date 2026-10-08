@@ -1,7 +1,7 @@
 // Reglas de negocio sobre los datos. Funciones puras: reciben los datos y los
 // consultan o modifican en memoria; guardarlos es cosa de store.ts.
 
-import { computePalcoScore, type PalcoScore } from "../palco";
+import { computePalcoScore, computePalcoScoreFromHistogram, type PalcoScore } from "../palco";
 import type { Category, Performance, PhaseKind, Session, StageStatus } from "../types";
 import { DEFAULT_HASHTAGS } from "../share/links";
 import type { ConfirmedBy, Db, DbGroup, DbPerformance, DbSettings, DbUser } from "./schema";
@@ -80,6 +80,8 @@ export function validScores(db: Db, performanceId: string): number[] {
 }
 
 export function palcoScore(db: Db, performanceId: string): PalcoScore {
+  const histogram = db.tallies?.[performanceId];
+  if (histogram) return computePalcoScoreFromHistogram(histogram, db.settings);
   return computePalcoScore(validScores(db, performanceId), db.settings);
 }
 
@@ -112,7 +114,7 @@ export type VoteError = "not_found" | "closed" | "blocked" | "invalid";
 export function ensureUser(db: Db, userId: string, now: Date): DbUser {
   let user = findUser(db, userId);
   if (!user) {
-    user = { id: userId, alias: null, status: "active", createdAt: now.toISOString() };
+    user = { id: userId, alias: null, status: "active", createdAt: now.toISOString(), demo: false };
     db.users.push(user);
   }
   return user;
@@ -136,7 +138,9 @@ export function castVote(
     existing.at = now.toISOString();
   } else {
     db.votes.push({ userId, performanceId, score, kind: "quick", at: now.toISOString() });
+    user.votesCount = (user.votesCount ?? 0) + 1;
   }
+  user.lastVoteAt = now.toISOString();
   return { ok: true };
 }
 

@@ -2,13 +2,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { VoteScreen } from "@/components/VoteScreen";
 import { findGroup, findPerformance, findUser, sessionView, shareHashtags, toPerformanceView } from "@/lib/db/logic";
-import { readDb, todayInCadiz } from "@/lib/db/store";
+import { read, todayInCadiz } from "@/lib/db/firestore-store";
 import { getVisitorId } from "@/lib/visitor";
 
 export const dynamic = "force-dynamic";
 
 export default async function VotarPage({ params }: { params: Promise<{ id: string }> }) {
-  const [{ id }, db, userId] = await Promise.all([params, readDb(), getVisitorId()]);
+  const [{ id }, userId] = await Promise.all([params, getVisitorId()]);
+  const db = await read({
+    performanceWithSession: id,
+    ...(userId ? { users: [userId], votes: [{ userId, performanceId: id }] } : {}),
+  });
   const dbPerformance = findPerformance(db, id);
   if (!dbPerformance || findGroup(db, dbPerformance.groupId)?.withdrawn) notFound();
   const performance = toPerformanceView(db, dbPerformance);

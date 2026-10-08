@@ -2,12 +2,12 @@ import { ActionForm, SubmitButton } from "@/components/admin/ActionForm";
 import { Badge, Card, Field, inputClass } from "@/components/admin/ui";
 import { CategoryAvatar } from "@/components/CategoryIcon";
 import type { DbGroup } from "@/lib/db/schema";
-import { readDb } from "@/lib/db/store";
+import { read } from "@/lib/db/firestore-store";
 import { CATEGORIES, CATEGORY_LABEL, CATEGORY_PLURAL } from "@/lib/types";
 import { groupWithdrawnAction, saveGroupAction } from "../../actions";
 
 export default async function AgrupacionesPage() {
-  const db = await readDb();
+  const db = await read({ allGroups: true });
   const groups = [...db.groups].sort((a, b) => a.category.localeCompare(b.category) || a.name.localeCompare(b.name, "es"));
 
   return (

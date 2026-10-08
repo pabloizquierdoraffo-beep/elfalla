@@ -115,6 +115,8 @@ La base de datos aplica estas reglas por sí misma, así que aunque hubiera un f
 
 ## 4. Ficha técnica (para programar)
 
+> **Actualización (8 oct 2026):** la base de datos es **Firestore**. Las colecciones son las mismas, con estos cambios: `votes/{persona}_{actuación}` (un voto por persona y actuación), `reports/{actuación}_{persona}`, `settings/global`, y la nota de El Palco se guarda como histograma en `palcoTallies/{actuación}/shards/{0-9}` (campo `c`: votos por nota). Los usuarios llevan los contadores `votesCount` y `lastVoteAt` para el panel. La lista técnica de abajo era el diseño original para PostgreSQL.
+
 *Base de datos PostgreSQL en Supabase. Los nombres van en inglés porque es lo habitual en el código; al lado, su equivalente.*
 
 ```

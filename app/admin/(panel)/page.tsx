@@ -1,9 +1,9 @@
 import { ActionForm, SubmitButton } from "@/components/admin/ActionForm";
 import { Badge, Card, inputClass } from "@/components/admin/ui";
 import { CategoryAvatar } from "@/components/CategoryIcon";
-import { findGroup, palcoScore, sessionPerformances, validScores } from "@/lib/db/logic";
+import { findGroup, palcoScore, sessionPerformances } from "@/lib/db/logic";
 import type { ConfirmedBy } from "@/lib/db/schema";
-import { readDb } from "@/lib/db/store";
+import { read } from "@/lib/db/firestore-store";
 import { formatScore } from "@/lib/format";
 import { CATEGORY_LABEL, PHASE_LABEL, type StageStatus } from "@/lib/types";
 import { closeSessionVotingAction, setCurrentSessionAction, stageAction, votingAction } from "../actions";
@@ -24,7 +24,11 @@ const CONFIRMED_LABEL: Record<ConfirmedBy, string> = {
 };
 
 export default async function DirectoPage() {
-  const db = await readDb();
+  const base = await read({ allSessions: true });
+  const currentId = base.settings.currentSessionId;
+  const db = currentId
+    ? await read({ allSessions: true, sessionPerformancesOf: [currentId], talliesOfLoaded: true })
+    : base;
   const sessions = [...db.sessions].sort((a, b) => (a.date + a.startsAt).localeCompare(b.date + b.startsAt));
   const current = db.sessions.find((s) => s.id === db.settings.currentSessionId);
   const performances = current ? sessionPerformances(db, current.id) : [];
@@ -71,7 +75,7 @@ export default async function DirectoPage() {
               const group = findGroup(db, p.groupId);
               if (!group) return null;
               const score = palcoScore(db, p.id);
-              const votes = validScores(db, p.id).length;
+              const votes = score.votes;
               const live = p.stageStatus === "on_stage" || p.stageStatus === "probably_on_stage";
               return (
                 <li key={p.id} className={`rounded-2xl bg-superficie p-3 ${live ? "ring-2 ring-directo" : ""}`}>

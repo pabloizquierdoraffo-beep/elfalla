@@ -1,8 +1,8 @@
 // Prueba de punta a punta del panel de administración, con dos "personas" a la vez:
 // una aficionada que vota y el administrador que gestiona.
 //
-// Uso: arrancar la web con un archivo de datos nuevo y una contraseña de prueba:
-//   ADMIN_PASSWORD=prueba-1234 ELFALLA_DATA_FILE=/tmp/prueba.json npm start
+// Uso: con el simulador de Firebase vacío (npm run emuladores), arrancar la web contra él:
+//   FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 FIREBASE_PROJECT_ID=demo-elfalla ADMIN_PASSWORD=prueba-1234 npm start
 // y en otra terminal:  ADMIN_PASSWORD=prueba-1234 npm run prueba:panel
 
 import { mkdir } from "node:fs/promises";

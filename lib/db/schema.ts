@@ -13,8 +13,11 @@ export type DbUser = {
   status: UserStatus;
   createdAt: string;
   blockedReason?: string;
-  /** Votantes inventados para la versión de prueba. */
-  demo?: boolean;
+  /** Votantes inventados para la versión de prueba. Siempre presente, para poder filtrar en el panel. */
+  demo: boolean;
+  /** Contadores para el panel (se actualizan al votar). */
+  votesCount?: number;
+  lastVoteAt?: string;
 };
 
 export type DbGroup = {
@@ -90,4 +93,9 @@ export type Db = {
   reports: DbReport[];
   settings: DbSettings;
   audit: AuditEntry[];
+  /**
+   * Histograma de votos válidos por actuación (posición n = votos de n puntos).
+   * Lo rellena el almacén de Firestore; si falta, la nota se calcula con `votes`.
+   */
+  tallies?: Record<string, number[]>;
 };

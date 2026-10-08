@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computePalcoScore, trimCount } from "./palco";
+import { computePalcoScore, computePalcoScoreFromHistogram, emptyHistogram, trimCount } from "./palco";
 
 // Ejemplo del documento 02, apartado 3.
 const EJEMPLO_30 = [
@@ -62,5 +62,34 @@ describe("nota de El Palco", () => {
     expect(() => computePalcoScore([101])).toThrow(RangeError);
     expect(() => computePalcoScore([-1])).toThrow(RangeError);
     expect(() => computePalcoScore([70.5])).toThrow(RangeError);
+  });
+});
+
+function histogramOf(votes: number[]): number[] {
+  const h = emptyHistogram();
+  for (const v of votes) h[v]++;
+  return h;
+}
+
+describe("nota de El Palco desde el histograma (lo que guarda la base de datos)", () => {
+  it("da lo mismo que el cálculo voto a voto en el ejemplo del documento 02", () => {
+    expect(computePalcoScoreFromHistogram(histogramOf(EJEMPLO_30))).toEqual(computePalcoScore(EJEMPLO_30));
+  });
+
+  it("da lo mismo en 2.000 votaciones al azar de todos los tamaños", () => {
+    let seed = 12345;
+    const rand = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+    for (let i = 0; i < 2000; i++) {
+      const n = Math.floor(rand() * 400);
+      const votes = Array.from({ length: n }, () => Math.floor(rand() * 101));
+      expect(computePalcoScoreFromHistogram(histogramOf(votes))).toEqual(computePalcoScore(votes));
+    }
+  });
+
+  it("rechaza histogramas mal formados", () => {
+    expect(() => computePalcoScoreFromHistogram([1, 2, 3])).toThrow(RangeError);
+    const h = emptyHistogram();
+    h[50] = -1;
+    expect(() => computePalcoScoreFromHistogram(h)).toThrow(RangeError);
   });
 });

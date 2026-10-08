@@ -1,11 +1,11 @@
 import { ActionForm, SubmitButton } from "@/components/admin/ActionForm";
 import { Card, Field, inputClass } from "@/components/admin/ui";
 import { SETTING_LIMITS, shareHashtags } from "@/lib/db/logic";
-import { readDb } from "@/lib/db/store";
+import { read } from "@/lib/db/firestore-store";
 import { saveSettingsAction, saveShareSettingsAction } from "../../actions";
 
 export default async function AjustesPage() {
-  const db = await readDb();
+  const db = await read({});
   return (
     <>
       <Card title="Tarjetas para compartir">

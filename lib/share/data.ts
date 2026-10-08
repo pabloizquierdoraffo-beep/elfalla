@@ -4,7 +4,8 @@ import "server-only";
 // cerrada, para no adelantársela a quien todavía no ha votado (PRD 3.4).
 
 import { findGroup, findPerformance, palcoScore, sessionPerformances } from "../db/logic";
-import { readDb } from "../db/store";
+import { read } from "../db/firestore-store";
+import { publicSlice } from "../public-data";
 import { CATEGORY_LABEL, PHASE_LABEL, type Category } from "../types";
 
 export type VoteCardData = {
@@ -23,7 +24,7 @@ export function parseScore(value: string | null): number | null {
 }
 
 export async function loadVoteCard(performanceId: string, myScore: number): Promise<VoteCardData | null> {
-  const db = await readDb();
+  const db = await read({ performanceWithSession: performanceId, tallies: [performanceId] });
   const p = findPerformance(db, performanceId);
   const group = p && findGroup(db, p.groupId);
   const session = p && db.sessions.find((s) => s.id === p.sessionId);
@@ -48,7 +49,7 @@ export type NightCardData = {
 
 /** Clasificación de El Palco de una sesión, solo con las votaciones ya cerradas. */
 export async function loadNightCard(sessionId: string): Promise<NightCardData | null> {
-  const db = await readDb();
+  const db = await publicSlice(sessionId);
   const session = db.sessions.find((s) => s.id === sessionId);
   if (!session) return null;
   const rows = sessionPerformances(db, session.id)

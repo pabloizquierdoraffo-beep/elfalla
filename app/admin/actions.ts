@@ -3,7 +3,7 @@
 // Acciones del panel de administración. Cada una comprueba primero que quien la
 // pide es administrador y deja constancia en el registro de auditoría (ADM-10).
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { logout, requireAdmin, tryLogin } from "@/lib/admin-auth";
 import {
@@ -22,8 +22,9 @@ import {
   setVotingOpen,
   upsertGroup,
 } from "@/lib/db/logic";
+import { transact, type SliceSpec } from "@/lib/db/firestore-store";
 import type { Db } from "@/lib/db/schema";
-import { mutate } from "@/lib/db/store";
+import { PUBLIC_TAG } from "@/lib/public-data";
 import { parseHashtags } from "@/lib/share/links";
 import { CATEGORIES, PHASE_LABEL, type Category, type PhaseKind, type StageStatus } from "@/lib/types";
 
@@ -37,11 +38,15 @@ function text(fd: FormData, key: string): string {
   return String(fd.get(key) ?? "").trim();
 }
 
-/** Aplica un cambio, lo registra y refresca el panel y la web pública. */
-async function adminChange(change: (db: Db, now: Date) => FormState): Promise<FormState> {
+/**
+ * Aplica un cambio en una transacción, lo registra y refresca el panel y la web pública.
+ * `spec` dice qué datos hay que cargar para poder hacer el cambio.
+ */
+async function adminChange(spec: SliceSpec, change: (db: Db, now: Date) => FormState): Promise<FormState> {
   await requireAdmin();
   const now = new Date();
-  const result = await mutate((db) => change(db, now));
+  const result = await transact(spec, (db) => change(db, now));
+  revalidateTag(PUBLIC_TAG);
   revalidatePath("/", "layout");
   return result;
 }
@@ -69,7 +74,7 @@ export async function logoutAction(): Promise<void> {
 
 export async function setCurrentSessionAction(_: FormState, fd: FormData): Promise<FormState> {
   const sessionId = text(fd, "sessionId");
-  return adminChange((db, now) => {
+  return adminChange({ sessions: [sessionId] }, (db, now) => {
     const s = db.sessions.find((x) => x.id === sessionId);
     if (!s) return { error: "Esa sesión no existe." };
     db.settings.currentSessionId = s.id;
@@ -89,7 +94,7 @@ export async function stageAction(_: FormState, fd: FormData): Promise<FormState
   const performanceId = text(fd, "performanceId");
   const status = text(fd, "status") as StageStatus;
   if (!STAGE_ACTIONS[status]) return { error: "Estado no válido." };
-  return adminChange((db, now) => {
+  return adminChange({ performanceWithSession: performanceId }, (db, now) => {
     const p = findPerformance(db, performanceId);
     if (!p) return { error: "Esa actuación no existe." };
     setStageStatus(db, p.id, status, now);
@@ -101,7 +106,7 @@ export async function stageAction(_: FormState, fd: FormData): Promise<FormState
 export async function votingAction(_: FormState, fd: FormData): Promise<FormState> {
   const performanceId = text(fd, "performanceId");
   const open = text(fd, "open") === "1";
-  return adminChange((db, now) => {
+  return adminChange({ performanceWithSession: performanceId }, (db, now) => {
     const p = findPerformance(db, performanceId);
     if (!p) return { error: "Esa actuación no existe." };
     setVotingOpen(db, p.id, open, now);
@@ -113,7 +118,7 @@ export async function votingAction(_: FormState, fd: FormData): Promise<FormStat
 
 export async function closeSessionVotingAction(_: FormState, fd: FormData): Promise<FormState> {
   const sessionId = text(fd, "sessionId");
-  return adminChange((db, now) => {
+  return adminChange({ sessionPerformancesOf: [sessionId] }, (db, now) => {
     const closed = closeSessionVoting(db, sessionId, now);
     audit(db, ACTOR, "Votaciones de la sesión cerradas", `${closed} votaciones`, now);
     return { ok: closed ? `Cerradas ${closed} votaciones.` : "No había votaciones abiertas." };
@@ -132,7 +137,7 @@ export async function saveGroupAction(_: FormState, fd: FormData): Promise<FormS
   if (!CATEGORIES.includes(category)) return { error: "Elige una modalidad." };
   if (authors.length > 120) return { error: "Los autores no pueden pasar de 120 caracteres." };
   if (photoUrl && !/^(https:\/\/|\/)/.test(photoUrl)) return { error: "La foto debe ser una dirección que empiece por https://" };
-  return adminChange((db, now) => {
+  return adminChange({ groups: id ? [id] : [] }, (db, now) => {
     const group = upsertGroup(db, { id, name, category, authors, photoUrl });
     audit(db, ACTOR, id ? "Agrupación editada" : "Agrupación creada", group.name, now);
     return { ok: id ? "Cambios guardados." : `«${group.name}» creada.` };
@@ -142,7 +147,7 @@ export async function saveGroupAction(_: FormState, fd: FormData): Promise<FormS
 export async function groupWithdrawnAction(_: FormState, fd: FormData): Promise<FormState> {
   const groupId = text(fd, "groupId");
   const withdrawn = text(fd, "withdrawn") === "1";
-  return adminChange((db, now) => {
+  return adminChange({ groups: [groupId] }, (db, now) => {
     const g = findGroup(db, groupId);
     if (!g) return { error: "Esa agrupación no existe." };
     setGroupWithdrawn(db, g.id, withdrawn);
@@ -162,7 +167,7 @@ export async function createSessionAction(_: FormState, fd: FormData): Promise<F
   if (!Number.isInteger(number) || number < 1 || number > 99) return { error: "El número de sesión no es válido." };
   if (!DATE.test(date)) return { error: "La fecha no es válida." };
   if (!TIME.test(startsAt)) return { error: "La hora no es válida (por ejemplo, 20:00)." };
-  return adminChange((db, now) => {
+  return adminChange({ allSessions: true }, (db, now) => {
     if (db.sessions.some((s) => s.phase === phase && s.number === number)) {
       return { error: `Ya existe la sesión ${number} de ${PHASE_LABEL[phase]}.` };
     }
@@ -177,7 +182,7 @@ export async function addPerformanceAction(_: FormState, fd: FormData): Promise<
   const groupId = text(fd, "groupId");
   const expectedTime = text(fd, "expectedTime");
   if (!TIME.test(expectedTime)) return { error: "La hora prevista no es válida (por ejemplo, 21:35)." };
-  return adminChange((db, now) => {
+  return adminChange({ sessions: [sessionId], sessionPerformancesOf: [sessionId], groups: [groupId] }, (db, now) => {
     if (!db.sessions.some((s) => s.id === sessionId)) return { error: "Esa sesión no existe." };
     const g = findGroup(db, groupId);
     if (!g) return { error: "Elige una agrupación." };
@@ -193,7 +198,7 @@ export async function addPerformanceAction(_: FormState, fd: FormData): Promise<
 export async function movePerformanceAction(_: FormState, fd: FormData): Promise<FormState> {
   const performanceId = text(fd, "performanceId");
   const direction = text(fd, "direction") === "up" ? "up" : "down";
-  return adminChange((db) => {
+  return adminChange({ performanceWithSession: performanceId }, (db) => {
     movePerformance(db, performanceId, direction);
     return null;
   });
@@ -201,7 +206,7 @@ export async function movePerformanceAction(_: FormState, fd: FormData): Promise
 
 export async function removePerformanceAction(_: FormState, fd: FormData): Promise<FormState> {
   const performanceId = text(fd, "performanceId");
-  return adminChange((db, now) => {
+  return adminChange({ performanceWithSession: performanceId, anyVoteOf: performanceId }, (db, now) => {
     const p = findPerformance(db, performanceId);
     const name = p ? findGroup(db, p.groupId)?.name : undefined;
     if (!removePerformance(db, performanceId)) {
@@ -219,7 +224,8 @@ export async function blockUserAction(_: FormState, fd: FormData): Promise<FormS
   const blocked = text(fd, "blocked") === "1";
   const reason = text(fd, "reason").slice(0, 200);
   if (blocked && !reason) return { error: "Escribe el motivo del bloqueo." };
-  return adminChange((db, now) => {
+  // Se cargan todos sus votos: al bloquear se restan de El Palco y al desbloquear se vuelven a sumar.
+  return adminChange({ votesOfUser: userId }, (db, now) => {
     const u = findUser(db, userId);
     if (!u) return { error: "Ese usuario no existe." };
     setUserBlocked(db, u.id, blocked, reason);
@@ -234,7 +240,7 @@ export async function saveShareSettingsAction(_: FormState, fd: FormData): Promi
   const sponsor = text(fd, "sponsor");
   const hashtags = parseHashtags(text(fd, "hashtags"));
   if (sponsor.length > 60) return { error: "El nombre del patrocinador no puede pasar de 60 caracteres." };
-  return adminChange((db, now) => {
+  return adminChange({}, (db, now) => {
     db.settings.shareSponsor = sponsor;
     db.settings.shareHashtags = hashtags;
     audit(db, ACTOR, "Ajustes de compartir", `Patrocinador: ${sponsor || "(ninguno)"} · Hashtags: ${hashtags.map((h) => `#${h}`).join(" ") || "(ninguno)"}`, now);
@@ -251,7 +257,7 @@ export async function saveSettingsAction(_: FormState, fd: FormData): Promise<Fo
     }
     values[key] = n;
   }
-  return adminChange((db, now) => {
+  return adminChange({}, (db, now) => {
     const changes = Object.entries(values)
       .filter(([k, v]) => db.settings[k as keyof typeof values] !== v)
       .map(([k, v]) => `${SETTING_LIMITS[k as keyof typeof values].label}: ${db.settings[k as keyof typeof values]} → ${v}`);

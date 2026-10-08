@@ -154,7 +154,18 @@ El detalle por semanas irá en el **roadmap** (otro documento). Orden previsto:
 
 ---
 
-## 8. Estado actual (octubre 2026)
+## 8. Cambio de base de datos: Firebase (8 de octubre de 2026)
+
+✅ **Decidido:** la base de datos es **Firebase Firestore** (en lugar de Supabase), las cuentas serán **Firebase Authentication** (Google y enlace por email) y la web se publica en **Vercel**.
+
+- **El navegador nunca escribe en la base de datos.** Toda escritura pasa por el servidor (Firebase Admin SDK) y las reglas de Firestore (`firestore.rules`) cierran todo acceso directo.
+- **Un voto por persona y actuación** garantizado por el propio identificador del voto (`votes/{persona}_{actuación}`).
+- **La nota de El Palco** se calcula desde un **histograma** (cuántos votos hay de cada nota) repartido en 10 trozos (`palcoTallies/{actuación}/shards`), para aguantar miles de votos a la vez. Da exactamente el mismo resultado que el cálculo voto a voto (probado con 2.000 votaciones al azar).
+- **Transacciones:** cada operación carga solo los datos que necesita, aplica las reglas de `lib/db/logic.ts` y guarda solo lo que cambia (`lib/db/firestore-store.ts`). Probado con 80 votos simultáneos sobre la misma actuación.
+- **Costes de Firestore:** el plan gratis (Spark) da 50.000 lecturas y 20.000 escrituras al día y, si se pasa, **deja de funcionar** hasta el día siguiente. Una noche de COAC lo supera: antes de la beta hay que pasar al plan **Blaze** (pago por uso) con alertas de gasto.
+- **Clave de servicio:** solo en las variables de entorno de Vercel (`FIREBASE_SERVICE_ACCOUNT`), nunca en GitHub ni en el chat.
+
+## 9. Estado anterior (provisional, ya sustituido)
 
 - Los datos se guardan provisionalmente en un **archivo JSON en el servidor** (`lib/db/store.ts`). Todas las reglas están en `lib/db/logic.ts`, separadas del almacenamiento, así que pasar a Supabase (u otra base de datos) solo exige reescribir `store.ts`.
 - **Sin cuentas todavía:** cada móvil recibe un identificador anónimo en una cookie. Sirve para "un voto por persona" y para poder bloquear, pero se puede saltar borrando cookies; las cuentas reales (CUE-01) lo resolverán.

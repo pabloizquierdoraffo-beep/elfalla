@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ActionForm, SubmitButton } from "@/components/admin/ActionForm";
 import { Badge, Card, formatDateTime, inputClass } from "@/components/admin/ui";
-import { readDb } from "@/lib/db/store";
+import { listUsers, userCounts } from "@/lib/db/firestore-store";
 import { blockUserAction } from "../../actions";
 
 const FILTERS = {
@@ -14,23 +14,10 @@ type Filter = keyof typeof FILTERS;
 const LIMIT = 100;
 
 export default async function UsuariosPage({ searchParams }: { searchParams: Promise<{ ver?: string }> }) {
-  const [{ ver }, db] = await Promise.all([searchParams, readDb()]);
+  const { ver } = await searchParams;
   const filter: Filter = ver && ver in FILTERS ? (ver as Filter) : "reales";
-
-  const stats = new Map<string, { votes: number; last: string | null }>();
-  for (const v of db.votes) {
-    const s = stats.get(v.userId) ?? { votes: 0, last: null };
-    s.votes++;
-    if (!s.last || v.at > s.last) s.last = v.at;
-    stats.set(v.userId, s);
-  }
-
-  const users = db.users
-    .filter((u) => (filter === "bloqueados" ? u.status === "blocked" : filter === "prueba" ? u.demo : !u.demo))
-    .sort((a, b) => (stats.get(b.id)?.last ?? b.createdAt).localeCompare(stats.get(a.id)?.last ?? a.createdAt));
-
-  const real = db.users.filter((u) => !u.demo);
-  const blocked = db.users.filter((u) => u.status === "blocked");
+  // Se piden uno más del límite para saber si hay más de los que se enseñan.
+  const [users, counts] = await Promise.all([listUsers(filter, LIMIT + 1), userCounts()]);
 
   return (
     <>
@@ -38,15 +25,15 @@ export default async function UsuariosPage({ searchParams }: { searchParams: Pro
         <dl className="grid grid-cols-3 gap-2 text-center">
           <div>
             <dt className="text-xs text-texto-2">Personas</dt>
-            <dd className="cifras font-display text-2xl">{real.length}</dd>
+            <dd className="cifras font-display text-2xl">{counts.real}</dd>
           </div>
           <div>
             <dt className="text-xs text-texto-2">Bloqueadas</dt>
-            <dd className="cifras font-display text-2xl text-directo">{blocked.length}</dd>
+            <dd className="cifras font-display text-2xl text-directo">{counts.blocked}</dd>
           </div>
           <div>
             <dt className="text-xs text-texto-2">Votos</dt>
-            <dd className="cifras font-display text-2xl">{db.votes.length}</dd>
+            <dd className="cifras font-display text-2xl">{counts.votes}</dd>
           </div>
         </dl>
         <p className="mt-3 text-sm text-texto-2">
@@ -72,14 +59,13 @@ export default async function UsuariosPage({ searchParams }: { searchParams: Pro
 
       <ul className="space-y-2">
         {users.slice(0, LIMIT).map((u) => {
-          const s = stats.get(u.id);
           return (
             <li key={u.id} className="rounded-2xl bg-superficie p-3">
               <div className="flex items-center justify-between gap-2">
                 <div className="min-w-0">
                   <p className="truncate font-semibold">{u.alias ?? `Anónimo ${u.id.slice(0, 8)}`}</p>
                   <p className="cifras text-sm text-texto-2">
-                    {s?.votes === 1 ? "1 voto" : `${s?.votes ?? 0} votos`}{s?.last ? ` · último ${formatDateTime(s.last)}` : ""}
+                    {u.votesCount === 1 ? "1 voto" : `${u.votesCount ?? 0} votos`}{u.lastVoteAt ? ` · último ${formatDateTime(u.lastVoteAt)}` : ""}
                   </p>
                 </div>
                 {u.status === "blocked" ? <Badge tone="danger">Bloqueado</Badge> : <Badge tone="ok">Activo</Badge>}
@@ -111,7 +97,7 @@ export default async function UsuariosPage({ searchParams }: { searchParams: Pro
         })}
       </ul>
       {users.length === 0 && <p className="text-texto-2">No hay nadie en esta lista.</p>}
-      {users.length > LIMIT && <p className="text-sm text-texto-2">Se muestran los {LIMIT} más recientes de {users.length}.</p>}
+      {users.length > LIMIT && <p className="text-sm text-texto-2">Se muestran los {LIMIT} más recientes.</p>}
     </>
   );
 }

@@ -52,6 +52,52 @@ export function computePalcoScore(
   };
 }
 
+/** Histograma vacío: posición n = cuántos votos de n puntos (0 a 100). */
+export function emptyHistogram(): number[] {
+  return Array.from({ length: 101 }, () => 0);
+}
+
+/**
+ * La misma nota de El Palco, pero a partir del histograma de votos (cuántos hay de cada nota).
+ * Es lo que guarda la base de datos para no tener que leer todos los votos uno a uno.
+ * Da exactamente el mismo resultado que computePalcoScore.
+ */
+export function computePalcoScoreFromHistogram(
+  histogram: readonly number[],
+  settings: PalcoSettings = DEFAULT_PALCO_SETTINGS,
+): PalcoScore {
+  if (histogram.length !== 101 || histogram.some((c) => !Number.isInteger(c) || c < 0)) {
+    throw new RangeError("Histograma no válido");
+  }
+  const n = histogram.reduce((acc, c) => acc + c, 0);
+  if (n < settings.minVotes) {
+    return { status: "no_score", votes: n, missing: settings.minVotes - n };
+  }
+
+  // Se quitan k votos por abajo y k por arriba recorriendo el histograma, sin desplegarlo.
+  const k = trimCount(n, settings.trimEvery);
+  const remaining = [...histogram];
+  let low = k;
+  for (let score = 0; low > 0; score++) {
+    const take = Math.min(low, remaining[score]);
+    remaining[score] -= take;
+    low -= take;
+  }
+  let high = k;
+  for (let score = 100; high > 0; score--) {
+    const take = Math.min(high, remaining[score]);
+    remaining[score] -= take;
+    high -= take;
+  }
+  const sum = remaining.reduce((acc, c, score) => acc + c * score, 0);
+
+  return {
+    status: n < settings.consolidatedVotes ? "provisional" : "published",
+    votes: n,
+    score: roundToTenth(sum, n - 2 * k),
+  };
+}
+
 /**
  * Redondea sum/count a un decimal, con los medios hacia arriba (78,45 → 78,5).
  * Se hace con enteros para evitar errores de coma flotante.

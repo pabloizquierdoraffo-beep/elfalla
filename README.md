@@ -51,7 +51,7 @@ La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octu
 
 ## La web (código)
 
-**Estado:** semana 2. Agrupaciones y votos de prueba (inventados). Los votos ya se guardan **en el servidor**, en un archivo provisional (`.data/elfalla.json`) que se sustituirá por la base de datos real antes de la beta. Mientras no haya cuentas, cada móvil recibe un identificador anónimo.
+**Estado:** semana 2. Los datos se guardan en **Firebase (Firestore)**. Mientras no haya cuentas, cada móvil recibe un identificador anónimo. En desarrollo se usa el **simulador de Firebase**, que carga solo las agrupaciones inventadas de prueba; el proyecto real nunca se toca sin pedirlo.
 
 **Parte pública:** bienvenida, Inicio con la sesión en directo, listado de la sesión por modalidad, votar, voto enviado con la nota de El Palco (oculta hasta votar), "¡Ya ha salido!", "Cómo funciona El Palco" y modo sala.
 
@@ -70,16 +70,17 @@ La fuente de verdad del proyecto es el *Dossier Maestro* (versión del 7 de octu
 
 **Tecnología:** Next.js 15 · React 19 · Tailwind CSS 4 · TypeScript. Reglas de negocio en `lib/db/logic.ts` y cálculo de El Palco en `lib/palco.ts`, ambos con pruebas automáticas.
 
-**Para arrancarla en un ordenador** (hace falta Node.js 22). Copia `.env.example` como `.env.local` y pon una contraseña en `ADMIN_PASSWORD`. Después:
+**Para arrancarla en un ordenador** (hace falta Node.js 22 y Java 21 para el simulador de Firebase). Copia `.env.example` como `.env.local` y pon una contraseña en `ADMIN_PASSWORD`. Después:
 
 ```bash
 npm install
-npm run dev        # abre http://localhost:3000 (panel en /admin)
-npm test           # pruebas automáticas de las reglas
-npm run lint       # comprobación de tipos
+npm run dev:simulador   # simulador de Firebase + web en http://localhost:3000 (panel en /admin)
+npm test                # pruebas de las reglas
+npm run test:firestore  # pruebas contra el simulador (votos a la vez, bloqueos…)
+npm run lint            # comprobación de tipos
 ```
 
-**Pruebas con navegador** (con la web arrancada con `npm run build && npm start`):
+**Pruebas con navegador** (con el simulador en marcha, `npm run emuladores`, y la web arrancada contra él con `npm run build && npm start` y las variables `FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 FIREBASE_PROJECT_ID=demo-elfalla`):
 
 - `npm run capturas` → capturas de las pantallas públicas, como en un móvil.
-- `ADMIN_PASSWORD=… npm run prueba:panel` → prueba de punta a punta del panel (votar, bloquear, poner en escena, cerrar votaciones, crear agrupaciones). Usar con un archivo de datos nuevo (`ELFALLA_DATA_FILE`).
+- `ADMIN_PASSWORD=… npm run prueba:panel` → prueba de punta a punta (votar, bloquear, poner en escena, cerrar votaciones, crear agrupaciones, tarjetas y compartir).
